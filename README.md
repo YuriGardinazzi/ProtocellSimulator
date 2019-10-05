@@ -4,8 +4,8 @@ Protocell simulator built with [BioDynaMo](http://biodynamo.web.cern.ch/).
 At the moment this is just a thesis project that aims to simulate protocells dynamics.
 
 # How to run it
-
-Enter the folder and type `biodynamo run`
+* Setup the BioDynaMo environment 
+* Run BioDynaMo with`biodynamo run`
 
 # Visualize with ParaView
 
