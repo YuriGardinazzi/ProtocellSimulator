@@ -1,0 +1,33 @@
+<?xml version="1.0"?>
+<VTKFile type="UnstructuredGrid" version="0.1" byte_order="LittleEndian" header_type="UInt32" compressor="vtkZLibDataCompressor">
+  <UnstructuredGrid>
+    <Piece NumberOfPoints="16"                   NumberOfCells="0"                   >
+      <PointData>
+        <DataArray type="Float64" Name="diameter_" format="appended" RangeMin="10"                   RangeMax="10"                   offset="0"                   >
+        </DataArray>
+      </PointData>
+      <CellData>
+      </CellData>
+      <Points>
+        <DataArray type="Float64" Name="position_" NumberOfComponents="3" format="appended" RangeMin="0"                    RangeMax="100"                  offset="212"                 >
+          <InformationKey name="L2_NORM_RANGE" location="vtkDataArray" length="2">
+            <Value index="0">
+              0
+            </Value>
+            <Value index="1">
+              100
+            </Value>
+          </InformationKey>
+        </DataArray>
+      </Points>
+      <Cells>
+        <DataArray type="Int64" Name="connectivity" format="appended" RangeMin=""                     RangeMax=""                     offset="764"                 />
+        <DataArray type="Int64" Name="offsets" format="appended" RangeMin=""                     RangeMax=""                     offset="780"                 />
+        <DataArray type="UInt8" Name="types" format="appended" RangeMin=""                     RangeMax=""                     offset="796"                 />
+      </Cells>
+    </Piece>
+  </UnstructuredGrid>
+  <AppendedData encoding="base64">
+   _AQAAAACAAACAAAAAiwAAAA==eJwBgAB//17jlJ2BiTlAdHvFPdTWOUCkyuSzpv85QHEmU978ATpARl9hZzSWOkDGFZP035A6QJgjWGoYJTpAQhPu5cpoOkB4d1cHbiA7QPyTLFr1HTtA/N9ES8ZzOkCGNGU8NI86QMl8mT/KKTpAhEm4mN+UOkD8lydsd9s5QEkH2qcTlTlAwUE4lA==AQAAAACAAACAAQAAiwEAAA==eJwBgAF//vZtp1UiEjfArG8BEFYmM8BUDuWOLZIjQIC5sE+c1zXA7HhSYiPgXEDTSKWLnDIpQJap4KzxbCFAriMAiDI/VUAR6qRieG4gwJRexz5wBjFAiqyyBfynG0CwhD5722g2wLYfxz483DFAjhc3E07dXECpj6icEJwzwHbHcSV7th9Au95T2VW8REDPgaqvZgIgwEAi5jj/wy7AoSuMY/CUJUC8Qmw+uLMWQGQQZxU4DizAYMp75cyvU0DabtZy3dYIQJhkSSfkWy9A2iSrWaKhYUDA89E1MUgqwLrt8CdVkCFALuEtyLoVMUA9Dj/7gfnev3+Fpxi9stk/9uFwYMLXIsDm/RpTch4nQHGwoxWjNAVANQ8jOtsxW0C+3fss5SXjP6b3kwDQ67c/QRJ503+2TUBBJ1Zt5KgfQCU7X2Js2CdAKbpvn3Z6MMDAJq8Gb30owLjCyraXryvAIQB1qmxMRMA+UHphesIyQAY0GXHJRCnAjjOLxLWzV0AEN9+LTVw0QKlWrwM=AAAAAACAAAAAAAAAAAAAAACAAAAAAAAAAAAAAACAAAAAAAAA
+  </AppendedData>
+</VTKFile>

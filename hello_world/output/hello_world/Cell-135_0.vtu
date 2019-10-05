@@ -1,0 +1,33 @@
+<?xml version="1.0"?>
+<VTKFile type="UnstructuredGrid" version="0.1" byte_order="LittleEndian" header_type="UInt32" compressor="vtkZLibDataCompressor">
+  <UnstructuredGrid>
+    <Piece NumberOfPoints="8"                    NumberOfCells="0"                   >
+      <PointData>
+        <DataArray type="Float64" Name="diameter_" format="appended" RangeMin="10"                   RangeMax="10"                   offset="0"                   >
+        </DataArray>
+      </PointData>
+      <CellData>
+      </CellData>
+      <Points>
+        <DataArray type="Float64" Name="position_" NumberOfComponents="3" format="appended" RangeMin="0"                    RangeMax="100"                  offset="124"                 >
+          <InformationKey name="L2_NORM_RANGE" location="vtkDataArray" length="2">
+            <Value index="0">
+              0
+            </Value>
+            <Value index="1">
+              100
+            </Value>
+          </InformationKey>
+        </DataArray>
+      </Points>
+      <Cells>
+        <DataArray type="Int64" Name="connectivity" format="appended" RangeMin=""                     RangeMax=""                     offset="420"                 />
+        <DataArray type="Int64" Name="offsets" format="appended" RangeMin=""                     RangeMax=""                     offset="436"                 />
+        <DataArray type="UInt8" Name="types" format="appended" RangeMin=""                     RangeMax=""                     offset="452"                 />
+      </Cells>
+    </Piece>
+  </UnstructuredGrid>
+  <AppendedData encoding="base64">
+   _AQAAAACAAABAAAAASwAAAA==eJwBQAC//+TGGmVBijxATth/QrqPPEAy68V16wc9QKjnuZ+JDj1ADhyy+EqJPUDqGINw44I9QOGavzs/Dz1ALK2sCPYJPUC6jRwiAQAAAACAAADAAAAAywAAAA==eJwBwAA//8DcH3lumi7Ac2rfwILkOsCNDRHawQ4sQNqdkgTety/APudl0DEoWUCriHl+HsIqQJsc+s+99hZAlw0tlDvrWEAIsRXWdloTwIR9AjV92ShA1zW2aZ/RAsAy6ROoAGQrwDN6tWG64CxAAV3sP3lXX0C1B7loaPYqwBAlDxKToBxAZ0h2wStEOUA8z8dPZmkVwB9rgtJ2GxvAA25I5g448b+B5Mdw9/ocQP41XFtsBBnA84C0EciLUkCRU2PDyVQaQCnYVno=AAAAAACAAAAAAAAAAAAAAACAAAAAAAAAAAAAAACAAAAAAAAA
+  </AppendedData>
+</VTKFile>

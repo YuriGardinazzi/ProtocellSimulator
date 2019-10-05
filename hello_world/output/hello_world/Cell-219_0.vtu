@@ -1,0 +1,33 @@
+<?xml version="1.0"?>
+<VTKFile type="UnstructuredGrid" version="0.1" byte_order="LittleEndian" header_type="UInt32" compressor="vtkZLibDataCompressor">
+  <UnstructuredGrid>
+    <Piece NumberOfPoints="61"                   NumberOfCells="0"                   >
+      <PointData>
+        <DataArray type="Float64" Name="diameter_" format="appended" RangeMin="10"                   RangeMax="10"                   offset="0"                   >
+        </DataArray>
+      </PointData>
+      <CellData>
+      </CellData>
+      <Points>
+        <DataArray type="Float64" Name="position_" NumberOfComponents="3" format="appended" RangeMin="0"                    RangeMax="100"                  offset="692"                 >
+          <InformationKey name="L2_NORM_RANGE" location="vtkDataArray" length="2">
+            <Value index="0">
+              0
+            </Value>
+            <Value index="1">
+              100
+            </Value>
+          </InformationKey>
+        </DataArray>
+      </Points>
+      <Cells>
+        <DataArray type="Int64" Name="connectivity" format="appended" RangeMin=""                     RangeMax=""                     offset="2656"                />
+        <DataArray type="Int64" Name="offsets" format="appended" RangeMin=""                     RangeMax=""                     offset="2672"                />
+        <DataArray type="UInt8" Name="types" format="appended" RangeMin=""                     RangeMax=""                     offset="2688"                />
+      </Cells>
+    </Piece>
+  </UnstructuredGrid>
+  <AppendedData encoding="base64">
+   _AQAAAACAAADoAQAA8wEAAA==eJwB6AEX/m8RxaUnIThAE3gjHXEUOEBQKnfkL5s4QHuXBOP1UzhApHWF51P/OEAYd219AtI4QESWs7cTuzhAPhpzcW8xOUATIHwvD3I5QEff3bLWvTlAMA30LXadOECzv41ovXA4QHGW1Y4NkjhAym0RM4uoOEATELHJ6k04QLiOVtXzxDdAI5GgrSSuOUBb8K55wG45QAJzvxHWcThA18P9rIthOEApEqoI6BM5QKy/IkI7IDlAFMLSCMO1OEDO+iff+J44QEe/FOr2QThALsSUwoclOEC8EliZZfE3QNgaxBxcbDhAuYq97B6+N0A8M8/oUyE+QGRp2KRu7j1AY5B1eN7ePUBwHTry5Vc5QJOPEZXMcTlAki5K7C0nOUBEjboOrDE5QPij+yHNNDlAVItfXQMxOUB5geu7uB85QHGWh/JkmThAbcg+ZVMgOUC6TkCz6dM4QGMyjoH3RjhAz4KeI3SyOEBLBSjjg5E4QMv7pV87XDhA7dyHZ3JYOEDqmAcoRqo4QDck2WJQjzhAx7+Q7hMHOEB1EyyAa0E4QBv2aUPwGjhA923M7uP6N0D7E26CFQo4QOswrJTV+DdAotA0Nq8rOEBH+YBiids3QPiWkC7dDzhAohmv3ZQTOEDX8ALRzr03QDV5iAINhDdAS/PS3A==AQAAAACAAAC4BQAArQUAAA==eJwFwQk4lAkYAOCekkoz1lG5xzhXGMaYSzH/p2kqilC54nFuhyNHpBKFKLZYIVepaJNsKWJVxnzSxSSRmHHGs0UpkkmRtO8r83WoZzRwMUr7YuZFXRbOmIgz096vB53JbKIrjI2GksmBitt+kLKcoRcYbwfywT4xMDJBVPOMGoaeu0ILPf7eMuSgjE9+Om2vB4w403tLGszBDc3e+3RxUZ9ju77iER+CBp6ZkbJ8wbPh8ZG4KC7OFPs9ifaREZ7tA4Ti+s1Q1H8tzouhh12CQaOuu+uxNWeQu0HIhhK27PFYAQ0a8UZADtsCHV49/EcpzQWMLcvJ/vUKqPDr2/G3OvqQQDcM1bwcBGPZ1yPZvVS8FP3dcr70i2hRZastaTEXsCdtn89da+iaGd16eSkVLKMbQrq/kfH+j6D72nM0SL7cYEn2WYtDfj3Vm0q84XuxeN9R6bzo7wgvfultDlz1b3e5eMQF9iwRFZ94YQs2AYMCjvoPgjBp1poyMsItm88ESLRUURKRMVIVysSi8Zgw180CDFpsv3OaxYcvXQPPhmQzolRSXrl09y5IPIFyJ1MI8Gjfm6H8HxuCMhU9dVQDYMEGWYKTHNSzSbsewuRA7W3jOzUmqvCRL32LYYooy2+TE1SYQJHKSsWvQ9tA4vziTNwePsYSHo8iLVTxkdxWr5pxb1D1cMyJeMXDc00F+3BSDiJPh4yEmwPe1Lri9IFGR0br7BmcoUKe4UWW0w1/0O++0BhfZQavIqoW6BMrcK2/dPYgjYveLD9RQg0dMp6qX045yMNlr4ekK3AnBMecW2pVSQazxNxqm2xj5FJqn4JwDfR/sFpJOaYPqRPWCv2nGEgzOHesxFEAT05X11cZWcFHE90soYQLQ0cnVkZ4e4DxtNOD4pcjxMfwm4djPxFw5RP73brs5ShzTfLLSmKhQeaXu2LGRrwS5py7Rbwb0sabpVGHpkQeA/nBr8fMcZ+daoHnOwH2RVfkF3ouh2GD4OqmsnU4OsoPrKn3gPL9dT/LdTlQyjyQQq4gsHa+crjSmo1WIrX0z1FUDL2VsPVn7yjx07R7+JorGxJnJ3jWyqvx7UBHgsTRFnLXuT22uBAABQ5Ym9zSRfTmTH6bXsSAKQcFwyVVwSDq9W0qvMXDQl+170tabaE3NCT5iZUlpM0+tdq0nQ7y7Yd4A7MABs+3zA9ZecLBo42vpAkMVFfqULj2mg2EvvhHbJUA5Xe7C+85aqMJSdPuwRQFnVz2Lr7K9Adubqct6ZYyzq+671p34A1x0+mMiKWxE1RqY9STKnuJEq1tCUXmHOg0jj76W4sjyD6Ua+1PXBCRy7avmPCzAMEfL9tOzdijyvdUYWQyF4qOT/Uxz/OQNNqWQU2xh/vWyWNZhUqY/cBy3KrEGMToRnFP8oV3WS4KzkosJOjEKpURKpR7uiuRE52hh54+vkrRAn52037pUHQhJ74HP5GU4Y67u+Zjsj0MeignlCbqAVHjlnTTTAvLcjs7pdFc/HdxtfrqcCqkyu9nuO/gQ4fpuLSjiIfC4s1l7xZWw19qhylzLC/QPe08RyHpwCfepVBxxEac1ywtvze5A9o1cmO9I0zRsfNqznkyFzPKDo/0zz8X0SIHo5rHSChvv2CWdWEDGG7bVco/qQZueUxteTk+XvsyrltIpYNYEhueydoFCv4akreEDT7rrgtjZlLRjlaVf/bSVjC1bNKUo5iDZsvwc1EFFfUO/6oLUHPEX32/r0nVsQWuxrT+RAEbtAPZgdZqO+DNct2A9GhlyHCej6d6rYE4t56GpDkmSBQzQh1oG9Fg4tQtn7jV0O1Vl8eJ9oRuvlljcZ8dbKzLLBT32uH+evagsNoX/jSUuxBjpwIm0/a29oGmeKTN98abDl84v7NR/auQBa4PT8y2fSawuW/OUKOCg2ddRZjOoMP/iLmyww==AAAAAACAAAAAAAAAAAAAAACAAAAAAAAAAAAAAACAAAAAAAAA
+  </AppendedData>
+</VTKFile>
