@@ -6,7 +6,8 @@ demo/makefile_project/*rdict.pcm
 demo/makefile_project/my-simulation
 
 **/.DS_Store
-
+#-----------------output folder--------------
+output/
 #----------------- intellij -----------------
 .idea
 cx3d-cpp.iml
