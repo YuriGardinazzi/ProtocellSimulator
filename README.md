@@ -1,6 +1,7 @@
 # ProtocellSimulator
 
 Protocell simulator built with [BioDynaMo](http://biodynamo.web.cern.ch/).
+
 At the moment this is just a thesis project that aims to simulate protocells dynamics.
 
 # How to run it
