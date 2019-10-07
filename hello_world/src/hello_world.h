@@ -31,23 +31,16 @@ inline int Simulate(int argc, const char** argv) {
     return cell;
    };
 
-
   //vector of cells positions 
   std::vector<Double3> positions;
   positions.push_back({0, 0, 0});
   positions.push_back({0, 100, 0});
 
-
   ModelInitializer::CreateCells(positions, construct);
-
-
 
   // Run simulation for 30 timestep
   simulation.GetScheduler()->Simulate(250);
-
   
-  
-
   std::cout << "Simulation completed successfully!" << std::endl;
   return 0;
 }
