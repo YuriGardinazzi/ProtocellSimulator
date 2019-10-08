@@ -1,0 +1,33 @@
+<?xml version="1.0"?>
+<VTKFile type="UnstructuredGrid" version="0.1" byte_order="LittleEndian" header_type="UInt32" compressor="vtkZLibDataCompressor">
+  <UnstructuredGrid>
+    <Piece NumberOfPoints="32"                   NumberOfCells="0"                   >
+      <PointData>
+        <DataArray type="Float64" Name="diameter_" format="appended" RangeMin="10"                   RangeMax="10"                   offset="0"                   >
+        </DataArray>
+      </PointData>
+      <CellData>
+      </CellData>
+      <Points>
+        <DataArray type="Float64" Name="position_" NumberOfComponents="3" format="appended" RangeMin="0"                    RangeMax="100"                  offset="380"                 >
+          <InformationKey name="L2_NORM_RANGE" location="vtkDataArray" length="2">
+            <Value index="0">
+              0
+            </Value>
+            <Value index="1">
+              100
+            </Value>
+          </InformationKey>
+        </DataArray>
+      </Points>
+      <Cells>
+        <DataArray type="Int64" Name="connectivity" format="appended" RangeMin=""                     RangeMax=""                     offset="1444"                />
+        <DataArray type="Int64" Name="offsets" format="appended" RangeMin=""                     RangeMax=""                     offset="1460"                />
+        <DataArray type="UInt8" Name="types" format="appended" RangeMin=""                     RangeMax=""                     offset="1476"                />
+      </Cells>
+    </Piece>
+  </UnstructuredGrid>
+  <AppendedData encoding="base64">
+   _AQAAAACAAAAAAQAACwEAAA==eJwBAAH//sE8bf9qCTxAn8vKbXwQPEC5KSrq2W08QAUYuwIunjxADvrvF2PpPEA936O/Kf48QHIBplkSbDxAHfM7LptHPECyLYFTaiQ9QOhUu1ZZXj1AK1HyTQasPEDk3IK/ZcU8QFt6vgir/DxAtZEB1zP0PEC8wevh8YU8QOMt9rVUWzxAcUR7pvVjPUA0a+ihZis9QFsY2A7etDxAexCs/1WePEAs004ve+08QIgP5T7nnDxA8s73YT6kPEAnc+DQPJA8QPX0KEK5TDxAo7ARkXlePEAONHgnPTs8QNASGiQCIzxAesUyBLA3PEAxvIsKkQc8QO8ac8gZoztAtCUAS4e6O0C6DmwOAQAAAACAAAAAAwAACwMAAA==eJwBAAP//J5zSnCvzgjAmGDwL+cVOcBcUtvvY2YLQIjx8J05PCrAvDGE+BL2UkCowD3qgCjlP7yOfUwyOCHA/zMauriZOUDueAHQaxwbwDscKG4qtSrALh9hiK20WUCaHIKulGYEwBIe05yV4TBAF6Fq5XIcOECJYdL9uJE8wMYYoVroiztAlu7A6L7AYkAAmyYNQ9cjwFzAYGzYPz/A9CoPLgAVVUAHiO5gBPYyQMBo/gderT3AjQL2bR7VOUANaJacyIIqQB0a3vKKCy9ABhYKa25nS0AHJWWvdf42wKNJfz8RTDFAyDJYUQjtXkA0eHM8s5IvwOzfQeYL1CdAA426FA2RHMAK8m4yP+Y1wPFTcSK8IyxAhXIZf7J1WEA4/jl4pAsGQNB8etUpGxXAdnRTLI2AL8BxZnZqKBw+QMN19LPNSCnAmsSkQoqnXEBiN2vve2Q+QCOZusONWBZATbte52wcScDA4GFBspwoQOOZRcBMxx7AYpRwmX5eSkAqR7k3fq06QOrc9X2w6DJA1m83kn87QUCfB3lXujP2vxz78/gY70BAqU+GrZQPWUBMTktLJ14ywDAUKIwSBENA/0lJep3HEkD+LSLg3mc3wK5ZP0AgsuS/O3wySmZSYkD6v3LV41MxwEJ6Do6dPTZAT+UclSY3PsCcMgejiQIdwMv5pIOjW0DAU3hfumwyIsBnHKAOwLE2QKNt9TL50ivACH3PQ7cwYEA3tXYBWFMXQHRrEQpjmjVABXG1w5OnUUAMrEoDpo/ZP9hoHwYWGRfArVBdaWcSXEAJtFGYTi88wMgFmc5BWCDAssHlRkoaKUB9djzJm805QDMMX8JUrS/AwWYMsaQ5VkCKp/IVTwpFQE5SjlifVzbA4ptt9XO4RsDO1FVRzcsXQKK/UFUkBgRA246m5QMg/D+ZxcQJF9AFQAkY44tKg/q/aclmJWlcSkAJihivClnjvze2H6YkkDvA3mbzGlJ2MMCqb9DO9g4WwCQIM+E8GSrAJGXa0asyVUAphZsNS2U5wDa/Upw=AAAAAACAAAAAAAAAAAAAAACAAAAAAAAAAAAAAACAAAAAAAAA
+  </AppendedData>
+</VTKFile>

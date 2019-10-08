@@ -67,6 +67,7 @@ inline int Simulate(int argc, const char** argv) {
     
     return cell;
    };
+<<<<<<< HEAD
   
   std::vector<Double3> positions;
   positions.push_back({0, 0, 0});
@@ -77,8 +78,19 @@ inline int Simulate(int argc, const char** argv) {
   simulation.GetScheduler()->Simulate(250);
 */
   
-  
+=======
 
+  //vector of cells positions 
+  std::vector<Double3> positions;
+  positions.push_back({0, 0, 0});
+  positions.push_back({0, 100, 0});
+
+  ModelInitializer::CreateCells(positions, construct);
+
+  // Run simulation for 30 timestep
+  simulation.GetScheduler()->Simulate(250);
+>>>>>>> baa879dca02723f63032062439a136c3a245fe09
+  
   std::cout << "Simulation completed successfully!" << std::endl;
   return 0;
 }
