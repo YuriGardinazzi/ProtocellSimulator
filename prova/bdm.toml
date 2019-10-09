@@ -1,7 +1,0 @@
-[visualization]
-export = true
-export_interval = 5
-
-    [[visualize_sim_object]]
-    name = "Cell"
-    additional_data_members = [ "diameter_" ]
