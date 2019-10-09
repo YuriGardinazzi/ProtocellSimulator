@@ -7,6 +7,7 @@ This is my personal thesis project that aims to simulate protocells dynamics, at
 # How to run it
 
 * Setup the BioDynaMo environment in your terminal
+* each folder is a simulation, so first of open a folder
 * Run `biodynamo clean` to clean build files 
 * Run BioDynaMo with`biodynamo run`
 
