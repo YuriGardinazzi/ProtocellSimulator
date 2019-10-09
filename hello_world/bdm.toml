@@ -1,7 +1,7 @@
 [visualization]
+live = false
 export = true
-export_interval = 1
+export_interval = 2
 
-    [[visualize_sim_object]]
-    name = "Cell"
-    additional_data_members = [ "diameter_" ]
+[[visualize_sim_object]]
+name = "Cell"

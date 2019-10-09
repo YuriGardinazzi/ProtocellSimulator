@@ -16,8 +16,31 @@
 
 #include "biodynamo.h"
 
-namespace bdm {
 
+namespace bdm {
+struct GrowthModule : public BaseBiologyModule {
+  BDM_STATELESS_BM_HEADER(GrowthModule, BaseBiologyModule, 1);
+
+ public:
+  GrowthModule() : BaseBiologyModule(gAllEventIds) {}
+
+  /// Empty default event constructor, because GrowthModule does not have state.
+  template <typename TEvent, typename TBm>
+  GrowthModule(const TEvent& event, TBm* other, uint64_t new_oid = 0)
+      : BaseBiologyModule(event, other, new_oid) {}
+
+  void Run(SimObject* so) override {
+      // code to be executed at each simulation step
+    if (auto* cell = dynamic_cast<Cell*>(so)) {
+      if (cell->GetDiameter() < 8) {
+        cell->ChangeVolume(400);
+      }
+      else {
+        cell->Divide();
+      }
+    }
+  }
+};
 inline int Simulate(int argc, const char** argv) {
   
 
@@ -35,8 +58,13 @@ inline int Simulate(int argc, const char** argv) {
   auto* random = simulation.GetRandom(); //random number 
   auto* param = simulation.GetParam(); //simulation parameters
 
-  size_t nb_of_cells = 1000; //number of cells in the simulation
+  size_t nb_of_cells = 2400; //number of cells in the simulation
   double x_coord, y_coord, z_coord;
+
+  Cell* cell = new Cell({20, 50, 50});
+  cell->SetDiameter(6);
+  cell->AddBiologyModule(new GrowthModule());
+  rm->push_back(cell);
 
   for(size_t i = 0; i <= nb_of_cells; i++){
   // our modelling will be a cell cube of 100*100*100
@@ -55,41 +83,6 @@ inline int Simulate(int argc, const char** argv) {
 
   //Simulate the model for 200 steps
   simulation.GetScheduler()->Simulate(200);
-
-
-/*  
-   auto construct = [](const Double3& position) {
-    Cell* cell = new Cell(position);
-    cell->SetDiameter(10);
-    cell->SetMass(1.0);
-    // primo parametro = threshold secondo= growthrate
-    cell->AddBiologyModule(new GrowDivide(30, 20000, {gAllEventIds}));
-    
-    return cell;
-   };
-<<<<<<< HEAD
-  
-  std::vector<Double3> positions;
-  positions.push_back({0, 0, 0});
-  positions.push_back({0, 100, 0});
-  
-  ModelInitializer::CreateCells(positions, construct);
-  // Run simulation for 30 timestep
-  simulation.GetScheduler()->Simulate(250);
-*/
-  
-=======
-
-  //vector of cells positions 
-  std::vector<Double3> positions;
-  positions.push_back({0, 0, 0});
-  positions.push_back({0, 100, 0});
-
-  ModelInitializer::CreateCells(positions, construct);
-
-  // Run simulation for 30 timestep
-  simulation.GetScheduler()->Simulate(250);
->>>>>>> baa879dca02723f63032062439a136c3a245fe09
   
   std::cout << "Simulation completed successfully!" << std::endl;
   return 0;
