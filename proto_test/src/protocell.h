@@ -3,11 +3,15 @@
 
 #include "biodynamo.h"
 
+
+/*
+Definition of a custom cell that aims to emulate a protocell
+*/
 namespace bdm{
-    // 0. Define my custom cell MyCell, which extends Cell by adding extra data
+
     // members: cell_color and can_divide
-    class MyCell : public Cell {  // our object extends the Cell object
-                                // create the header with our new data member
+    class MyCell : public Cell {  // MyCell extends the Cell object
+                                  // create the header with our new data member
     BDM_SIM_OBJECT_HEADER(MyCell, Cell, 1, can_divide_, cell_color_);
 
     public:
@@ -17,9 +21,11 @@ namespace bdm{
         /// If MyCell divides, daughter 2 copies the data members from the mother
         MyCell(const Event& event, SimObject* other, uint64_t new_oid = 0)
             : Base(event, other, new_oid) {
-        if (auto* mother = dynamic_cast<MyCell*>(other)) {
-            cell_color_ = mother->cell_color_;
-        }
+
+            //inheritance of the color from mother cell to daughter    
+            if (auto* mother = dynamic_cast<MyCell*>(other)) {
+                cell_color_ = mother->cell_color_;
+            }
         }
 
         /// If a cell divides, daughter keeps the same state from its mother.
@@ -38,8 +44,8 @@ namespace bdm{
 
     private:
 
-    bool can_divide_;
-    int cell_color_;
+        bool can_divide_;
+        int cell_color_;
     };
 } // namespace bdm
 
