@@ -12,5 +12,7 @@
 //
 // -----------------------------------------------------------------------------
 #include "proto_test.h"
+#include "protocell.h"
+#include "my_growth.h"
 
 int main(int argc, const char** argv) { return bdm::Simulate(argc, argv); }

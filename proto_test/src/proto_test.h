@@ -15,72 +15,10 @@
 #define PROTO_TEST_H_
 
 #include "biodynamo.h"
+#include "protocell.h"
+#include "my_growth.h"
 
 namespace bdm {
-// 0. Define my custom cell MyCell, which extends Cell by adding extra data
-// members: cell_color and can_divide
-class MyCell : public Cell {  // our object extends the Cell object
-                              // create the header with our new data member
-  BDM_SIM_OBJECT_HEADER(MyCell, Cell, 1, can_divide_, cell_color_);
-
-  public:
-   MyCell() {}
-  explicit MyCell(const Double3& position) : Base(position) {}
-
-    /// If MyCell divides, daughter 2 copies the data members from the mother
-    MyCell(const Event& event, SimObject* other, uint64_t new_oid = 0)
-        : Base(event, other, new_oid) {
-      if (auto* mother = dynamic_cast<MyCell*>(other)) {
-          cell_color_ = mother->cell_color_;
-      }
-    }
-
-    /// If a cell divides, daughter keeps the same state from its mother.
-    void EventHandler(const Event& event, SimObject* other1,
-                      SimObject* other2 = nullptr) override {
-      Base::EventHandler(event, other1, other2);
-    }
-
-    void SetCanDivide(bool d) { can_divide_ = d; }
-    bool GetCanDivide() { return can_divide_; }
-
-    void SetCellColor(int cell_color) { cell_color_ = cell_color; }
-    int GetCellColor() const { return cell_color_; }
-
- private:
-  // declare new data member and define their type
-  // private data can only be accessed by public function and not directly
-  bool can_divide_;
-  int cell_color_;
-};
-
-
-
-//Definition of the growth module
-struct GrowthModule : public BaseBiologyModule {
-  BDM_STATELESS_BM_HEADER(GrowthModule, BaseBiologyModule, 1);
-
- public:
-  GrowthModule() : BaseBiologyModule(gAllEventIds) {}
-
-  /// Empty default event constructor, because GrowthModule does not have state.
-  template <typename TEvent, typename TBm>
-  GrowthModule(const TEvent& event, TBm* other, uint64_t new_oid = 0)
-      : BaseBiologyModule(event, other, new_oid) {}
-
-  void Run(SimObject* so) override {
-    if (auto* cell = dynamic_cast<MyCell*>(so)) {
-      if (cell->GetDiameter() < 8) {
-        cell->ChangeVolume(400);
-      }
-      else {
-        cell->Divide();
-      }
-    }
-  }
-
-};
-
 
 inline int Simulate(int argc, const char** argv) {
   auto set_param = [](Param* param){
@@ -110,7 +48,7 @@ inline int Simulate(int argc, const char** argv) {
     //Set cells parameters
     cell->AddBiologyModule(new GrowthModule());
     cell->SetDiameter(7.5);
-    cell->SetCellColor(250);
+    cell->SetCellColor(1000);
     rm->push_back(cell); //put the create cell in the cell structure
   }
 
