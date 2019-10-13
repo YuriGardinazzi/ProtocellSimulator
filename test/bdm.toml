@@ -1,9 +1,0 @@
-  
-[visualization]
-live = false
-export = true
-export_interval = 2
-
-[[visualize_sim_object]]
-  name = "MyCell"
-  additional_data_members = [ "cell_color_" ]
