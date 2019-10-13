@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+<VTKFile type="PUnstructuredGrid" version="0.1" byte_order="LittleEndian" header_type="UInt32" compressor="vtkZLibDataCompressor">
+  <PUnstructuredGrid GhostLevel="0">
+    <PPointData>
+      <PDataArray type="Int32" Name="cell_color_"/>
+      <PDataArray type="Float64" Name="diameter_"/>
+    </PPointData>
+    <PPoints>
+      <PDataArray type="Float64" Name="position_" NumberOfComponents="3"/>
+    </PPoints>
+    <Piece Source="MyCell-188_0.vtu"/>
+  </PUnstructuredGrid>
+</VTKFile>
