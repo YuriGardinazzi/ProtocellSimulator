@@ -4,6 +4,7 @@
 #include "biodynamo.h"
 
 namespace bdm{
+
 //Definition of the growth module
     struct GrowthModule : public BaseBiologyModule {
         BDM_STATELESS_BM_HEADER(GrowthModule, BaseBiologyModule, 1);
@@ -17,6 +18,7 @@ namespace bdm{
             : BaseBiologyModule(event, other, new_oid) {}
 
         void Run(SimObject* so) override {
+			//TODO:Define more complex cases for cell deaths
             if (auto* cell = dynamic_cast<MyCell*>(so)) {
 				
 				if (cell->GetDiameter() < 8) {
@@ -33,20 +35,15 @@ namespace bdm{
 					cell->UpdatePosition(cell_movements);
 								
 					}else {
-					/*	//FIXME: 
-					 	//at the moment the core dumps while running the simulation with
-						//this snippet of code
-						//TODO: find a more effective way to delete cells randomly
-						auto* rm = Simulation::GetActive()-> GetResourceManager();
+						//Remove a cell randomly from the simulation
 						int rand = std::rand() % 100;
 						
-						if (rand <80){
-							
-							rm->Remove(so->GetUid());
+						if (rand <30){
+							so->RemoveFromSimulation();
 						}else{
 							cell->Divide();
-						}*/
-						cell ->Divide();
+						}
+						
 					}
             }
         }
