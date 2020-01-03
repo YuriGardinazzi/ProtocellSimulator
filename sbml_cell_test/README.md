@@ -24,7 +24,7 @@ Simple test of the sbml_integration demo but with a different sbml model
 ### Reactions
 | name |reactants/products|  math |
 |-----|----| ---- |
-|J1 | Xo &rarr; S1| X0 * r1 |
+|J1 | Xo &rarr; S1| Xo * r1 |
 |J2 | S1 &rarr; S2 | S1 + k1 |
 |J3 | S2 &rarr; S3 | S2 + k2 |
 |J4 | S3 &rarr; X1 | S3*r1 - k1|
