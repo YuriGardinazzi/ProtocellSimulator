@@ -15,10 +15,12 @@
 #define SBML_INTEGRATION_H_
 
 #include "biodynamo.h"
+#include "cell.h"
+#include "graphic_visualization.h"
+
 #include "core/util/io.h"
 #include "core/util/timing.h"
-#include "graphic_visualization.h"
-#include "cell.h"
+
 
 
 namespace bdm {

@@ -1,11 +1,12 @@
 
 #ifndef CELL_H_
 #define CELL_H_
-#include "sbml_integration.h"
-#include "graphic_visualization.h"
+
 
 #include "biodynamo.h"
 
+//#include "sbml_integration.h"
+//#include "graphic_visualization.h"
 
 #include "rrException.h"
 #include "rrExecutableModel.h"

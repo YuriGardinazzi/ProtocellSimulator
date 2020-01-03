@@ -1,10 +1,12 @@
 #ifndef GRAPHIC_VISUALIZATION_H_
 #define GRAPHIC_VISUALIZATION_H_
 
-#include "sbml_integration.h"
-#include "cell.h"
 
 #include "biodynamo.h"
+
+
+
+#include "cell.h"
 
 
 #include <TAxis.h>
