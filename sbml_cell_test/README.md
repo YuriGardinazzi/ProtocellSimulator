@@ -30,4 +30,7 @@ Simple test of the sbml_integration demo but with a different sbml model
 |J4 | S3 &rarr; X1 | S3*r1 - k1|
 
 ### Gillespie integration
-![Gillespie](/src/sbml-modules-test-2.svg?sanitize=true)
+![Gillespie](Gillespie.png)
+
+### Continous integration
+![Continuous](Continuous.png)
