@@ -1,0 +1,353 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<sbml xmlns="http://www.sbml.org/sbml/level2/version4" level="2" version="4">
+<model metaid="COPASI0" id="New_Model" name="New Model">
+<annotation/>
+<listOfFunctionDefinitions>
+<functionDefinition metaid="COPASI15" id="Rate_Law_for_R2" name="Rate Law for R2">
+<annotation>
+<COPASI xmlns="http://www.copasi.org/static/sbml">
+<rdf:RDF xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
+<rdf:Description rdf:about="#COPASI15">
+<dcterms:created>
+<rdf:Description>
+<dcterms:W3CDTF>2020-02-19T18:51:33Z</dcterms:W3CDTF>
+</rdf:Description>
+</dcterms:created>
+</rdf:Description>
+</rdf:RDF>
+</COPASI>
+</annotation>
+<math xmlns="http://www.w3.org/1998/Math/MathML">
+<lambda>
+<bvar>
+<ci> K </ci>
+</bvar>
+<bvar>
+<ci> vol </ci>
+</bvar>
+<bvar>
+<ci> A </ci>
+</bvar>
+<bvar>
+<ci> B </ci>
+</bvar>
+<apply>
+<times/>
+<apply>
+<divide/>
+<ci> K </ci>
+<apply>
+<power/>
+<ci> vol </ci>
+<apply>
+<divide/>
+<cn> 1 </cn>
+<cn> 3 </cn>
+</apply>
+</apply>
+</apply>
+<apply>
+<minus/>
+<ci> A </ci>
+<ci> B </ci>
+</apply>
+</apply>
+</lambda>
+</math>
+</functionDefinition>
+</listOfFunctionDefinitions>
+<listOfUnitDefinitions>
+<unitDefinition metaid="substance" id="substance" name="substance">
+<listOfUnits>
+<unit metaid="CDMT00030" kind="mole"/>
+</listOfUnits>
+</unitDefinition>
+<unitDefinition metaid="volume" id="volume" name="volume">
+<listOfUnits>
+<unit metaid="CDMT00031" kind="litre"/>
+</listOfUnits>
+</unitDefinition>
+<unitDefinition metaid="area" id="area" name="area">
+<listOfUnits>
+<unit metaid="CDMT00032" kind="metre" exponent="2"/>
+</listOfUnits>
+</unitDefinition>
+<unitDefinition metaid="length" id="length" name="length">
+<listOfUnits>
+<unit metaid="CDMT00033" kind="metre"/>
+</listOfUnits>
+</unitDefinition>
+<unitDefinition metaid="time" id="time" name="time">
+<listOfUnits>
+<unit metaid="CDMT00034" kind="second"/>
+</listOfUnits>
+</unitDefinition>
+</listOfUnitDefinitions>
+<listOfCompartments>
+<compartment metaid="default" id="default" size="1" units="volume"/>
+<compartment metaid="COPASI1" id="compartment" name="compartment" size="1" units="volume" outside="default">
+<annotation>
+<COPASI xmlns="http://www.copasi.org/static/sbml">
+<rdf:RDF xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
+<rdf:Description rdf:about="#COPASI1">
+<dcterms:created>
+<rdf:Description>
+<dcterms:W3CDTF>2020-02-19T18:47:45Z</dcterms:W3CDTF>
+</rdf:Description>
+</dcterms:created>
+</rdf:Description>
+</rdf:RDF>
+</COPASI>
+</annotation>
+</compartment>
+</listOfCompartments>
+<listOfSpecies>
+<species metaid="COPASI2" id="A" name="A" compartment="compartment" initialConcentration="0.001">
+<annotation/>
+</species>
+<species metaid="COPASI3" id="Astar" name="Astar" compartment="compartment" initialConcentration="0.01">
+<annotation/>
+</species>
+<species metaid="COPASI4" id="B" name="B" compartment="compartment" initialConcentration="0.001">
+<annotation/>
+</species>
+<species metaid="COPASI5" id="Bstar" name="Bstar" compartment="compartment" initialConcentration="0.01">
+<annotation/>
+</species>
+<species metaid="COPASI6" id="AB" name="AB" compartment="compartment" initialConcentration="0.0001">
+<annotation/>
+</species>
+<species metaid="COPASI7" id="Comp1" name="Comp1" compartment="compartment" initialConcentration="0">
+<annotation/>
+</species>
+</listOfSpecies>
+<listOfReactions>
+<reaction metaid="COPASI8" id="NoA" name="NoA" reversible="false">
+<annotation>
+<COPASI xmlns="http://www.copasi.org/static/sbml">
+<rdf:RDF xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
+<rdf:Description rdf:about="#COPASI8">
+<dcterms:created>
+<rdf:Description>
+<dcterms:W3CDTF>2020-02-19T18:47:03Z</dcterms:W3CDTF>
+</rdf:Description>
+</dcterms:created>
+</rdf:Description>
+</rdf:RDF>
+</COPASI>
+</annotation>
+<listOfReactants>
+<speciesReference metaid="CDMT00001" species="A"/>
+<speciesReference metaid="CDMT00002" species="Astar"/>
+</listOfReactants>
+<listOfProducts>
+<speciesReference metaid="CDMT00003" species="Astar"/>
+</listOfProducts>
+<kineticLaw metaid="CDMT00004">
+<math xmlns="http://www.w3.org/1998/Math/MathML">
+<apply>
+<times/>
+<ci> compartment </ci>
+<ci> k1 </ci>
+<ci> A </ci>
+<ci> Astar </ci>
+</apply>
+</math>
+<listOfParameters>
+<parameter metaid="k1" id="k1" name="k1" value="0"/>
+</listOfParameters>
+</kineticLaw>
+</reaction>
+<reaction metaid="COPASI9" id="DiffA" name="DiffA" reversible="false">
+<annotation>
+<COPASI xmlns="http://www.copasi.org/static/sbml">
+<rdf:RDF xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
+<rdf:Description rdf:about="#COPASI9">
+<dcterms:created>
+<rdf:Description>
+<dcterms:W3CDTF>2020-02-19T18:53:58Z</dcterms:W3CDTF>
+</rdf:Description>
+</dcterms:created>
+</rdf:Description>
+</rdf:RDF>
+</COPASI>
+</annotation>
+<listOfReactants>
+<speciesReference metaid="CDMT00005" species="A"/>
+<speciesReference metaid="CDMT00006" species="Astar"/>
+</listOfReactants>
+<listOfProducts>
+<speciesReference metaid="CDMT00007" species="Astar"/>
+</listOfProducts>
+<kineticLaw metaid="CDMT00008">
+<math xmlns="http://www.w3.org/1998/Math/MathML">
+<apply>
+<times/>
+<ci> compartment </ci>
+<apply>
+<ci> Rate_Law_for_R2 </ci>
+<ci> K </ci>
+<ci> vol </ci>
+<ci> A </ci>
+<ci> Astar </ci>
+</apply>
+</apply>
+</math>
+<listOfParameters>
+<parameter metaid="K" id="K" name="K" value="3.8688e-008"/>
+<parameter metaid="vol" id="vol" name="vol" value="4.19e-015"/>
+</listOfParameters>
+</kineticLaw>
+</reaction>
+<reaction metaid="COPASI10" id="DiffB" name="DiffB" reversible="false">
+<annotation>
+<COPASI xmlns="http://www.copasi.org/static/sbml">
+<rdf:RDF xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
+<rdf:Description rdf:about="#COPASI10">
+<dcterms:created>
+<rdf:Description>
+<dcterms:W3CDTF>2020-02-19T19:08:26Z</dcterms:W3CDTF>
+</rdf:Description>
+</dcterms:created>
+</rdf:Description>
+</rdf:RDF>
+</COPASI>
+</annotation>
+<listOfReactants>
+<speciesReference metaid="CDMT00009" species="B"/>
+<speciesReference metaid="CDMT00010" species="Bstar"/>
+</listOfReactants>
+<listOfProducts>
+<speciesReference metaid="CDMT00011" species="Bstar"/>
+</listOfProducts>
+<kineticLaw metaid="CDMT00012">
+<math xmlns="http://www.w3.org/1998/Math/MathML">
+<apply>
+<times/>
+<ci> compartment </ci>
+<apply>
+<ci> Rate_Law_for_R2 </ci>
+<ci> K </ci>
+<ci> vol </ci>
+<ci> B </ci>
+<ci> Bstar </ci>
+</apply>
+</apply>
+</math>
+<listOfParameters>
+<parameter metaid="CDMT00013" id="K" name="K" value="3.8688e-008"/>
+<parameter metaid="CDMT00014" id="vol" name="vol" value="4.19e-015"/>
+</listOfParameters>
+</kineticLaw>
+</reaction>
+<reaction metaid="COPASI11" id="Cond_p1" name="Cond_p1" reversible="false">
+<annotation>
+<COPASI xmlns="http://www.copasi.org/static/sbml">
+<rdf:RDF xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
+<rdf:Description rdf:about="#COPASI11">
+<dcterms:created>
+<rdf:Description>
+<dcterms:W3CDTF>2020-02-19T19:17:35Z</dcterms:W3CDTF>
+</rdf:Description>
+</dcterms:created>
+</rdf:Description>
+</rdf:RDF>
+</COPASI>
+</annotation>
+<listOfReactants>
+<speciesReference metaid="CDMT00015" species="A"/>
+<speciesReference metaid="CDMT00016" species="AB"/>
+</listOfReactants>
+<listOfProducts>
+<speciesReference metaid="CDMT00017" species="Comp1"/>
+</listOfProducts>
+<kineticLaw metaid="CDMT00018">
+<math xmlns="http://www.w3.org/1998/Math/MathML">
+<apply>
+<times/>
+<ci> compartment </ci>
+<ci> k1 </ci>
+<ci> A </ci>
+<ci> AB </ci>
+</apply>
+</math>
+<listOfParameters>
+<parameter metaid="CDMT00019" id="k1" name="k1" value="1000"/>
+</listOfParameters>
+</kineticLaw>
+</reaction>
+<reaction metaid="COPASI12" id="Cond_p2" name="Cond_p2" reversible="false">
+<annotation>
+<COPASI xmlns="http://www.copasi.org/static/sbml">
+<rdf:RDF xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
+<rdf:Description rdf:about="#COPASI12">
+<dcterms:created>
+<rdf:Description>
+<dcterms:W3CDTF>2020-02-19T19:20:00Z</dcterms:W3CDTF>
+</rdf:Description>
+</dcterms:created>
+</rdf:Description>
+</rdf:RDF>
+</COPASI>
+</annotation>
+<listOfReactants>
+<speciesReference metaid="CDMT00020" species="Comp1"/>
+<speciesReference metaid="CDMT00021" species="B"/>
+</listOfReactants>
+<listOfProducts>
+<speciesReference metaid="CDMT00022" species="AB" stoichiometry="2"/>
+</listOfProducts>
+<kineticLaw metaid="CDMT00023">
+<math xmlns="http://www.w3.org/1998/Math/MathML">
+<apply>
+<times/>
+<ci> compartment </ci>
+<ci> k1 </ci>
+<ci> Comp1 </ci>
+<ci> B </ci>
+</apply>
+</math>
+<listOfParameters>
+<parameter metaid="CDMT00024" id="k1" name="k1" value="1000"/>
+</listOfParameters>
+</kineticLaw>
+</reaction>
+<reaction metaid="COPASI13" id="Cond_p1_inv" name="Cond_p1_inv" reversible="false">
+<annotation>
+<COPASI xmlns="http://www.copasi.org/static/sbml">
+<rdf:RDF xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
+<rdf:Description rdf:about="#COPASI13">
+<dcterms:created>
+<rdf:Description>
+<dcterms:W3CDTF>2020-02-19T19:21:23Z</dcterms:W3CDTF>
+</rdf:Description>
+</dcterms:created>
+</rdf:Description>
+</rdf:RDF>
+</COPASI>
+</annotation>
+<listOfReactants>
+<speciesReference metaid="CDMT00025" species="Comp1"/>
+</listOfReactants>
+<listOfProducts>
+<speciesReference metaid="CDMT00026" species="A"/>
+<speciesReference metaid="CDMT00027" species="AB"/>
+</listOfProducts>
+<kineticLaw metaid="CDMT00028">
+<math xmlns="http://www.w3.org/1998/Math/MathML">
+<apply>
+<times/>
+<ci> compartment </ci>
+<ci> k1 </ci>
+<ci> Comp1 </ci>
+</apply>
+</math>
+<listOfParameters>
+<parameter metaid="CDMT00029" id="k1" name="k1" value="14.86"/>
+</listOfParameters>
+</kineticLaw>
+</reaction>
+</listOfReactions>
+</model>
+</sbml>
+
