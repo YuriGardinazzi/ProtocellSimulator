@@ -35,9 +35,9 @@
 namespace bdm {
 
 // Define my custom cell, which extends Cell by adding an extra
-// data member s1_.
+// data member compartment_, L_.
 class MyCell : public Cell {
-  BDM_SIM_OBJECT_HEADER(MyCell, Cell, 1, s1_);
+  BDM_SIM_OBJECT_HEADER(MyCell, Cell, 1, compartment_, L_);
 
  public:
   MyCell() {}
@@ -47,11 +47,15 @@ class MyCell : public Cell {
   MyCell(const Event& event, SimObject* other, uint64_t new_oid = 0)
       : Base(event, other, new_oid) {}
 
-  void SetS1(double s1) { s1_ = s1; }
-  int GetS1() const { return s1_; }
+  void SetCompartment(double volume) { compartment_ = volume; }
+  double GetCompartment() const { return compartment_; }
+  
+  void SetL(int l) { L_ = l; }
+  int GetL() const { return L_; }
 
  private:
-  double s1_ = 100;
+  double compartment_ = 0;
+  int L_ = 0;
 };
 
 // Define SbmlModule to simulate intracellular chemical reaction network.
@@ -67,12 +71,6 @@ struct SbmlModule : public BaseBiologyModule {
     integrator->setValue("variable_step_size", false);
     integrator->setValue("initial_time_step", dt_);
     integrator->setValue("maximum_time_step", dt_);
-    // rr_ -> setValue("A_0", 20000);
-    // rr_ -> setValue("B_0", 15000);
-    // rr_ -> setValue("C", 0);
-    // rr_ -> setValue("L", 10000);
-    // rr_ -> setValue("p", 1);
-
     result_.resize(opt.steps, 6);
   }
 
@@ -102,11 +100,11 @@ struct SbmlModule : public BaseBiologyModule {
       auto i = Simulation::GetActive()->GetScheduler()->GetSimulatedSteps();
       rr_->getIntegrator()->integrate(0 * dt_, dt_);
     
-      std::cout << "Volume: "<< rr_ -> getValue("compartment") << std::endl;
-      if(rr_ -> getValue("L") > 20000){
-        rr_ -> setValue("compartment", 8e-15);
-
-      }
+      cell -> SetCompartment(rr_ -> getValue("compartment"));
+      cell -> SetL(rr_ -> getValue("L"));
+      // if(rr_ -> getValue("L") > 20000){
+      //   rr_ -> setValue("compartment", 8e-15);
+      // }
       
       // FIXME model time not the same as
       const auto& partial_result = rr_->getFloatingSpeciesAmountsNamedArray();
@@ -116,6 +114,13 @@ struct SbmlModule : public BaseBiologyModule {
         result_(i, j + 1) = partial_result(0, j);
       }
 
+
+      if (cell -> GetL() > 20000 && active_){
+          active_ = false;
+          cell -> SetCompartment( cell -> GetCompartment()/2);
+          std::cout <<"Vol:"<< cell -> GetCompartment() <<" L: "<< cell -> GetL() << std::endl;
+          cell -> Divide();
+      }
 
     }
   }
