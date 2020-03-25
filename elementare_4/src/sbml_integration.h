@@ -32,6 +32,7 @@
 #include "rrRoadRunner.h"
 #include "rrUtils.h"
 
+#include <math.h>
 namespace bdm {
 
 // Define my custom cell, which extends Cell by adding an extra
@@ -95,6 +96,20 @@ struct SbmlModule : public BaseBiologyModule {
     BaseBiologyModule::EventHandler(event, other1, other2);
   }
 
+  void UpdateSpecies(){
+    std::cout << "called update species" << std::endl;
+  }
+
+  //update volume
+  void UpdateVolume(){
+    float ro = 0.8;
+    float r = 1e-6;
+    float delta = 1e-6;
+    float delta3 = pow(delta,3);
+    float L = rr_ -> getValue("L");
+    double newVolume = (1/6)*M_PI*delta3*pow(sqrt(L/(2.75357784e19*ro*M_PI*delta3))-1 ,3 );
+    rr_ -> setValue("compartment",newVolume);
+  }
   void Run(SimObject* so) override {
     if (auto* cell = static_cast<MyCell*>(so)) {
       auto i = Simulation::GetActive()->GetScheduler()->GetSimulatedSteps();
@@ -102,11 +117,7 @@ struct SbmlModule : public BaseBiologyModule {
     
       cell -> SetCompartment(rr_ -> getValue("compartment"));
       cell -> SetL(rr_ -> getValue("L"));
-      // if(rr_ -> getValue("L") > 20000){
-      //   rr_ -> setValue("compartment", 8e-15);
-      // }
-      
-      // FIXME model time not the same as
+     
       const auto& partial_result = rr_->getFloatingSpeciesAmountsNamedArray();
      
       result_(i, 0) = i * dt_;
@@ -114,11 +125,14 @@ struct SbmlModule : public BaseBiologyModule {
         result_(i, j + 1) = partial_result(0, j);
       }
 
-
+      
       if (cell -> GetL() > 20000 && active_){
+          UpdateSpecies();
           active_ = false;
+
+          //update volume of the cell and of the integrator
           cell -> SetCompartment( cell -> GetCompartment()/2);
-          std::cout <<"Vol:"<< cell -> GetCompartment() <<" L: "<< cell -> GetL() << std::endl;
+          rr_ -> setValue("compartment", cell -> GetCompartment());
           cell -> Divide();
       }
 
