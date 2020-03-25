@@ -46,7 +46,13 @@ class MyCell : public Cell {
 
   /// Default event constructor
   MyCell(const Event& event, SimObject* other, uint64_t new_oid = 0)
-      : Base(event, other, new_oid) {}
+      : Base(event, other, new_oid) {
+
+        //TODO: inherit substances from mother and update RR
+        if (auto* mother = dynamic_cast<MyCell*>(other)) {
+          //inherit stuff with mother -> GetSomething()
+        }
+      }
 
   void SetCompartment(double volume) { compartment_ = volume; }
   double GetCompartment() const { return compartment_; }
@@ -95,11 +101,16 @@ struct SbmlModule : public BaseBiologyModule {
                     BaseBiologyModule* other2 = nullptr) override {
     BaseBiologyModule::EventHandler(event, other1, other2);
   }
-
-  void UpdateSpecies(){
-    std::cout << "called update species" << std::endl;
+  //Multiply all species by a value, excepts lipids "L"
+  void MultiplyAllSpecies(float value){
+    rr_ -> setValue("A_0", static_cast<int>(rr_ -> getValue("A_0")*value));
+    rr_ -> setValue("B_0", static_cast<int>(rr_ -> getValue("B_0")*value));
+    rr_ -> setValue("p", (rr_ -> getValue("p")*value));
+    rr_ -> setValue("C", static_cast<int>(rr_ -> getValue("C")*value));
   }
 
+  //Correct the value of all species
+  void UpdateSpecies(){}
   //update volume
   void UpdateVolume(){
     float ro = 0.8;
@@ -129,7 +140,10 @@ struct SbmlModule : public BaseBiologyModule {
       if (cell -> GetL() > 20000 && active_){
           UpdateSpecies();
           active_ = false;
-
+          MultiplyAllSpecies(0.353553391);
+          //multiply lipids by 0.5
+          rr_ -> setValue("L", rr_ -> getValue("L")/2);
+          cell -> SetL(rr_ -> getValue("L"));
           //update volume of the cell and of the integrator
           cell -> SetCompartment( cell -> GetCompartment()/2);
           rr_ -> setValue("compartment", cell -> GetCompartment());
