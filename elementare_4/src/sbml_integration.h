@@ -107,7 +107,7 @@ struct SbmlModule : public BaseBiologyModule {
     float delta = 1e-6;
     float delta3 = pow(delta,3);
     float L = rr_ -> getValue("L");
-    double newVolume = (1/6)*M_PI*delta3*pow(sqrt(L/(2.75357784e19*ro*M_PI*delta3)-1/3)-1 ,3 );
+    double newVolume = (1/6)*M_PI*delta3*pow(sqrt((L/(2.75357784e19*ro*M_PI*delta3)) -1/3)-1 ,3 );
     rr_ -> setValue("compartment",newVolume);
   }
   void Run(SimObject* so) override {
