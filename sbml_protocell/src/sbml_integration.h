@@ -62,7 +62,7 @@ struct SbmlModule : public BaseBiologyModule {
     rr_ = new rr::RoadRunner(sbml_file);
     rr_->getSimulateOptions() = opt;
     // setup integrator
-    rr_->setIntegrator("gillespie");
+    //rr_->setIntegrator("gillespie");
     dt_ = opt.duration / opt.steps;
     auto* integrator = rr_->getIntegrator();
     integrator->setValue("variable_step_size", false);
@@ -180,7 +180,7 @@ inline void PlotSbmlModules(const char* filename) {
   c.SetGrid();
 
   TMultiGraph* mg = new TMultiGraph();
-  mg->SetTitle("Gillespie;Timestep;Concentration");
+  mg->SetTitle("Standard;Timestep;Concentration");
 
   Simulation::GetActive()->GetResourceManager()->ApplyOnAllElements(
       [&](SimObject* so) {

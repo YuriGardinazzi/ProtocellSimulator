@@ -1,0 +1,17 @@
+{
+  "simulation": {
+    "name":"sbml_integration",
+    "result_dir":"output/sbml_integration"
+  },
+  "sim_objects": [
+    {
+      "name":"MyCell",
+      "glyph":"Glyph",
+      "shape":"Sphere",
+      "scaling_attribute":"diameter_"
+    }
+  ],
+  "extracellular_substances": [
+
+  ]
+}

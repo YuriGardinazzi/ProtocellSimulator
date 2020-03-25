@@ -32,12 +32,14 @@
 #include "rrRoadRunner.h"
 #include "rrUtils.h"
 
+#include "omp.h"
+
 namespace bdm {
 
-// Define my custom cell, which extends Cell by adding an extra
-// data member s1_.
+// Define my custom cell, which extends Cell by adding extra
+// data members specie L: spL_.
 class MyCell : public Cell {
-  BDM_SIM_OBJECT_HEADER(MyCell, Cell, 1, s1_);
+  BDM_SIM_OBJECT_HEADER(MyCell, Cell, 1, spL_, A_, B_, AB_, COMP_, PL_);
 
  public:
   MyCell() {}
@@ -45,13 +47,43 @@ class MyCell : public Cell {
 
   /// Default event constructor
   MyCell(const Event& event, SimObject* other, uint64_t new_oid = 0)
-      : Base(event, other, new_oid) {}
+      : Base(event, other, new_oid) {
+     /* if (auto* mother = dynamic_cast<MyCell*>(other)) {
+        cell_color_ = mother->cell_color_;
+        if (event.GetId() == CellDivisionEvent::kEventId) {
+          // the daughter will be able to divide
+          can_divide_ = true;
+        } else {
+          can_divide_ = mother->can_divide_;
+        }
 
-  void SetS1(double s1) { s1_ = s1; }
-  int GetS1() const { return s1_; }
+      } */
+    }
 
+  void setA(double a) { A_ = a; }
+  double getA() const { return A_; }
+
+  void setB(double b) { B_ = b; }
+  double getB() const { return B_; }
+
+  void setAB(double ab) { AB_ = ab; }
+  double getAB() const { return AB_; }
+
+  void setPL(double pl) { PL_ = pl; }
+  double getPL() const { return PL_; }
+
+  void setCOMP(double comp) { COMP_ = comp; }
+  double getCOMP() const { return COMP_; }
+
+  void setL(double l) { spL_ = l; }
+  double getL() const { return spL_; }
  private:
-  double s1_ = 100;
+  double COMP_ = 0;
+  double PL_ = 0;
+  double A_ = 0;
+  double B_ = 0;
+  double AB_ = 0;
+  double spL_= 1.00201e-16;
 };
 
 // Define SbmlModule to simulate intracellular chemical reaction network.
@@ -61,7 +93,7 @@ struct SbmlModule : public BaseBiologyModule {
     rr_ = new rr::RoadRunner(sbml_file);
     rr_->getSimulateOptions() = opt;
     // setup integrator
-    //rr_->setIntegrator("gillespie");
+    rr_->setIntegrator("cvode");
     dt_ = opt.duration / opt.steps;
     auto* integrator = rr_->getIntegrator();
     integrator->setValue("variable_step_size", false);
@@ -94,20 +126,45 @@ struct SbmlModule : public BaseBiologyModule {
 
   void Run(SimObject* so) override {
     if (auto* cell = static_cast<MyCell*>(so)) {
-      auto i = Simulation::GetActive()->GetScheduler()->GetSimulatedSteps();
+      auto i = Simulation::GetActive()->GetScheduler()->GetSimulatedSteps();    
+
+      
+      
       rr_->getIntegrator()->integrate(i * dt_, dt_);
-      // FIXME model time not the same as
+
+      if (rr_ -> getValue("L") > 2e-16 && active_) {
+        // rr_ -> setValue("L", cell -> getL()/2);
+        // rr_ -> setValue("A", cell -> getA()/2);
+        rr_ -> setValue("L", rr_ -> getValue("L")/2);
+        rr_ -> setValue("A", rr_ -> getValue("A")/2);
+        rr_ -> setValue("B", rr_ -> getValue("B")/2);
+        rr_ -> setValue("AB", rr_ -> getValue("AB")/2);
+        rr_ -> setValue("Comp1", rr_ -> getValue("Comp1")/2);
+        rr_ -> setValue("pL", rr_ -> getValue("pL")/2);
+        rr_ -> setValue("Astar", rr_ -> getValue("Astar")/2);
+        rr_ -> setValue("Bstar", rr_ -> getValue("Bstar")/2);
+        // rr_ -> setValue("B", cell -> getB()/2);
+        // rr_ -> setValue("AB", cell -> getAB()/2);
+        // rr_ -> setValue("pL", cell -> getPL()/2);
+        // rr_ -> setValue("Comp1", cell -> getCOMP()/2);
+        cell->Divide();
+        active_ = false;
+      }      
+      // FIXME model time not the same as    
       const auto& partial_result = rr_->getFloatingSpeciesAmountsNamedArray();
-      cell->SetS1(partial_result(0, 0));
+
+      cell->setL(partial_result(0, 6)); //L is at position 6
+      cell->setA(partial_result(0, 0)); //L is at position 6
+      cell->setB(partial_result(0, 2));
+      cell->setAB(partial_result(0, 4));
+      cell->setCOMP(partial_result(0, 5));
+      cell->setPL(partial_result(0, 7));
+     // std::cout<< "Cell GetL: "<< cell->GetL()<< std::endl; 
       result_(i, 0) = i * dt_;
       for (unsigned j = 0; j < partial_result.numCols(); j++) {
         result_(i, j + 1) = partial_result(0, j);
       }
 
-      if (cell->GetS1() < 30 && active_) {
-        cell->Divide();
-        active_ = false;
-      }
     }
   }
 
@@ -127,10 +184,11 @@ inline void AddToPlot(TMultiGraph* mg, const ls::Matrix<double>* result) {
   int rows;
   int cols;
   auto** twod = foo.get2DMatrix(rows, cols);
+  //position twod[0] contains just the time_step number
 
   TGraph* gr = new TGraph(cols, twod[0], twod[1]);
   //gr->SetFillStyle(0);
-  gr->SetLineColorAlpha(2, 0.1);
+  gr->SetLineColorAlpha(2, 0.5);
   gr->SetLineWidth(3);
   gr->SetTitle("A");
 
@@ -141,7 +199,7 @@ inline void AddToPlot(TMultiGraph* mg, const ls::Matrix<double>* result) {
 
   TGraph* gr2 = new TGraph(cols, twod[0], twod[3]);
   gr2->SetTitle("B");
-  gr2->SetLineColorAlpha(5, 0.1);
+  gr2->SetLineColorAlpha(4, 0.5);
   gr2->SetLineWidth(3);
  
   //
@@ -152,7 +210,7 @@ inline void AddToPlot(TMultiGraph* mg, const ls::Matrix<double>* result) {
 
   TGraph* gr4 = new TGraph(cols, twod[0], twod[5]);
   gr4->SetTitle("AB");
-  gr4->SetLineColorAlpha(2, 0.1);
+  gr4->SetLineColorAlpha(8, 0.5);
   gr4->SetLineWidth(3);
 
   TGraph* gr5 = new TGraph(cols, twod[0], twod[6]);
@@ -162,7 +220,7 @@ inline void AddToPlot(TMultiGraph* mg, const ls::Matrix<double>* result) {
 
   TGraph* gr6 = new TGraph(cols, twod[0], twod[7]);
   gr6->SetTitle("L");
-  gr6->SetLineColorAlpha(3, 0.1);
+  gr6->SetLineColorAlpha(28, 0.1);
   gr6->SetLineWidth(5);
 
   TGraph* gr7 = new TGraph(cols, twod[0], twod[8]);
@@ -171,15 +229,16 @@ inline void AddToPlot(TMultiGraph* mg, const ls::Matrix<double>* result) {
   gr7->SetLineWidth(1);
   //
 
-  //mg->Add(gr);
- // mg->Add(gr1);
- // mg->Add(gr2);
- // mg->Add(gr3);
-  //mg->Add(gr4);
- // mg->Add(gr5);
-  mg->Add(gr6);
+  //mg->Add(gr); //A
+  //mg->Add(gr1);
+  //mg->Add(gr2); //B
+  //mg->Add(gr3);
+  //mg->Add(gr4); //AB
+  //mg->Add(gr5);
+  mg->Add(gr6); //L
   //mg->Add(gr7);
-  mg->Draw("AL C C");
+  //mg->Draw("AL C C");
+  mg->Draw("ACP");
 }
 
 inline void PlotSbmlModules(const char* filename) {
@@ -213,14 +272,14 @@ inline void PlotSbmlModules(const char* filename) {
 
 inline int Simulate(int argc, const char** argv) {
   auto opts = CommandLineOptions(argc, argv);
-  opts.AddOption<uint64_t>("n, num-cells", "10", "The total number of cells");
+  opts.AddOption<uint64_t>("n, num-cells", "1", "The total number of cells");
   uint64_t num_cells = opts.Get<uint64_t>("num-cells");
 
   // roadrunner options
   rr::SimulateOptions opt;
   opt.start = 0;
-  opt.duration = 50;
-  opt.steps = 100;
+  opt.duration = 100;
+  opt.steps = 200;
 
   auto set_param = [&](Param* param) {
     param->simulation_time_step_ = opt.duration / opt.steps;
