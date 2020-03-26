@@ -38,7 +38,7 @@ namespace bdm {
 // Define my custom cell, which extends Cell by adding an extra
 // data member compartment_, L_.
 class MyCell : public Cell {
-  BDM_SIM_OBJECT_HEADER(MyCell, Cell, 1, compartment_, L_);
+  BDM_SIM_OBJECT_HEADER(MyCell, Cell, 1, compartment_, L_,A_0_ ,B_0_, p_ ,C_ , isBornAfterDivision_);
 
  public:
   MyCell() {}
@@ -50,7 +50,19 @@ class MyCell : public Cell {
 
         //TODO: inherit substances from mother and update RR
         if (auto* mother = dynamic_cast<MyCell*>(other)) {
-          //inherit stuff with mother -> GetSomething()
+          if(mother -> GetIsBornAfterDivision()){
+            // std::cout << "I'm a new CELL :D " << std::endl;
+            SetL(mother -> GetL());
+            SetA(mother -> GetA());
+            SetB(mother -> GetB());
+            SetC(mother -> GetC());
+            SetP(mother -> GetP());
+            // std::cout << "My values are:\n" <<"L:  "<<GetL() <<"\n" 
+            //           <<"A: "<<GetA() <<"\n"
+            //           <<"B: "<<GetB() <<"\n"
+            //           <<"C: "<<GetC() <<"\n"
+            //           <<"p: "<<GetP() <<"\n"  <<std::endl;
+          }
         }
       }
 
@@ -58,11 +70,41 @@ class MyCell : public Cell {
   double GetCompartment() const { return compartment_; }
   
   void SetL(int l) { L_ = l; }
-  int GetL() const { return L_; }
+  int GetL(){ return L_; }
 
+  void SetA(int a) { A_0_ = a; }
+  int GetA() const { return A_0_; }
+
+  void SetB(int b) { B_0_ = b; }
+  int GetB() const { return B_0_; }
+
+  void SetC(int c) { C_ = c; }
+  int GetC() const { return C_; }
+
+  void SetP(double p) { p_ = p; }
+  double GetP() const { return p_; }
+  
+  void SetIsBornAfterDivision(bool flag){ isBornAfterDivision_ = flag;}
+  bool GetIsBornAfterDivision(){ return isBornAfterDivision_ ;}
+  
+  void PrintValues(){
+    std::cout <<"L:  "<<GetL() <<"\n" 
+              <<"A: "<<GetA() <<"\n"
+              <<"B: "<<GetB() <<"\n"
+              <<"C: "<<GetC() <<"\n"
+              <<"p: "<<GetP() <<"\n" 
+              <<"is born after division: "<<GetIsBornAfterDivision()<<std::endl;
+
+
+  }
  private:
   double compartment_ = 0;
   int L_ = 0;
+  int A_0_ = 0;
+  int B_0_ = 0;
+  int C_ = 0;
+  double p_ = 0;
+  bool isBornAfterDivision_ = false;
 };
 
 // Define SbmlModule to simulate intracellular chemical reaction network.
@@ -105,7 +147,7 @@ struct SbmlModule : public BaseBiologyModule {
   void MultiplyAllSpecies(float value){
     rr_ -> setValue("A_0", static_cast<int>(rr_ -> getValue("A_0")*value));
     rr_ -> setValue("B_0", static_cast<int>(rr_ -> getValue("B_0")*value));
-    rr_ -> setValue("p", (rr_ -> getValue("p")*value));
+  //  rr_ -> setValue("p", (rr_ -> getValue("p")*value));
     rr_ -> setValue("C", static_cast<int>(rr_ -> getValue("C")*value));
   }
 
@@ -123,7 +165,21 @@ struct SbmlModule : public BaseBiologyModule {
   }
   void Run(SimObject* so) override {
     if (auto* cell = static_cast<MyCell*>(so)) {
+
       auto i = Simulation::GetActive()->GetScheduler()->GetSimulatedSteps();
+
+      if(cell -> GetIsBornAfterDivision()){
+       // std::cout << "I'm a new cell " << std::endl;
+        //cell -> PrintValues();
+        cell -> SetIsBornAfterDivision(false);
+        rr_ -> setValue("A_0", cell -> GetA());
+        rr_ -> setValue("B_0", cell -> GetB());
+        rr_ -> setValue("C", cell -> GetC());
+        rr_ -> setValue("L", cell -> GetL());
+       // rr_ -> setValue("p", cell -> GetP());
+
+      }
+
       rr_->getIntegrator()->integrate(0 * dt_, dt_);
     
       cell -> SetCompartment(rr_ -> getValue("compartment"));
@@ -139,14 +195,26 @@ struct SbmlModule : public BaseBiologyModule {
       
       if (cell -> GetL() > 20000 && active_){
           UpdateSpecies();
-          active_ = false;
+         // active_ = false;  <- cells keep replicating
           MultiplyAllSpecies(0.353553391);
+
+
           //multiply lipids by 0.5
           rr_ -> setValue("L", rr_ -> getValue("L")/2);
           cell -> SetL(rr_ -> getValue("L"));
+
+          //update Cell Values
+          cell -> SetA(rr_ -> getValue("A_0"));
+          cell -> SetB(rr_ -> getValue("B_0"));
+          cell -> SetC(rr_ -> getValue("C"));
+          cell -> SetP(rr_ -> getValue("p"));
+
           //update volume of the cell and of the integrator
           cell -> SetCompartment( cell -> GetCompartment()/2);
           rr_ -> setValue("compartment", cell -> GetCompartment());
+
+          cell -> SetIsBornAfterDivision(true);
+
           cell -> Divide();
       }
 
@@ -211,7 +279,7 @@ inline void PlotSbmlModules(const char* filename) {
   c.SetGrid();
 
   TMultiGraph* mg = new TMultiGraph();
-  mg->SetTitle("Gillespie;Timestep;Concentration");
+  mg->SetTitle("Elementare 4;Timestep;Concentration");
 
   Simulation::GetActive()->GetResourceManager()->ApplyOnAllElements(
       [&](SimObject* so) {
