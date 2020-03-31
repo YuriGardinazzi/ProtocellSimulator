@@ -33,6 +33,8 @@
 #include "rrUtils.h"
 
 #include <math.h>
+#include <fstream>
+#include <omp.h>
 namespace bdm {
 
 // Define my custom cell, which extends Cell by adding an extra
@@ -153,14 +155,26 @@ struct SbmlModule : public BaseBiologyModule {
 
   //Correct the value of all species
   void UpdateSpecies(){}
+  //Append volume value to text file
+  void SaveVolume(int t, float v){
+    #pragma omp critical
+    {
+      std::ofstream outfile;
+
+      outfile.open("volume.csv", std::ios_base::app); // append instead of overwrite
+      outfile << t<<";" << v << std::endl;
+    } 
+  }
   //update volume
   void UpdateVolume(){
     float ro = 0.8;
-    float r = 1e-6;
+    //float r = 1e-6;
     float delta = 1e-6;
     float delta3 = pow(delta,3);
     float L = rr_ -> getValue("L");
-    double newVolume = (1/6)*M_PI*delta3*pow(sqrt((L/(2.75357784e19*ro*M_PI*delta3)) -1/3)-1 ,3 );
+    
+    double newVolume = (1.0/6.0)*M_PI*delta3*pow(sqrt((L/(2.75357784e19*ro*M_PI*delta3)) -1.0/3.0)-1 ,3 );
+    std::cout <<newVolume<<std::endl;
     rr_ -> setValue("compartment",newVolume);
   }
   void Run(SimObject* so) override {
@@ -177,14 +191,19 @@ struct SbmlModule : public BaseBiologyModule {
         rr_ -> setValue("C", cell -> GetC());
         rr_ -> setValue("L", cell -> GetL());
        // rr_ -> setValue("p", cell -> GetP());
-
       }
 
       rr_->getIntegrator()->integrate(0 * dt_, dt_);
     
       cell -> SetCompartment(rr_ -> getValue("compartment"));
-      cell -> SetL(rr_ -> getValue("L"));
+      
+      
+      //SaveVolume(i,rr_ -> getValue("compartment"));
+      std::cout << i << " " << rr_ -> getValue("compartment") << std::endl;
+      
      
+      cell -> SetL(rr_ -> getValue("L"));
+      UpdateVolume();
       const auto& partial_result = rr_->getFloatingSpeciesAmountsNamedArray();
      
       result_(i, 0) = i * dt_;
@@ -194,15 +213,12 @@ struct SbmlModule : public BaseBiologyModule {
 
       
       if (cell -> GetL() > 20000 && active_){
-          UpdateSpecies();
-         // active_ = false;  <- cells keep replicating
-          MultiplyAllSpecies(0.353553391);
-
-
           //multiply lipids by 0.5
           rr_ -> setValue("L", rr_ -> getValue("L")/2);
           cell -> SetL(rr_ -> getValue("L"));
-
+          UpdateSpecies();
+         // active_ = false;  <- cells keep replicating
+          MultiplyAllSpecies(0.353553391);
           //update Cell Values
           cell -> SetA(rr_ -> getValue("A_0"));
           cell -> SetB(rr_ -> getValue("B_0"));
