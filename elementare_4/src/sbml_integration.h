@@ -160,14 +160,15 @@ struct SbmlModule : public BaseBiologyModule {
     float C = rr_ -> getValue("C");
     float p = rr_ -> getValue("p");
     float v = rr_ -> getValue("compartment");
-    std::cout << "A_0 " << -v*1e-19*A*B+v*1e+17
-              << "\nB_0 " << -v*1e-19*A*B+v*1e+17
-              << "\nC  " << +v*1e-19*A*B
-              << "L " << +v*1e-17*p*C << std::endl;
-    // rr_ -> setValue("A_0",-v*1e-19*A*B+v*1e+17);
-    // rr_ -> setValue("B_0",-v*1e-19*A*B+v*1e+17);
-    // rr_ -> setValue("C",+v*1e-19*A*B);
-    // rr_ -> setValue("L",+v*1e-17*p*C);
+    // std::cout << "A_0 " << -v*1e-19*A*B+v*1e+17
+    //           << "\nB_0 " << -v*1e-19*A*B+v*1e+17
+    //           << "\nC  " << +v*1e-19*A*B
+    //           << "L " << +v*1e-17*p*C << std::endl;
+    //FIXME: Errors are raised in the simulation
+    // rr_ -> setValue("A_0",static_cast<int>(-v*1e-19*A*B+v*1e+17));
+    // rr_ -> setValue("B_0",static_cast<int>(-v*1e-19*A*B+v*1e+17));
+    // rr_ -> setValue("C",static_cast<int>(+v*1e-19*A*B));
+    // rr_ -> setValue("L",static_cast<int>(+v*1e-17*p*C));
   }
   //Append volume value to text file
   void SaveVolume(int t, float v){
@@ -188,7 +189,7 @@ struct SbmlModule : public BaseBiologyModule {
     float L = rr_ -> getValue("L");
     
     double newVolume = (1.0/6.0)*M_PI*delta3*pow(sqrt((L/(2.75357784e19*ro*M_PI*delta3)) -1.0/3.0)-1 ,3 );
-    std::cout <<newVolume<<std::endl;
+    //std::cout <<newVolume<<std::endl;
     rr_ -> setValue("compartment",newVolume);
   }
   void Run(SimObject* so) override {
@@ -225,13 +226,13 @@ struct SbmlModule : public BaseBiologyModule {
         result_(i, j + 1) = partial_result(0, j);
       }
 
-     // UpdateSpecies();
+      UpdateSpecies();
 
       if (cell -> GetL() > 20000 && active_){
           //multiply lipids by 0.5
           rr_ -> setValue("L", rr_ -> getValue("L")/2);
           cell -> SetL(rr_ -> getValue("L"));
-          //UpdateSpecies();
+          UpdateSpecies();
          // active_ = false;  <- cells keep replicating
           MultiplyAllSpecies(0.353553391);
           //update Cell Values
