@@ -154,7 +154,21 @@ struct SbmlModule : public BaseBiologyModule {
   }
 
   //Correct the value of all species
-  void UpdateSpecies(){}
+  void UpdateSpecies(){
+    float A = rr_ -> getValue("A_0");
+    float B = rr_ -> getValue("B_0");
+    float C = rr_ -> getValue("C");
+    float p = rr_ -> getValue("p");
+    float v = rr_ -> getValue("compartment");
+    std::cout << "A_0 " << -v*1e-19*A*B+v*1e+17
+              << "\nB_0 " << -v*1e-19*A*B+v*1e+17
+              << "\nC  " << +v*1e-19*A*B
+              << "L " << +v*1e-17*p*C << std::endl;
+    // rr_ -> setValue("A_0",-v*1e-19*A*B+v*1e+17);
+    // rr_ -> setValue("B_0",-v*1e-19*A*B+v*1e+17);
+    // rr_ -> setValue("C",+v*1e-19*A*B);
+    // rr_ -> setValue("L",+v*1e-17*p*C);
+  }
   //Append volume value to text file
   void SaveVolume(int t, float v){
     #pragma omp critical
@@ -199,7 +213,7 @@ struct SbmlModule : public BaseBiologyModule {
       
       
       //SaveVolume(i,rr_ -> getValue("compartment"));
-      std::cout << i << " " << rr_ -> getValue("compartment") << std::endl;
+     // std::cout << i << " " << rr_ -> getValue("compartment") << std::endl;
       
      
       cell -> SetL(rr_ -> getValue("L"));
@@ -211,12 +225,13 @@ struct SbmlModule : public BaseBiologyModule {
         result_(i, j + 1) = partial_result(0, j);
       }
 
-      
+     // UpdateSpecies();
+
       if (cell -> GetL() > 20000 && active_){
           //multiply lipids by 0.5
           rr_ -> setValue("L", rr_ -> getValue("L")/2);
           cell -> SetL(rr_ -> getValue("L"));
-          UpdateSpecies();
+          //UpdateSpecies();
          // active_ = false;  <- cells keep replicating
           MultiplyAllSpecies(0.353553391);
           //update Cell Values
