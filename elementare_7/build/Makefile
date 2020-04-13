@@ -111,123 +111,6 @@ depend:
 .PHONY : depend
 
 #=============================================================================
-# Target rules for targets named sbml_integration
-
-# Build rule for target.
-sbml_integration: cmake_check_build_system
-	$(MAKE) -f CMakeFiles/Makefile2 sbml_integration
-.PHONY : sbml_integration
-
-# fast build rule for target.
-sbml_integration/fast:
-	$(MAKE) -f CMakeFiles/sbml_integration.dir/build.make CMakeFiles/sbml_integration.dir/build
-.PHONY : sbml_integration/fast
-
-#=============================================================================
-# Target rules for targets named sbml_integration-dict
-
-# Build rule for target.
-sbml_integration-dict: cmake_check_build_system
-	$(MAKE) -f CMakeFiles/Makefile2 sbml_integration-dict
-.PHONY : sbml_integration-dict
-
-# fast build rule for target.
-sbml_integration-dict/fast:
-	$(MAKE) -f CMakeFiles/sbml_integration-dict.dir/build.make CMakeFiles/sbml_integration-dict.dir/build
-.PHONY : sbml_integration-dict/fast
-
-#=============================================================================
-# Target rules for targets named sbml_integration-objectlib
-
-# Build rule for target.
-sbml_integration-objectlib: cmake_check_build_system
-	$(MAKE) -f CMakeFiles/Makefile2 sbml_integration-objectlib
-.PHONY : sbml_integration-objectlib
-
-# fast build rule for target.
-sbml_integration-objectlib/fast:
-	$(MAKE) -f CMakeFiles/sbml_integration-objectlib.dir/build.make CMakeFiles/sbml_integration-objectlib.dir/build
-.PHONY : sbml_integration-objectlib/fast
-
-#=============================================================================
-# Target rules for targets named check-tidy-all
-
-# Build rule for target.
-check-tidy-all: cmake_check_build_system
-	$(MAKE) -f CMakeFiles/Makefile2 check-tidy-all
-.PHONY : check-tidy-all
-
-# fast build rule for target.
-check-tidy-all/fast:
-	$(MAKE) -f CMakeFiles/check-tidy-all.dir/build.make CMakeFiles/check-tidy-all.dir/build
-.PHONY : check-tidy-all/fast
-
-#=============================================================================
-# Target rules for targets named tidy-all
-
-# Build rule for target.
-tidy-all: cmake_check_build_system
-	$(MAKE) -f CMakeFiles/Makefile2 tidy-all
-.PHONY : tidy-all
-
-# fast build rule for target.
-tidy-all/fast:
-	$(MAKE) -f CMakeFiles/tidy-all.dir/build.make CMakeFiles/tidy-all.dir/build
-.PHONY : tidy-all/fast
-
-#=============================================================================
-# Target rules for targets named check-cpplint
-
-# Build rule for target.
-check-cpplint: cmake_check_build_system
-	$(MAKE) -f CMakeFiles/Makefile2 check-cpplint
-.PHONY : check-cpplint
-
-# fast build rule for target.
-check-cpplint/fast:
-	$(MAKE) -f CMakeFiles/check-cpplint.dir/build.make CMakeFiles/check-cpplint.dir/build
-.PHONY : check-cpplint/fast
-
-#=============================================================================
-# Target rules for targets named format-all
-
-# Build rule for target.
-format-all: cmake_check_build_system
-	$(MAKE) -f CMakeFiles/Makefile2 format-all
-.PHONY : format-all
-
-# fast build rule for target.
-format-all/fast:
-	$(MAKE) -f CMakeFiles/format-all.dir/build.make CMakeFiles/format-all.dir/build
-.PHONY : format-all/fast
-
-#=============================================================================
-# Target rules for targets named show-tidy
-
-# Build rule for target.
-show-tidy: cmake_check_build_system
-	$(MAKE) -f CMakeFiles/Makefile2 show-tidy
-.PHONY : show-tidy
-
-# fast build rule for target.
-show-tidy/fast:
-	$(MAKE) -f CMakeFiles/show-tidy.dir/build.make CMakeFiles/show-tidy.dir/build
-.PHONY : show-tidy/fast
-
-#=============================================================================
-# Target rules for targets named tidy
-
-# Build rule for target.
-tidy: cmake_check_build_system
-	$(MAKE) -f CMakeFiles/Makefile2 tidy
-.PHONY : tidy
-
-# fast build rule for target.
-tidy/fast:
-	$(MAKE) -f CMakeFiles/tidy.dir/build.make CMakeFiles/tidy.dir/build
-.PHONY : tidy/fast
-
-#=============================================================================
 # Target rules for targets named check-cpplint-staged
 
 # Build rule for target.
@@ -241,30 +124,17 @@ check-cpplint-staged/fast:
 .PHONY : check-cpplint-staged/fast
 
 #=============================================================================
-# Target rules for targets named check-tidy-staged
+# Target rules for targets named show-tidy-staged
 
 # Build rule for target.
-check-tidy-staged: cmake_check_build_system
-	$(MAKE) -f CMakeFiles/Makefile2 check-tidy-staged
-.PHONY : check-tidy-staged
+show-tidy-staged: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 show-tidy-staged
+.PHONY : show-tidy-staged
 
 # fast build rule for target.
-check-tidy-staged/fast:
-	$(MAKE) -f CMakeFiles/check-tidy-staged.dir/build.make CMakeFiles/check-tidy-staged.dir/build
-.PHONY : check-tidy-staged/fast
-
-#=============================================================================
-# Target rules for targets named fix-submission
-
-# Build rule for target.
-fix-submission: cmake_check_build_system
-	$(MAKE) -f CMakeFiles/Makefile2 fix-submission
-.PHONY : fix-submission
-
-# fast build rule for target.
-fix-submission/fast:
-	$(MAKE) -f CMakeFiles/fix-submission.dir/build.make CMakeFiles/fix-submission.dir/build
-.PHONY : fix-submission/fast
+show-tidy-staged/fast:
+	$(MAKE) -f CMakeFiles/show-tidy-staged.dir/build.make CMakeFiles/show-tidy-staged.dir/build
+.PHONY : show-tidy-staged/fast
 
 #=============================================================================
 # Target rules for targets named intrinsics_gen
@@ -278,19 +148,6 @@ intrinsics_gen: cmake_check_build_system
 intrinsics_gen/fast:
 	$(MAKE) -f CMakeFiles/intrinsics_gen.dir/build.make CMakeFiles/intrinsics_gen.dir/build
 .PHONY : intrinsics_gen/fast
-
-#=============================================================================
-# Target rules for targets named check-tidy
-
-# Build rule for target.
-check-tidy: cmake_check_build_system
-	$(MAKE) -f CMakeFiles/Makefile2 check-tidy
-.PHONY : check-tidy
-
-# fast build rule for target.
-check-tidy/fast:
-	$(MAKE) -f CMakeFiles/check-tidy.dir/build.make CMakeFiles/check-tidy.dir/build
-.PHONY : check-tidy/fast
 
 #=============================================================================
 # Target rules for targets named clang-tidy-header-helper
@@ -319,30 +176,30 @@ format-staged/fast:
 .PHONY : format-staged/fast
 
 #=============================================================================
-# Target rules for targets named format
+# Target rules for targets named check-tidy-staged
 
 # Build rule for target.
-format: cmake_check_build_system
-	$(MAKE) -f CMakeFiles/Makefile2 format
-.PHONY : format
+check-tidy-staged: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 check-tidy-staged
+.PHONY : check-tidy-staged
 
 # fast build rule for target.
-format/fast:
-	$(MAKE) -f CMakeFiles/format.dir/build.make CMakeFiles/format.dir/build
-.PHONY : format/fast
+check-tidy-staged/fast:
+	$(MAKE) -f CMakeFiles/check-tidy-staged.dir/build.make CMakeFiles/check-tidy-staged.dir/build
+.PHONY : check-tidy-staged/fast
 
 #=============================================================================
-# Target rules for targets named check-format
+# Target rules for targets named fix-submission
 
 # Build rule for target.
-check-format: cmake_check_build_system
-	$(MAKE) -f CMakeFiles/Makefile2 check-format
-.PHONY : check-format
+fix-submission: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 fix-submission
+.PHONY : fix-submission
 
 # fast build rule for target.
-check-format/fast:
-	$(MAKE) -f CMakeFiles/check-format.dir/build.make CMakeFiles/check-format.dir/build
-.PHONY : check-format/fast
+fix-submission/fast:
+	$(MAKE) -f CMakeFiles/fix-submission.dir/build.make CMakeFiles/fix-submission.dir/build
+.PHONY : fix-submission/fast
 
 #=============================================================================
 # Target rules for targets named fetch-master
@@ -358,56 +215,17 @@ fetch-master/fast:
 .PHONY : fetch-master/fast
 
 #=============================================================================
-# Target rules for targets named show-tidy-staged
+# Target rules for targets named tidy-all
 
 # Build rule for target.
-show-tidy-staged: cmake_check_build_system
-	$(MAKE) -f CMakeFiles/Makefile2 show-tidy-staged
-.PHONY : show-tidy-staged
+tidy-all: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 tidy-all
+.PHONY : tidy-all
 
 # fast build rule for target.
-show-tidy-staged/fast:
-	$(MAKE) -f CMakeFiles/show-tidy-staged.dir/build.make CMakeFiles/show-tidy-staged.dir/build
-.PHONY : show-tidy-staged/fast
-
-#=============================================================================
-# Target rules for targets named check-cpplint-all
-
-# Build rule for target.
-check-cpplint-all: cmake_check_build_system
-	$(MAKE) -f CMakeFiles/Makefile2 check-cpplint-all
-.PHONY : check-cpplint-all
-
-# fast build rule for target.
-check-cpplint-all/fast:
-	$(MAKE) -f CMakeFiles/check-cpplint-all.dir/build.make CMakeFiles/check-cpplint-all.dir/build
-.PHONY : check-cpplint-all/fast
-
-#=============================================================================
-# Target rules for targets named show-format
-
-# Build rule for target.
-show-format: cmake_check_build_system
-	$(MAKE) -f CMakeFiles/Makefile2 show-format
-.PHONY : show-format
-
-# fast build rule for target.
-show-format/fast:
-	$(MAKE) -f CMakeFiles/show-format.dir/build.make CMakeFiles/show-format.dir/build
-.PHONY : show-format/fast
-
-#=============================================================================
-# Target rules for targets named tidy-staged
-
-# Build rule for target.
-tidy-staged: cmake_check_build_system
-	$(MAKE) -f CMakeFiles/Makefile2 tidy-staged
-.PHONY : tidy-staged
-
-# fast build rule for target.
-tidy-staged/fast:
-	$(MAKE) -f CMakeFiles/tidy-staged.dir/build.make CMakeFiles/tidy-staged.dir/build
-.PHONY : tidy-staged/fast
+tidy-all/fast:
+	$(MAKE) -f CMakeFiles/tidy-all.dir/build.make CMakeFiles/tidy-all.dir/build
+.PHONY : tidy-all/fast
 
 #=============================================================================
 # Target rules for targets named show-tidy-all
@@ -434,6 +252,32 @@ check-submission: cmake_check_build_system
 check-submission/fast:
 	$(MAKE) -f CMakeFiles/check-submission.dir/build.make CMakeFiles/check-submission.dir/build
 .PHONY : check-submission/fast
+
+#=============================================================================
+# Target rules for targets named format-all
+
+# Build rule for target.
+format-all: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 format-all
+.PHONY : format-all
+
+# fast build rule for target.
+format-all/fast:
+	$(MAKE) -f CMakeFiles/format-all.dir/build.make CMakeFiles/format-all.dir/build
+.PHONY : format-all/fast
+
+#=============================================================================
+# Target rules for targets named sbml_integration
+
+# Build rule for target.
+sbml_integration: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 sbml_integration
+.PHONY : sbml_integration
+
+# fast build rule for target.
+sbml_integration/fast:
+	$(MAKE) -f CMakeFiles/sbml_integration.dir/build.make CMakeFiles/sbml_integration.dir/build
+.PHONY : sbml_integration/fast
 
 #=============================================================================
 # Target rules for targets named check-format-staged
@@ -486,6 +330,71 @@ check-format-all: cmake_check_build_system
 check-format-all/fast:
 	$(MAKE) -f CMakeFiles/check-format-all.dir/build.make CMakeFiles/check-format-all.dir/build
 .PHONY : check-format-all/fast
+
+#=============================================================================
+# Target rules for targets named check-tidy-all
+
+# Build rule for target.
+check-tidy-all: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 check-tidy-all
+.PHONY : check-tidy-all
+
+# fast build rule for target.
+check-tidy-all/fast:
+	$(MAKE) -f CMakeFiles/check-tidy-all.dir/build.make CMakeFiles/check-tidy-all.dir/build
+.PHONY : check-tidy-all/fast
+
+#=============================================================================
+# Target rules for targets named sbml_integration-dict
+
+# Build rule for target.
+sbml_integration-dict: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 sbml_integration-dict
+.PHONY : sbml_integration-dict
+
+# fast build rule for target.
+sbml_integration-dict/fast:
+	$(MAKE) -f CMakeFiles/sbml_integration-dict.dir/build.make CMakeFiles/sbml_integration-dict.dir/build
+.PHONY : sbml_integration-dict/fast
+
+#=============================================================================
+# Target rules for targets named tidy-staged
+
+# Build rule for target.
+tidy-staged: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 tidy-staged
+.PHONY : tidy-staged
+
+# fast build rule for target.
+tidy-staged/fast:
+	$(MAKE) -f CMakeFiles/tidy-staged.dir/build.make CMakeFiles/tidy-staged.dir/build
+.PHONY : tidy-staged/fast
+
+#=============================================================================
+# Target rules for targets named check-cpplint-all
+
+# Build rule for target.
+check-cpplint-all: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 check-cpplint-all
+.PHONY : check-cpplint-all
+
+# fast build rule for target.
+check-cpplint-all/fast:
+	$(MAKE) -f CMakeFiles/check-cpplint-all.dir/build.make CMakeFiles/check-cpplint-all.dir/build
+.PHONY : check-cpplint-all/fast
+
+#=============================================================================
+# Target rules for targets named sbml_integration-objectlib
+
+# Build rule for target.
+sbml_integration-objectlib: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 sbml_integration-objectlib
+.PHONY : sbml_integration-objectlib
+
+# fast build rule for target.
+sbml_integration-objectlib/fast:
+	$(MAKE) -f CMakeFiles/sbml_integration-objectlib.dir/build.make CMakeFiles/sbml_integration-objectlib.dir/build
+.PHONY : sbml_integration-objectlib/fast
 
 clang_tidy_header_helper.o: clang_tidy_header_helper.cc.o
 
@@ -575,36 +484,29 @@ help:
 	@echo "... clean"
 	@echo "... depend"
 	@echo "... edit_cache"
-	@echo "... sbml_integration"
-	@echo "... sbml_integration-dict"
-	@echo "... sbml_integration-objectlib"
-	@echo "... check-tidy-all"
-	@echo "... rebuild_cache"
-	@echo "... tidy-all"
-	@echo "... check-cpplint"
-	@echo "... format-all"
-	@echo "... show-tidy"
-	@echo "... tidy"
 	@echo "... check-cpplint-staged"
-	@echo "... check-tidy-staged"
-	@echo "... fix-submission"
+	@echo "... show-tidy-staged"
 	@echo "... intrinsics_gen"
-	@echo "... check-tidy"
 	@echo "... clang-tidy-header-helper"
 	@echo "... format-staged"
-	@echo "... format"
-	@echo "... check-format"
+	@echo "... check-tidy-staged"
+	@echo "... fix-submission"
 	@echo "... fetch-master"
-	@echo "... show-tidy-staged"
-	@echo "... check-cpplint-all"
-	@echo "... show-format"
-	@echo "... tidy-staged"
+	@echo "... rebuild_cache"
+	@echo "... tidy-all"
 	@echo "... show-tidy-all"
 	@echo "... check-submission"
+	@echo "... format-all"
+	@echo "... sbml_integration"
 	@echo "... check-format-staged"
 	@echo "... show-format-all"
 	@echo "... show-format-staged"
 	@echo "... check-format-all"
+	@echo "... check-tidy-all"
+	@echo "... sbml_integration-dict"
+	@echo "... tidy-staged"
+	@echo "... check-cpplint-all"
+	@echo "... sbml_integration-objectlib"
 	@echo "... clang_tidy_header_helper.o"
 	@echo "... clang_tidy_header_helper.i"
 	@echo "... clang_tidy_header_helper.s"
