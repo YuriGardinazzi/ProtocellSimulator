@@ -1,0 +1,68 @@
+	Selected namespace -> bdm::detail
+	Selected namespace -> bdm::experimental
+	Selected namespace -> bdm::experimental::neuroscience
+Selected class -> std::vector<bdm::InPlaceExecutionContext *, std::allocator<bdm::InPlaceExecutionContext *> > for ROOT: vector<bdm::InPlaceExecutionContext*>
+Selected class -> std::vector<bdm::Operation, std::allocator<bdm::Operation> > for ROOT: vector<bdm::Operation>
+Selected class -> std::vector<bdm::Random *, std::allocator<bdm::Random *> > for ROOT: vector<bdm::Random*>
+Selected class -> std::vector<bdm::BaseBiologyModule *, std::allocator<bdm::BaseBiologyModule *> > for ROOT: vector<bdm::BaseBiologyModule*>
+Selected class -> std::vector<bdm::Param::VisualizeDiffusion, std::allocator<bdm::Param::VisualizeDiffusion> > for ROOT: vector<bdm::Param::VisualizeDiffusion>
+Selected class -> std::vector<bdm::SimObject *, std::allocator<bdm::SimObject *> > for ROOT: vector<bdm::SimObject*>
+Selected class -> std::vector<bdm::Grid::NeighborMutexBuilder::MutexWrapper, std::allocator<bdm::Grid::NeighborMutexBuilder::MutexWrapper> > for ROOT: vector<bdm::Grid::NeighborMutexBuilder::MutexWrapper>
+Selected class -> std::vector<bdm::SoHandle, std::allocator<bdm::SoHandle> > for ROOT: vector<bdm::SoHandle>
+Selected class -> std::vector<bdm::MathArray<double, 3>, std::allocator<bdm::MathArray<double, 3> > > for ROOT: vector<bdm::MathArray<double,3> >
+Selected class -> std::vector<bdm::SoPointer<bdm::experimental::neuroscience::NeuriteElement>, std::allocator<bdm::SoPointer<bdm::experimental::neuroscience::NeuriteElement> > > for ROOT: vector<bdm::SoPointer<bdm::experimental::neuroscience::NeuriteElement> >
+Selected class -> std::vector<bdm::InlineVector<int, 8>, std::allocator<bdm::InlineVector<int, 8> > > for ROOT: vector<bdm::InlineVector<int,8> >
+Selected class -> bdm::Log for ROOT: bdm::Log
+Selected class -> bdm::UniqueEventIdFactory for ROOT: bdm::UniqueEventIdFactory
+Selected class -> bdm::Event for ROOT: bdm::Event
+Selected class -> bdm::SoUidGenerator for ROOT: bdm::SoUidGenerator
+Selected class -> bdm::ThreadInfo for ROOT: bdm::ThreadInfo
+Selected class -> bdm::InPlaceExecutionContext for ROOT: bdm::InPlaceExecutionContext
+Selected class -> bdm::SoPointer<bdm::experimental::neuroscience::NeuronOrNeurite> for ROOT: bdm::SoPointer<bdm::experimental::neuroscience::NeuronOrNeurite>
+Selected class -> bdm::SoPointer<bdm::experimental::neuroscience::NeuriteElement> for ROOT: bdm::SoPointer<bdm::experimental::neuroscience::NeuriteElement>
+Selected class -> bdm::is_so_ptr<unsigned long> for ROOT: bdm::is_so_ptr<unsigned long>
+Selected class -> bdm::is_so_ptr<unsigned int> for ROOT: bdm::is_so_ptr<unsigned int>
+Selected class -> bdm::is_so_ptr<std::vector<bdm::BaseBiologyModule *, std::allocator<bdm::BaseBiologyModule *> > > for ROOT: bdm::is_so_ptr<vector<bdm::BaseBiologyModule*> >
+Selected class -> bdm::is_so_ptr<bdm::MathArray<double, 3> > for ROOT: bdm::is_so_ptr<bdm::MathArray<double,3> >
+Selected class -> bdm::is_so_ptr<double> for ROOT: bdm::is_so_ptr<double>
+Selected class -> bdm::is_so_ptr<std::vector<bdm::SoPointer<bdm::experimental::neuroscience::NeuriteElement>, std::allocator<bdm::SoPointer<bdm::experimental::neuroscience::NeuriteElement> > > > for ROOT: bdm::is_so_ptr<vector<bdm::SoPointer<bdm::experimental::neuroscience::NeuriteElement> > >
+Selected class -> bdm::is_so_ptr<std::unordered_map<unsigned long, bdm::MathArray<double, 3>, std::hash<unsigned long>, std::equal_to<unsigned long>, std::allocator<std::pair<const unsigned long, bdm::MathArray<double, 3> > > > > for ROOT: bdm::is_so_ptr<unordered_map<unsigned long,bdm::MathArray<double,3> > >
+Selected class -> bdm::is_so_ptr<bool> for ROOT: bdm::is_so_ptr<bool>
+Selected class -> bdm::is_so_ptr<bdm::SoPointer<bdm::experimental::neuroscience::NeuronOrNeurite> > for ROOT: bdm::is_so_ptr<bdm::SoPointer<bdm::experimental::neuroscience::NeuronOrNeurite> >
+Selected class -> bdm::is_so_ptr<bdm::SoPointer<bdm::experimental::neuroscience::NeuriteElement> > for ROOT: bdm::is_so_ptr<bdm::SoPointer<bdm::experimental::neuroscience::NeuriteElement> >
+Selected class -> bdm::is_so_ptr<int> for ROOT: bdm::is_so_ptr<int>
+Selected class -> bdm::detail::ExtractUidPtr for ROOT: bdm::detail::ExtractUidPtr
+Selected class -> bdm::CellDivisionEvent for ROOT: bdm::CellDivisionEvent
+Selected class -> bdm::DefaultForce for ROOT: bdm::DefaultForce
+Selected class -> bdm::ModuleParamUidGenerator for ROOT: bdm::ModuleParamUidGenerator
+Selected class -> bdm::Param::VisualizeDiffusion for ROOT: bdm::Param::VisualizeDiffusion
+Selected class -> bdm::Math for ROOT: bdm::Math
+Selected class -> bdm::Scheduler for ROOT: bdm::Scheduler
+Selected class -> bdm::FixedSizeVector<const bdm::Grid::Box *, 27> for ROOT: bdm::FixedSizeVector<const bdm::Grid::Box*,27>
+Selected class -> bdm::FixedSizeVector<unsigned long, 27> for ROOT: bdm::FixedSizeVector<unsigned long,27>
+Selected class -> bdm::FixedSizeVector<unsigned long, 14> for ROOT: bdm::FixedSizeVector<unsigned long,14>
+Selected class -> bdm::ParallelResizeVector<double> for ROOT: bdm::ParallelResizeVector<double>
+Selected class -> bdm::ParallelResizeVector<bdm::Grid::Box> for ROOT: bdm::ParallelResizeVector<bdm::Grid::Box>
+Selected class (through typedef/alias bdm::ParallelResizeVector<bdm::Grid::Box>::iterator) -> bdm::Grid::Box for ROOT: bdm::Grid::Box
+Selected class -> bdm::ParallelResizeVector<std::pair<unsigned int, const bdm::Grid::Box *> > for ROOT: bdm::ParallelResizeVector<pair<unsigned int,const bdm::Grid::Box*> >
+Selected class (through typedef/alias bdm::ParallelResizeVector<std::pair<unsigned int, const bdm::Grid::Box *> >::iterator) -> std::pair<unsigned int, const bdm::Grid::Box *> for ROOT: pair<unsigned int,const bdm::Grid::Box*>
+Selected class -> bdm::SimObjectVector<bdm::SoHandle> for ROOT: bdm::SimObjectVector<bdm::SoHandle>
+Selected class -> bdm::Grid::Box::Iterator for ROOT: bdm::Grid::Box::Iterator
+Selected class -> bdm::Grid::NeighborIterator for ROOT: bdm::Grid::NeighborIterator
+Selected class -> bdm::Grid::NeighborMutexBuilder for ROOT: bdm::Grid::NeighborMutexBuilder
+Selected class -> bdm::Grid::NeighborMutexBuilder::NeighborMutex for ROOT: bdm::Grid::NeighborMutexBuilder::NeighborMutex
+Selected class -> bdm::ModelInitializer for ROOT: bdm::ModelInitializer
+Selected class -> bdm::Version for ROOT: bdm::Version
+Selected class -> bdm::CommandLineOptions for ROOT: bdm::CommandLineOptions
+Selected class -> bdm::experimental::neuroscience::NeuriteBifurcationEvent for ROOT: bdm::experimental::neuroscience::NeuriteBifurcationEvent
+Selected class -> bdm::experimental::neuroscience::NeuriteBranchingEvent for ROOT: bdm::experimental::neuroscience::NeuriteBranchingEvent
+Selected class -> bdm::experimental::neuroscience::NewNeuriteExtensionEvent for ROOT: bdm::experimental::neuroscience::NewNeuriteExtensionEvent
+Selected class -> bdm::experimental::neuroscience::SideNeuriteExtensionEvent for ROOT: bdm::experimental::neuroscience::SideNeuriteExtensionEvent
+Selected class -> bdm::experimental::neuroscience::SplitNeuriteElementEvent for ROOT: bdm::experimental::neuroscience::SplitNeuriteElementEvent
+Selected class -> bdm::experimental::neuroscience::NeuronOrNeurite for ROOT: bdm::experimental::neuroscience::NeuronOrNeurite
+Selected class -> bdm::RootAdaptor for ROOT: bdm::RootAdaptor
+Selected class -> bdm::TFileRaii for ROOT: bdm::TFileRaii
+Selected class -> bdm::TimingAggregator for ROOT: bdm::TimingAggregator
+Selected class -> bdm::Timing for ROOT: bdm::Timing
+Selected class -> bdm::MyCell for ROOT: bdm::MyCell
+Selected class -> bdm::SbmlModule for ROOT: bdm::SbmlModule
