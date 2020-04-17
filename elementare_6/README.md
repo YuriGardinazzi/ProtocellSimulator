@@ -10,3 +10,16 @@ random change is between [-10%; +10%]
 ![random change](random_change.svg)
 ### TO FIX
 __UpdateSpecies()__ not implemented, still raises errors during runtime
+```
+  void UpdateSpecies(){
+    float A = rr_ -> getValue("A_0");
+    float B = rr_ -> getValue("B_0");
+    float C = rr_ -> getValue("C");
+    float p = rr_ -> getValue("p");
+    float v = rr_ -> getValue("compartment");
+    rr_ -> setValue("A_0",static_cast<int>(-v*1e-19*A*B+v*1e+17));
+    rr_ -> setValue("B_0",static_cast<int>(-v*1e-19*A*B+v*1e+17));
+    rr_ -> setValue("C",static_cast<int>(+v*1e-19*A*B));
+    rr_ -> setValue("L",static_cast<int>(+v*1e-17*p*C));
+  }
+```
