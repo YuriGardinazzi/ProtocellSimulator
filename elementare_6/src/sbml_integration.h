@@ -35,7 +35,7 @@
 
 #include <math.h>
 #include <fstream>
-
+#include <stdlib.h>  /*rand()*/
 namespace bdm {
 
 // Define my custom cell, which extends Cell by adding an extra
@@ -97,8 +97,6 @@ class MyCell : public Cell {
               <<"C: "<<GetC() <<"\n"
               <<"p: "<<GetP() <<"\n" 
               <<"is born after division: "<<GetIsBornAfterDivision()<<std::endl;
-
-
   }
  private:
   double compartment_ = 0;
@@ -155,6 +153,7 @@ struct SbmlModule : public BaseBiologyModule {
   }
 
   //Correct the value of all species
+  //FIXME: Errors are raised in the simulation
   void UpdateSpecies(){
     float A = rr_ -> getValue("A_0");
     float B = rr_ -> getValue("B_0");
@@ -165,7 +164,7 @@ struct SbmlModule : public BaseBiologyModule {
     //           << "\nB_0 " << -v*1e-19*A*B+v*1e+17
     //           << "\nC  " << +v*1e-19*A*B
     //           << "L " << +v*1e-17*p*C << std::endl;
-    //FIXME: Errors are raised in the simulation
+
     // rr_ -> setValue("A_0",static_cast<int>(-v*1e-19*A*B+v*1e+17));
     // rr_ -> setValue("B_0",static_cast<int>(-v*1e-19*A*B+v*1e+17));
     // rr_ -> setValue("C",static_cast<int>(+v*1e-19*A*B));
@@ -198,15 +197,27 @@ struct SbmlModule : public BaseBiologyModule {
     if (auto* cell = static_cast<MyCell*>(so)) {
 
       auto i = Simulation::GetActive()->GetScheduler()->GetSimulatedSteps();
-
+      
+      /*First step random initialization*/
+      if(i == 1){
+        int randomSpeciesChange = rand() % 21 + 90;
+        std::cout << "First step, random init: "<< randomSpeciesChange << std::endl;
+        rr_ -> setValue("A_0", cell -> GetA() * randomSpeciesChange / 100);
+        rr_ -> setValue("B_0", cell -> GetB() * randomSpeciesChange / 100);
+        rr_ -> setValue("C", cell -> GetC() * randomSpeciesChange / 100);
+        rr_ -> setValue("L", cell -> GetL() * randomSpeciesChange / 100);
+      }
       if(cell -> GetIsBornAfterDivision()){
        // std::cout << "I'm a new cell " << std::endl;
         //cell -> PrintValues();
+        // rand 90-110
+        int randomSpeciesChange = rand() % 21 + 90;
+        std::cout << "Random init: "<< randomSpeciesChange << std::endl;
         cell -> SetIsBornAfterDivision(false);
-        rr_ -> setValue("A_0", cell -> GetA());
-        rr_ -> setValue("B_0", cell -> GetB());
-        rr_ -> setValue("C", cell -> GetC());
-        rr_ -> setValue("L", cell -> GetL());
+        rr_ -> setValue("A_0", cell -> GetA() * randomSpeciesChange / 100);
+        rr_ -> setValue("B_0", cell -> GetB() * randomSpeciesChange / 100);
+        rr_ -> setValue("C", cell -> GetC() * randomSpeciesChange / 100);
+        rr_ -> setValue("L", cell -> GetL() * randomSpeciesChange / 100);
        // rr_ -> setValue("p", cell -> GetP());
       }
 
@@ -294,18 +305,18 @@ inline void AddToPlot(TMultiGraph* mg, const ls::Matrix<double>* result) {
   gr3->SetLineWidth(1);
 
 
- TGraph* gr4 = new TGraph(cols, twod[0], twod[5]);
+  TGraph* gr4 = new TGraph(cols, twod[0], twod[5]);
   
   gr4->SetLineColorAlpha(8, 0.1);
   gr4->SetLineWidth(1);
 
  
- TGraph* gr5 = new TGraph(cols, twod[0], twod[6]);
+  TGraph* gr5 = new TGraph(cols, twod[0], twod[6]);
   
   gr5->SetLineColorAlpha(8, 0.1);
   gr5->SetLineWidth(1);
 
- TGraph* gr6 = new TGraph(cols, twod[0], twod[7]);
+  TGraph* gr6 = new TGraph(cols, twod[0], twod[7]);
   
   gr6->SetLineColorAlpha(9, 0.1);
   gr6->SetLineWidth(1);
@@ -321,10 +332,10 @@ inline void AddToPlot(TMultiGraph* mg, const ls::Matrix<double>* result) {
   
   mg->Draw("AL C C");
 
-  auto* legend = new TLegend(0.6,0.7,0.98,0.9);
+  auto* legend = new TLegend(0.8,0.7,0.90,0.9);
 
 
-  legend->SetHeader("The Legend Title","C"); 
+  // legend->SetHeader("The Legend Title","C"); 
   TLegendEntry *le = legend->AddEntry(gr,"A","l");
   le->SetTextColor(2);
   TLegendEntry *le1 = legend->AddEntry(gr1,"B","l");
