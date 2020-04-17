@@ -2,9 +2,10 @@
 
 * no random initialization of concentrations
 * no random change of values after division
+
 ![graph](elementare_6.svg)
 
-## Elementare 6.1
+
 * random change on initialization default values (step 1 instead of 0) _is it correct?_
 * random change to values after division
 random change is between [-10%; +10%]
