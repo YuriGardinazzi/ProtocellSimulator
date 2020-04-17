@@ -7,8 +7,9 @@
 
 
 * random change on initialization default values (step 1 instead of 0) _is it correct?_
-* random change to values after division
-random change is between [-10%; +10%]
+* random change of values after division
+
+__random change__ is between [-10%; +10%]
 ![random change](random_change.svg)
 ### TO FIX
 __UpdateSpecies()__ not implemented, still raises errors during runtime
