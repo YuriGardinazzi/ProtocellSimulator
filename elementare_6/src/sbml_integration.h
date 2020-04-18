@@ -192,6 +192,7 @@ struct SbmlModule : public BaseBiologyModule {
       
       /*First step random initialization*/
       if(i == 1){
+        //rand 90-110
         int randomSpeciesChange = rand() % 21 + 90;
         std::cout << "First step, random init: "<< randomSpeciesChange << std::endl;
         rr_ -> setValue("A_0", cell -> GetA() * randomSpeciesChange / 100);
@@ -200,8 +201,6 @@ struct SbmlModule : public BaseBiologyModule {
         rr_ -> setValue("L", cell -> GetL() * randomSpeciesChange / 100);
       }
       if(cell -> GetIsBornAfterDivision()){
-       // std::cout << "I'm a new cell " << std::endl;
-        //cell -> PrintValues();
         // rand 90-110
         int randomSpeciesChange = rand() % 21 + 90;
         std::cout << "Random init: "<< randomSpeciesChange << std::endl;
@@ -210,7 +209,6 @@ struct SbmlModule : public BaseBiologyModule {
         rr_ -> setValue("B_0", cell -> GetB() * randomSpeciesChange / 100);
         rr_ -> setValue("C", cell -> GetC() * randomSpeciesChange / 100);
         rr_ -> setValue("L", cell -> GetL() * randomSpeciesChange / 100);
-       // rr_ -> setValue("p", cell -> GetP());
       }
 
       rr_->getIntegrator()->integrate(0 * dt_, dt_);
