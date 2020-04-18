@@ -164,12 +164,9 @@ struct SbmlModule : public BaseBiologyModule {
   
     float v = rr_ -> getValue("compartment");
     int co = rr_ -> getValue("Compl");
-    //float compl = rr_ -> getValue("Compl");
-    // std::cout << "A_0 " << -v*1e-19*A*B+v*1e+17
-    //           << "\nB_0 " << -v*1e-19*A*B+v*1e+17
-    //           << "\nC  " << +v*1e-19*A*B
-    //           << "L " << +v*1e-17*p*C << std::endl;
+
     //FIXME: Errors are raised in the simulation
+    //FIXME: Update formulas with the one of the pdf
     // rr_ -> setValue("A_0",static_cast<int>(-v*1e-19*A*B+v*1e+17));
     // rr_ -> setValue("B_0",static_cast<int>(-v*1e-19*A*B+v*1e+17));
     // rr_ -> setValue("C",static_cast<int>(+v*1e-19*A*B));
@@ -203,15 +200,24 @@ struct SbmlModule : public BaseBiologyModule {
 
       auto i = Simulation::GetActive()->GetScheduler()->GetSimulatedSteps();
 
+      if(i == 1){
+        //rand 90-110
+        int randomSpeciesChange = rand() % 21 + 90;
+        rr_ -> setValue("A_0", cell -> GetA() * randomSpeciesChange / 100);
+        rr_ -> setValue("B_0", cell -> GetB() * randomSpeciesChange / 100);
+        rr_ -> setValue("C", cell -> GetC() * randomSpeciesChange / 100);
+        rr_ -> setValue("L", cell -> GetL() * randomSpeciesChange / 100);
+       // rr_ -> setValue("Compl", cell -> GetCompl() * randomSpeciesChange / 100);
+      }
       if(cell -> GetIsBornAfterDivision()){
-       // std::cout << "I'm a new cell " << std::endl;
-        //cell -> PrintValues();
+        //rand 90-110
+        int randomSpeciesChange = rand() % 21 + 90;
         cell -> SetIsBornAfterDivision(false);
-        rr_ -> setValue("A_0", cell -> GetA());
-        rr_ -> setValue("B_0", cell -> GetB());
-        rr_ -> setValue("C", cell -> GetC());
-        rr_ -> setValue("L", cell -> GetL());
-        rr_ -> setValue("Compl", cell -> GetCompl());
+        rr_ -> setValue("A_0", cell -> GetA() * randomSpeciesChange / 100);
+        rr_ -> setValue("B_0", cell -> GetB() * randomSpeciesChange / 100);
+        rr_ -> setValue("C", cell -> GetC() * randomSpeciesChange / 100);
+        rr_ -> setValue("L", cell -> GetL() * randomSpeciesChange / 100);
+       // rr_ -> setValue("Compl", cell -> GetCompl() * randomSpeciesChange / 100);
        // rr_ -> setValue("p", cell -> GetP());
       }
 
@@ -331,10 +337,10 @@ TGraph* gr7 = new TGraph(cols, twod[0], twod[7]);
   //mg -> Add(gr7); //compl => errors in visualization
   mg->Draw("AL C C");
 
-   auto* legend = new TLegend(0.6,0.7,0.98,0.9);
+  auto* legend = new TLegend(0.8,0.7,0.90,0.9);
 
 
-  legend->SetHeader("The Legend Title","C"); 
+   
   TLegendEntry *le = legend->AddEntry(gr,"A","l");
   le->SetTextColor(2);
   TLegendEntry *le1 = legend->AddEntry(gr1,"B","l");
@@ -343,6 +349,9 @@ TGraph* gr7 = new TGraph(cols, twod[0], twod[7]);
   le2->SetTextColor(4);
   TLegendEntry *le3 = legend->AddEntry(gr3,"L","l");
   le3->SetTextColor(6);
+
+  TLegendEntry *le7 = legend->AddEntry(gr7,"Compl","l");
+  le3->SetTextColor(1);
 
   legend -> Draw();
 }
@@ -353,7 +362,7 @@ inline void PlotSbmlModules(const char* filename) {
   c.SetGrid();
 
   TMultiGraph* mg = new TMultiGraph();
-  mg->SetTitle("Elementare 6;Timestep;Concentration");
+  mg->SetTitle("Elementare 7;Timestep;Concentration");
 
   Simulation::GetActive()->GetResourceManager()->ApplyOnAllElements(
       [&](SimObject* so) {
