@@ -89,6 +89,8 @@ math.h
 -
 fstream
 -
+stdlib.h
+-
 
 /home/yuri/Documents/ProtocellSimulator/elementare_7/src/sbml_integration.h
 biodynamo.h
@@ -128,6 +130,8 @@ rrUtils.h
 math.h
 -
 fstream
+-
+stdlib.h
 -
 
 /home/yuri/biodynamo/build/share/cmake/../../include/biodynamo.h

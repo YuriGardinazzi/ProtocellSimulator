@@ -2440,7 +2440,7 @@ namespace ROOT {
       ::bdm::SbmlModule *ptr = 0;
       static ::TVirtualIsAProxy* isa_proxy = new ::TInstrumentedIsAProxy< ::bdm::SbmlModule >(0);
       static ::ROOT::TGenericClassInfo 
-         instance("bdm::SbmlModule", ::bdm::SbmlModule::Class_Version(), "", 136,
+         instance("bdm::SbmlModule", ::bdm::SbmlModule::Class_Version(), "", 131,
                   typeid(::bdm::SbmlModule), ::ROOT::Internal::DefineBehavior(ptr, ptr),
                   &::bdm::SbmlModule::Dictionary, isa_proxy, 4,
                   sizeof(::bdm::SbmlModule) );
@@ -4505,7 +4505,7 @@ namespace bdm{struct __attribute__((annotate(R"ATTRDUMP(pattern@@@bdm::*)ATTRDUM
 
 #include <math.h>
 #include <fstream>
-
+#include <stdlib.h> /*rand()*/
 namespace bdm {
 
 // Define my custom cell, which extends Cell by adding an extra
@@ -4530,11 +4530,6 @@ class MyCell : public Cell {
             SetB(mother -> GetB());
             SetC(mother -> GetC());
             SetP(mother -> GetP());
-            // std::cout << "My values are:\n" <<"L:  "<<GetL() <<"\n" 
-            //           <<"A: "<<GetA() <<"\n"
-            //           <<"B: "<<GetB() <<"\n"
-            //           <<"C: "<<GetC() <<"\n"
-            //           <<"p: "<<GetP() <<"\n"  <<std::endl;
           }
         }
       }
@@ -4630,6 +4625,7 @@ struct SbmlModule : public BaseBiologyModule {
   }
 
   //Correct the value of all species
+  //
   void UpdateSpecies(){
     float A = rr_ -> getValue("A_0");
     float B = rr_ -> getValue("B_0");

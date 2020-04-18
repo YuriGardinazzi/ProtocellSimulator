@@ -218,7 +218,6 @@ struct SbmlModule : public BaseBiologyModule {
       cell -> SetCompartment(rr_ -> getValue("compartment"));     
       cell -> SetL(rr_ -> getValue("L"));
       UpdateVolume();
-      
       const auto& partial_result = rr_->getFloatingSpeciesAmountsNamedArray();
      
       result_(i, 0) = i * dt_;

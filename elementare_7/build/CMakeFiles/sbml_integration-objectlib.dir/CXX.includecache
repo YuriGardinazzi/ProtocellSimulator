@@ -49,6 +49,8 @@ math.h
 -
 fstream
 -
+stdlib.h
+-
 
 /home/yuri/biodynamo/build/share/cmake/../../include/biodynamo.h
 string

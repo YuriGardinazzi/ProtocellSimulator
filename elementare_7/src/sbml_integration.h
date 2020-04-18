@@ -35,7 +35,7 @@
 
 #include <math.h>
 #include <fstream>
-
+#include <stdlib.h> /*rand()*/
 namespace bdm {
 
 // Define my custom cell, which extends Cell by adding an extra
@@ -60,11 +60,6 @@ class MyCell : public Cell {
             SetB(mother -> GetB());
             SetC(mother -> GetC());
             SetP(mother -> GetP());
-            // std::cout << "My values are:\n" <<"L:  "<<GetL() <<"\n" 
-            //           <<"A: "<<GetA() <<"\n"
-            //           <<"B: "<<GetB() <<"\n"
-            //           <<"C: "<<GetC() <<"\n"
-            //           <<"p: "<<GetP() <<"\n"  <<std::endl;
           }
         }
       }
@@ -160,6 +155,7 @@ struct SbmlModule : public BaseBiologyModule {
   }
 
   //Correct the value of all species
+  //
   void UpdateSpecies(){
     float A = rr_ -> getValue("A_0");
     float B = rr_ -> getValue("B_0");
