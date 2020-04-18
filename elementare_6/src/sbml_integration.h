@@ -51,20 +51,13 @@ class MyCell : public Cell {
   MyCell(const Event& event, SimObject* other, uint64_t new_oid = 0)
       : Base(event, other, new_oid) {
 
-        //TODO: inherit substances from mother and update RR
         if (auto* mother = dynamic_cast<MyCell*>(other)) {
           if(mother -> GetIsBornAfterDivision()){
-            // std::cout << "I'm a new CELL :D " << std::endl;
             SetL(mother -> GetL());
             SetA(mother -> GetA());
             SetB(mother -> GetB());
             SetC(mother -> GetC());
             SetP(mother -> GetP());
-            // std::cout << "My values are:\n" <<"L:  "<<GetL() <<"\n" 
-            //           <<"A: "<<GetA() <<"\n"
-            //           <<"B: "<<GetB() <<"\n"
-            //           <<"C: "<<GetC() <<"\n"
-            //           <<"p: "<<GetP() <<"\n"  <<std::endl;
           }
         }
       }
@@ -144,11 +137,10 @@ struct SbmlModule : public BaseBiologyModule {
                     BaseBiologyModule* other2 = nullptr) override {
     BaseBiologyModule::EventHandler(event, other1, other2);
   }
-  //Multiply all species by a value, excepts lipids "L"
+  //Multiply all species by a value, excepts lipids "L" and "p"
   void MultiplyAllSpecies(float value){
     rr_ -> setValue("A_0", static_cast<int>(rr_ -> getValue("A_0")*value));
     rr_ -> setValue("B_0", static_cast<int>(rr_ -> getValue("B_0")*value));
-  //  rr_ -> setValue("p", (rr_ -> getValue("p")*value));
     rr_ -> setValue("C", static_cast<int>(rr_ -> getValue("C")*value));
   }
 
@@ -165,10 +157,10 @@ struct SbmlModule : public BaseBiologyModule {
     //           << "\nC  " << +v*1e-19*A*B
     //           << "L " << +v*1e-17*p*C << std::endl;
 
-    // rr_ -> setValue("A_0",static_cast<int>(-v*1e-19*A*B+v*1e+17));
-    // rr_ -> setValue("B_0",static_cast<int>(-v*1e-19*A*B+v*1e+17));
-    // rr_ -> setValue("C",static_cast<int>(+v*1e-19*A*B));
-    // rr_ -> setValue("L",static_cast<int>(+v*1e-17*p*C));
+    rr_ -> setValue("A_0",static_cast<int>(-v*1e-19*A*B+v*1e+17));
+    rr_ -> setValue("B_0",static_cast<int>(-v*1e-19*A*B+v*1e+17));
+    rr_ -> setValue("C",static_cast<int>(+v*1e-19*A*B));
+    rr_ -> setValue("L",static_cast<int>(+v*1e-17*p*C));
   }
   //Append volume value to text file
   void SaveVolume(int t, float v){
@@ -223,15 +215,10 @@ struct SbmlModule : public BaseBiologyModule {
 
       rr_->getIntegrator()->integrate(0 * dt_, dt_);
     
-      cell -> SetCompartment(rr_ -> getValue("compartment"));
-      
-      //std::cout << "Aext: "<< rr_ -> getValue("Aext") << std::endl;
-      //SaveVolume(i,rr_ -> getValue("compartment"));
-     // std::cout << i << " " << rr_ -> getValue("compartment") << std::endl;
-      
-     
+      cell -> SetCompartment(rr_ -> getValue("compartment"));     
       cell -> SetL(rr_ -> getValue("L"));
       UpdateVolume();
+      
       const auto& partial_result = rr_->getFloatingSpeciesAmountsNamedArray();
      
       result_(i, 0) = i * dt_;
@@ -283,41 +270,34 @@ inline void AddToPlot(TMultiGraph* mg, const ls::Matrix<double>* result) {
   int cols;
   auto** twod = foo.get2DMatrix(rows, cols);
 
-  TGraph* gr = new TGraph(cols, twod[0], twod[1]);
-  
+  TGraph* gr = new TGraph(cols, twod[0], twod[1]); 
   gr->SetLineColorAlpha(2, 0.1);
   gr->SetLineWidth(1);
   
 
   TGraph* gr1 = new TGraph(cols, twod[0], twod[2]);
-  
   gr1->SetLineColorAlpha(3, 0.1);
   gr1->SetLineWidth(1);
 
-  TGraph* gr2 = new TGraph(cols, twod[0], twod[3]);
-  
+  TGraph* gr2 = new TGraph(cols, twod[0], twod[3]); 
   gr2->SetLineColorAlpha(4, 0.1);
   gr2->SetLineWidth(1);
 
-  TGraph* gr3 = new TGraph(cols, twod[0], twod[4]);
-  
+  TGraph* gr3 = new TGraph(cols, twod[0], twod[4]); 
   gr3->SetLineColorAlpha(6, 0.1);
   gr3->SetLineWidth(1);
 
 
-  TGraph* gr4 = new TGraph(cols, twod[0], twod[5]);
-  
+  TGraph* gr4 = new TGraph(cols, twod[0], twod[5]); 
   gr4->SetLineColorAlpha(8, 0.1);
   gr4->SetLineWidth(1);
 
  
   TGraph* gr5 = new TGraph(cols, twod[0], twod[6]);
-  
   gr5->SetLineColorAlpha(8, 0.1);
   gr5->SetLineWidth(1);
 
   TGraph* gr6 = new TGraph(cols, twod[0], twod[7]);
-  
   gr6->SetLineColorAlpha(9, 0.1);
   gr6->SetLineWidth(1);
 

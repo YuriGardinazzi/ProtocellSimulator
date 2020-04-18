@@ -14,6 +14,7 @@ __random change__ is between [-10%; +10%]
 ![random change](random_change.svg)
 ### TO FIX
 __UpdateSpecies()__ not implemented, still raises errors during runtime
+this function should correct values of different species at runtime
 ```c++
   void UpdateSpecies(){
     float A = rr_ -> getValue("A_0");
