@@ -3,7 +3,7 @@
 * no random initialization of concentrations
 * no random change of values after division
 
-![graph](elementare_6.svg)
+![graph](elementare_6.png)
 
 ## Elementare 6.1
 * random change on initialization default values (step 1 instead of 0) _is it correct?_
@@ -11,7 +11,7 @@
 
 __random change__ is between [-10%; +10%]
 
-![random change](random_change.svg)
+![random change](random_change.png)
 ### TO FIX
 __UpdateSpecies()__ not implemented, still raises errors during runtime
 this function should correct values of different species at runtime
