@@ -12,6 +12,10 @@
 __random change__ is between [-10%; +10%]
 
 ![random change](random.png)
+
+## Elementare 7.2 (more steps)
+
+![longer simulation](longer.png)
 ### TO FIX
 __UpdateSpecies()__ not implemented, still raises errors during runtime
 this function should correct values of different species at runtime

@@ -4864,8 +4864,8 @@ inline int Simulate(int argc, const char** argv) {
   // roadrunner options
   rr::SimulateOptions opt;
   opt.start = 0;
-  opt.duration = 140;
-  opt.steps = 1000;
+  opt.duration = 500;
+  opt.steps = 5000;
 
   auto set_param = [&](Param* param) {
     param->simulation_time_step_ = opt.duration / opt.steps;
