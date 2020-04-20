@@ -1,25 +1,21 @@
-# Elementare 7 
+# Elementare 8
 
-* no random initialization of concentrations
-* no random change of values after division
 
-![graph](no_random.png)
 
-## Elementare 7.1
-* random change on initialization default values (step 1 instead of 0) _is it correct?_
+* random change on initialization default values (step 1 instead of 0)
 * random change of values after division
 
 __random change__ is between [-10%; +10%]
 
-![random change](random.png)
+__plot of ABCL__
+![ABCL](ABCL.png)
 
-## Elementare 7.2 (more steps)
+## Errors in visualization of other species
 
-![longer simulation](longer.png)
-### TO FIX
-__UpdateSpecies()__ not implemented, still raises errors during runtime
-this function should correct values of different species at runtime
+__Aout, Bin, Bout__
+![Error_1](error1.png)
 
-__Visualization of Comp__ the visualization of this specie raises errors, maybe it goes overflow at runtime
+__Aout, Bin, Bout__
+![Error_2](error2.png)
 
-__Variable Comp not affected by any random change__
+__TODO__ : finish completely cell division code (not all species are inherited, doesn't matter for this example because division doesn't happen).
