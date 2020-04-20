@@ -18,4 +18,6 @@ __Aout, Bin, Bout__
 __Aout, Bin, Bout__
 ![Error_2](error2.png)
 
-__TODO__ : finish completely cell division code (not all species are inherited, doesn't matter for this example because division doesn't happen).
+__TODO__  
+* finish completely cell division code (not all species are inherited, doesn't matter for this example because division doesn't happen).
+* finish __MultiplyAllSpecies__

@@ -16,6 +16,8 @@ __random change__ is between [-10%; +10%]
 ## Elementare 7.2 (more steps)
 
 ![longer simulation](longer.png)
+### TODO
+Fix __MultiplyAllSpecies__ 
 ### TO FIX
 __UpdateSpecies()__ not implemented, still raises errors during runtime
 this function should correct values of different species at runtime
@@ -23,3 +25,4 @@ this function should correct values of different species at runtime
 __Visualization of Comp__ the visualization of this specie raises errors, maybe it goes overflow at runtime
 
 __Variable Comp not affected by any random change__
+
