@@ -25,7 +25,6 @@ __random change__ is between [-10%; +10%]
    
     float L = rr_ -> getValue("L");
     double newVolume = (1.0/6.0)*M_PI*delta3*pow(sqrt((L/(ro*M_PI*delta3)) -1.0/3.0)-1 ,3 );
-    //std::cout <<newVolume<<std::endl;
     rr_ -> setValue("compartment",newVolume*1000);
 ```
 __Species multiplied by 0.353553391 after division:__ A, B, Compl, C
