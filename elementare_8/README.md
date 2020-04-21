@@ -11,7 +11,7 @@ __plot of ABCL__
 ![ABCL](ABCL.png)
 
 ## Errors in visualization of other species
-
+__NOTE__ : Aout = A_uscita, Ain = A_ingresso, Bin = B_ingresso, B_out = B_uscita
 __Aout, Bin, Bout__
 ![Error_1](error1.png)
 
