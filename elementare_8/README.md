@@ -11,7 +11,7 @@ __plot of ABCL__
 ![ABCL](ABCL.png)
 
 ## Errors in visualization of other species
-__NOTE__ : Aout = A_uscita, Ain = A_ingresso, Bin = B_ingresso, B_out = B_uscita
+__NOTE__ : Aout = A_uscita, Ain = A_ingresso, Bin = B_ingresso, Bout = B_uscita
 
 #### __Aout, Bin, Bout__
 
@@ -23,4 +23,6 @@ __NOTE__ : Aout = A_uscita, Ain = A_ingresso, Bin = B_ingresso, B_out = B_uscita
 
 __TODO__  
 * finish completely cell division code (not all species are inherited, doesn't matter for this example because division doesn't happen).
+* set _A_ingresso, A_uscita, B_ingresso, B_uscita_ to 0 after division
+* create a substance that spread outside the cells and exchange substances with the cell
 * finish __MultiplyAllSpecies__
