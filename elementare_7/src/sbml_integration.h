@@ -150,7 +150,7 @@ struct SbmlModule : public BaseBiologyModule {
   void MultiplyAllSpecies(float value){
     rr_ -> setValue("A_0", static_cast<int>(rr_ -> getValue("A_0")*value));
     rr_ -> setValue("B_0", static_cast<int>(rr_ -> getValue("B_0")*value));
-  //  rr_ -> setValue("p", (rr_ -> getValue("p")*value));
+    rr_ -> setValue("Compl", static_cast<int>(rr_ -> getValue("Compl")*value));
     rr_ -> setValue("C", static_cast<int>(rr_ -> getValue("C")*value));
   }
 
@@ -394,8 +394,8 @@ inline int Simulate(int argc, const char** argv) {
   // roadrunner options
   rr::SimulateOptions opt;
   opt.start = 0;
-  opt.duration = 500;
-  opt.steps = 5000;
+  opt.duration = 140;
+  opt.steps = 1400;
 
   auto set_param = [&](Param* param) {
     param->simulation_time_step_ = opt.duration / opt.steps;

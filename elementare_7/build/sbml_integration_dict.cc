@@ -4620,7 +4620,7 @@ struct SbmlModule : public BaseBiologyModule {
   void MultiplyAllSpecies(float value){
     rr_ -> setValue("A_0", static_cast<int>(rr_ -> getValue("A_0")*value));
     rr_ -> setValue("B_0", static_cast<int>(rr_ -> getValue("B_0")*value));
-  //  rr_ -> setValue("p", (rr_ -> getValue("p")*value));
+    rr_ -> setValue("Compl", static_cast<int>(rr_ -> getValue("Compl")*value));
     rr_ -> setValue("C", static_cast<int>(rr_ -> getValue("C")*value));
   }
 
@@ -4670,26 +4670,26 @@ struct SbmlModule : public BaseBiologyModule {
 
       auto i = Simulation::GetActive()->GetScheduler()->GetSimulatedSteps();
 
-      if(i == 1){
-        //rand 90-110
-        int randomSpeciesChange = rand() % 21 + 90;
-        rr_ -> setValue("A_0", cell -> GetA() * randomSpeciesChange / 100);
-        rr_ -> setValue("B_0", cell -> GetB() * randomSpeciesChange / 100);
-        rr_ -> setValue("C", cell -> GetC() * randomSpeciesChange / 100);
-        rr_ -> setValue("L", cell -> GetL() * randomSpeciesChange / 100);
-       // rr_ -> setValue("Compl", cell -> GetCompl() * randomSpeciesChange / 100);
-      }
-      if(cell -> GetIsBornAfterDivision()){
-        //rand 90-110
-        int randomSpeciesChange = rand() % 21 + 90;
-        cell -> SetIsBornAfterDivision(false);
-        rr_ -> setValue("A_0", cell -> GetA() * randomSpeciesChange / 100);
-        rr_ -> setValue("B_0", cell -> GetB() * randomSpeciesChange / 100);
-        rr_ -> setValue("C", cell -> GetC() * randomSpeciesChange / 100);
-        rr_ -> setValue("L", cell -> GetL() * randomSpeciesChange / 100);
-       // rr_ -> setValue("Compl", cell -> GetCompl() * randomSpeciesChange / 100);
-       // rr_ -> setValue("p", cell -> GetP());
-      }
+      // if(i == 1){
+      //   //rand 90-110
+      //   int randomSpeciesChange = rand() % 21 + 90;
+      //   rr_ -> setValue("A_0", cell -> GetA() * randomSpeciesChange / 100);
+      //   rr_ -> setValue("B_0", cell -> GetB() * randomSpeciesChange / 100);
+      //   rr_ -> setValue("C", cell -> GetC() * randomSpeciesChange / 100);
+      //   rr_ -> setValue("L", cell -> GetL() * randomSpeciesChange / 100);
+      //  // rr_ -> setValue("Compl", cell -> GetCompl() * randomSpeciesChange / 100);
+      // }
+      // if(cell -> GetIsBornAfterDivision()){
+      //   //rand 90-110
+      //   int randomSpeciesChange = rand() % 21 + 90;
+      //   cell -> SetIsBornAfterDivision(false);
+      //   rr_ -> setValue("A_0", cell -> GetA() * randomSpeciesChange / 100);
+      //   rr_ -> setValue("B_0", cell -> GetB() * randomSpeciesChange / 100);
+      //   rr_ -> setValue("C", cell -> GetC() * randomSpeciesChange / 100);
+      //   rr_ -> setValue("L", cell -> GetL() * randomSpeciesChange / 100);
+      //  // rr_ -> setValue("Compl", cell -> GetCompl() * randomSpeciesChange / 100);
+      //  // rr_ -> setValue("p", cell -> GetP());
+      // }
 
       rr_->getIntegrator()->integrate(0 * dt_, dt_);
     
@@ -4864,8 +4864,8 @@ inline int Simulate(int argc, const char** argv) {
   // roadrunner options
   rr::SimulateOptions opt;
   opt.start = 0;
-  opt.duration = 500;
-  opt.steps = 5000;
+  opt.duration = 140;
+  opt.steps = 1400;
 
   auto set_param = [&](Param* param) {
     param->simulation_time_step_ = opt.duration / opt.steps;
