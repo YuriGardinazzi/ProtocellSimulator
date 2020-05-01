@@ -226,6 +226,11 @@ struct SbmlModule : public BaseBiologyModule {
     
       cell -> SetCompartment(rr_ -> getValue("compartment"));
       
+
+    /*TEST EXPORT*/
+      auto* exp = new BasicExporter();
+      exp ->ExportIteration("export.txt",i);
+
       //std::cout << "Aext: "<< rr_ -> getValue("Aext") << std::endl;
       //SaveVolume(i,rr_ -> getValue("compartment"));
      // std::cout << i << " " << rr_ -> getValue("compartment") << std::endl;
@@ -456,9 +461,7 @@ inline int Simulate(int argc, const char** argv) {
   };
   ModelInitializer::CreateCellsRandom(0, 200, num_cells, construct);
 
-  auto* exp = new BasicExporter();
-  exp -> ExportSummary("export.txt",2000);
-  std::cout<<"STO ESPORTANDOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO"<<std::endl;
+
   // Run simulation
   auto start = Timing::Timestamp();
   simulation.GetScheduler()->Simulate(opt.steps);
