@@ -59,7 +59,7 @@ inline int Simulate(int argc, const char** argv) {
   ModelInitializer::DefineSubstance(kKalium, "Kalium", 0.4, 0, 25);
 
   // Run simulation for N timesteps
-  simulation.GetScheduler()->Simulate(1);
+  simulation.GetScheduler()->Simulate(100);
   std::cout << "Simulation completed successfully!\n";
   return 0;
 }

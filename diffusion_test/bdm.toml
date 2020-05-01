@@ -1,6 +1,11 @@
 [visualization]
 export = true
-export_interval = 2
+export_interval = 1
 
-[[visualize_sim_object]]
-  name = "Cell"
+	[[visualize_sim_object]]
+	name = "Cell"
+	additional_data_members = [ "diameter_" ]
+
+	[[visualize_diffusion]]
+	name = "Kalium"
+	gradient = true
