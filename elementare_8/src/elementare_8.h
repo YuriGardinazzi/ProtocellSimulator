@@ -17,6 +17,7 @@
 #include "biodynamo.h"
 #include "core/util/io.h"
 #include "core/util/timing.h"
+#include "core/exporter.h"
 
 #include <TAxis.h>
 #include <TCanvas.h>
@@ -229,7 +230,7 @@ struct SbmlModule : public BaseBiologyModule {
       //SaveVolume(i,rr_ -> getValue("compartment"));
      // std::cout << i << " " << rr_ -> getValue("compartment") << std::endl;
       
-     
+
       cell -> SetL(rr_ -> getValue("L"));
       UpdateVolume();
       const auto& partial_result = rr_->getFloatingSpeciesAmountsNamedArray();
@@ -455,6 +456,9 @@ inline int Simulate(int argc, const char** argv) {
   };
   ModelInitializer::CreateCellsRandom(0, 200, num_cells, construct);
 
+  auto* exp = new BasicExporter();
+  exp -> ExportSummary("export.txt",2000);
+  std::cout<<"STO ESPORTANDOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO"<<std::endl;
   // Run simulation
   auto start = Timing::Timestamp();
   simulation.GetScheduler()->Simulate(opt.steps);
@@ -462,6 +466,7 @@ inline int Simulate(int argc, const char** argv) {
   std::cout << "RUNTIME " << (stop - start) << std::endl;
 
   PlotSbmlModules("sbml-modules.svg");
+ /*Export to file */
 
   std::cout << "Simulation completed successfully!" << std::endl;
   return 0;
