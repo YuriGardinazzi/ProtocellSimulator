@@ -34,13 +34,14 @@ struct Chemotaxis : public BaseBiologyModule {
     auto* rm = sim->GetResourceManager();
     static auto* kDg = rm->GetDiffusionGrid(kKalium);
 
-    if (auto* cell = dynamic_cast<Cell*>(so)) {
-      const auto& position = so->GetPosition();
-      Double3 gradient;
-      kDg->GetGradient(position, &gradient);
-      gradient *= 0.5;
-      cell->UpdatePosition(gradient);
-    }
+    //remove movement of the cell to concentration
+    // if (auto* cell = dynamic_cast<Cell*>(so)) {
+    //   const auto& position = so->GetPosition();
+    //   Double3 gradient;
+    //   kDg->GetGradient(position, &gradient);
+    //   gradient *= 0.5;
+    //   cell->UpdatePosition(gradient);
+    // }
   }
 };
 
@@ -55,7 +56,7 @@ struct KaliumSecretion : public BaseBiologyModule {
     auto* sim = Simulation::GetActive();
     auto* rm = sim->GetResourceManager();
     static auto* kDg = rm->GetDiffusionGrid(kKalium);
-    double amount = 4;
+    double amount = 10;
     kDg->IncreaseConcentrationBy(so->GetPosition(), amount);
   }
 };

@@ -56,7 +56,7 @@ inline int Simulate(int argc, const char** argv) {
   ModelInitializer::CreateCells(positions, construct);
 
   // Define the substances that cells may secrete
-  ModelInitializer::DefineSubstance(kKalium, "Kalium", 0.4, 0, 25);
+  ModelInitializer::DefineSubstance(kKalium, "Kalium", 1.5, 0, 25);
 
   // Run simulation for N timesteps
   simulation.GetScheduler()->Simulate(100);
