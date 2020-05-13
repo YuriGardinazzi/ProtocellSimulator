@@ -16,15 +16,18 @@
 
 #include "biodynamo.h"
 #include "personalized_models.h"
-
 namespace bdm {
 
 
 
 inline int Simulate(int argc, const char** argv) {
-  
+
   //Initialize Biodynamo
   Simulation simulation(argc, argv);
+
+  
+
+
 
   // Define initial model - in this example: single cell at origin
   auto* rm = simulation.GetResourceManager();
@@ -53,7 +56,6 @@ inline int Simulate(int argc, const char** argv) {
   ModelInitializer::CreateCells(positions, construct);
   // Define the substances that cells may secrete
   ModelInitializer::DefineSubstance(Aspecie, "A", 0.4, 0, 25);
-
 
 
   // Run simulation 

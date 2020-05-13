@@ -6,9 +6,8 @@
 #include "biodynamo.h"
 
 namespace bdm{
+
 enum Substances{ Aspecie };
-
-
 
 //Definition of the secretion behaviour
 
