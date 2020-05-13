@@ -30,8 +30,27 @@ namespace bdm {
 // Create list of substances
 enum Substances { kSubstance };
 
+struct PersonalizedCube {
+  int value_;
+  int dim_;
+  PersonalizedCube(int value) {
+    dim_ = 50;
+    value_ = value;
+  }
+
+  double operator()(double x, double y, double z) {
+    //cube creation
+    if( x >= -dim_ and x <= dim_ and 
+        y >= -dim_ and y <= dim_ and
+        z >= -dim_ and z <= dim_){
+          return value_;
+        }
+    return 0;
+  }
+};
 
 inline int Simulate(int argc, const char** argv) {
+
   auto set_param = [](Param* param) {
     // Create an artificial bounds for the simulation space
     param->bound_space_ = true;
@@ -39,8 +58,9 @@ inline int Simulate(int argc, const char** argv) {
     param->max_bound_ = 100;
   };
 
+
   Simulation simulation(argc, argv, set_param);
-  auto* param = simulation.GetParam();
+
 
   // Define initial model
   // Create one cell at a random position
@@ -49,23 +69,26 @@ inline int Simulate(int argc, const char** argv) {
     cell->SetDiameter(10);
     return cell;
   };
-  ModelInitializer::CreateCellsRandom(param->min_bound_, param->max_bound_, 1,
-                                      construct);
 
+  std::vector<Double3> positions;
+  positions.push_back({50, 50, 50});
+  ModelInitializer::CreateCells(positions, construct);
   // Define the substances in our simulation
   // Order: substance id, substance_name, diffusion_coefficient, decay_constant,
   // resolution
-  ModelInitializer::DefineSubstance(kSubstance, "Substance", 0.5, 0, 20);
+  ModelInitializer::DefineSubstance(kSubstance, "Substance",0.5, 0.5, 15);
 
   // Order: substance id, substance name, initialization model, along which axis
   // (0 = x, 1 = y, 2 = z). See the documentation of `GaussianBand` for
   // information about its arguments
-  ModelInitializer::InitializeSubstance(kSubstance, "Substance",
-                                        GaussianBand(0, 5, Axis::kXAxis));
+  ModelInitializer::InitializeSubstance(kSubstance, "Substance",PersonalizedCube(50));
   // ModelInitializer::InitializeSubstance(kSubstance, "Substance",
-  //                                       GaussianBand(0, 5, Axis::kYAxis));
+  //                                       Uniform(0,10,1,Axis::kXAxis));
   // ModelInitializer::InitializeSubstance(kSubstance, "Substance",
-  //                                       GaussianBand(0, 5, Axis::kZAxis));
+  //                                       Uniform(0,10,5,Axis::kYAxis));
+  // ModelInitializer::InitializeSubstance(kSubstance, "Substance",
+  //                                       Uniform(0,10,5,Axis::kZAxis));                                      
+
 
   // Run simulation for N timesteps
   simulation.GetScheduler()->Simulate(20);
