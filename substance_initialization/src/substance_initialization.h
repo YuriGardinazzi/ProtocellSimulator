@@ -17,37 +17,11 @@
 #include <vector>
 
 #include "biodynamo.h"
+#include "personalized_modules.h"
 #include "core/substance_initializers.h"
 
 namespace bdm {
 
-// -----------------------------------------------------------------------------
-// In this integration test we should how to make use of the 'substance
-// initializers', in order to initialize the concentration of a particular
-// substance. We create a gaussian distribution along each axis.
-// -----------------------------------------------------------------------------
-
-// Create list of substances
-enum Substances { kSubstance };
-
-struct PersonalizedCube {
-  int value_;
-  int dim_;
-  PersonalizedCube(int value) {
-    dim_ = 50;
-    value_ = value;
-  }
-
-  double operator()(double x, double y, double z) {
-    //cube creation
-    if( x >= -dim_ and x <= dim_ and 
-        y >= -dim_ and y <= dim_ and
-        z >= -dim_ and z <= dim_){
-          return value_;
-        }
-    return 0;
-  }
-};
 
 inline int Simulate(int argc, const char** argv) {
 
@@ -66,7 +40,9 @@ inline int Simulate(int argc, const char** argv) {
   // Create one cell at a random position
   auto construct = [](const Double3& position) {
     Cell* cell = new Cell(position);
+    cell -> AddBiologyModule(new MyBehaviour());
     cell->SetDiameter(10);
+    
     return cell;
   };
 
@@ -76,7 +52,7 @@ inline int Simulate(int argc, const char** argv) {
   // Define the substances in our simulation
   // Order: substance id, substance_name, diffusion_coefficient, decay_constant,
   // resolution
-  ModelInitializer::DefineSubstance(kSubstance, "Substance",0.5, 0.5, 15);
+  ModelInitializer::DefineSubstance(kSubstance, "Substance",0.5, 0, 15);
 
 
   ModelInitializer::InitializeSubstance(kSubstance, "Substance",PersonalizedCube(50));
