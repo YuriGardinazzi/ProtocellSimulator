@@ -44,6 +44,10 @@ namespace bdm{
         //   std::cout << "gradient: "<< gradient << std::endl;
           gradient *= 0.5;
           cell->UpdatePosition(gradient);
+          size_t i = kDg -> GetBoxIndex(position);
+
+          //negative value, means that the cells ate something
+          kDg -> IncreaseConcentrationBy(i,-5); 
         }
     }
     };

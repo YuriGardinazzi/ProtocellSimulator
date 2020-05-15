@@ -48,6 +48,7 @@ inline int Simulate(int argc, const char** argv) {
 
   std::vector<Double3> positions;
   positions.push_back({50, 50, 50});
+  positions.push_back({50,0,0});
   ModelInitializer::CreateCells(positions, construct);
   // Define the substances in our simulation
   // Order: substance id, substance_name, diffusion_coefficient, decay_constant,
@@ -60,7 +61,7 @@ inline int Simulate(int argc, const char** argv) {
 
 
   // Run simulation for N timesteps
-  simulation.GetScheduler()->Simulate(20);
+  simulation.GetScheduler()->Simulate(500);
 
   std::cout << "Simulation completed successfully!\n";
   return 0;
