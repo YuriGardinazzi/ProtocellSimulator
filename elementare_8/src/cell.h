@@ -8,7 +8,8 @@ namespace bdm{
     // Define my custom cell, which extends Cell by adding an extra
 // data member compartment_, L_.
 class MyCell : public Cell {
-  BDM_SIM_OBJECT_HEADER(MyCell, Cell, 1, compartment_, L_,A_0_ ,B_0_, p_ ,C_ ,Compl_, isBornAfterDivision_);
+  BDM_SIM_OBJECT_HEADER(MyCell, Cell, 1, compartment_, L_,A_0_ ,B_0_, p_ ,C_ ,Compl_, isBornAfterDivision_,
+                        A_IN_, B_IN, A_EXT_, B_EXT_);
 
  public:
   MyCell() {}
@@ -74,6 +75,10 @@ class MyCell : public Cell {
   int C_ = 0;
   int Compl_ = 0;
   double p_ = 0;
+  int A_IN_ = 0; 
+  int B_IN = 0; 
+  int A_EXT_ = 0;
+  int B_EXT_ = 0;
   bool isBornAfterDivision_ = false;
 };
 
