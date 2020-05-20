@@ -1,0 +1,15 @@
+[visualization]
+export = true
+export_interval = 2
+
+	[[visualize_sim_object]]
+	name = "MyCell"
+	additional_data_members = [ "diameter_" ]
+
+	[[visualize_diffusion]]
+	name = "Aspecie"
+	gradient = false
+
+    [[visualize_diffusion]]
+    name = "Bspecie"
+    gradient = false

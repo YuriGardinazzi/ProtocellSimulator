@@ -21,26 +21,26 @@ namespace bdm{
         int cols;
         auto** twod = foo.get2DMatrix(rows, cols);
 
-        // TGraph* gr = new TGraph(cols, twod[0], twod[1]); /*A_0*/
+        TGraph* gr = new TGraph(cols, twod[0], twod[1]); /*A_0*/
         
-        // gr->SetLineColorAlpha(2, 0.1);
-        // gr->SetLineWidth(1);
+        gr->SetLineColorAlpha(2, 0.1);
+        gr->SetLineWidth(1);
         
 
-        // TGraph* gr1 = new TGraph(cols, twod[0], twod[2]); /*B_0*/
+        TGraph* gr1 = new TGraph(cols, twod[0], twod[2]); /*B_0*/
         
-        // gr1->SetLineColorAlpha(3, 0.1);
-        // gr1->SetLineWidth(1);
+        gr1->SetLineColorAlpha(3, 0.1);
+        gr1->SetLineWidth(1);
 
-        // TGraph* gr2 = new TGraph(cols, twod[0], twod[3]); /*C*/
+        TGraph* gr2 = new TGraph(cols, twod[0], twod[3]); /*C*/
         
-        // gr2->SetLineColorAlpha(4, 0.1);
-        // gr2->SetLineWidth(1);
+        gr2->SetLineColorAlpha(4, 0.1);
+        gr2->SetLineWidth(1);
 
-        // TGraph* gr3 = new TGraph(cols, twod[0], twod[4]); /*L*/
+        TGraph* gr3 = new TGraph(cols, twod[0], twod[4]); /*L*/
         
-        // gr3->SetLineColorAlpha(8, 0.1);
-        // gr3->SetLineWidth(1);
+        gr3->SetLineColorAlpha(8, 0.1);
+        gr3->SetLineWidth(1);
 
 
         // TGraph* gr4 = new TGraph(cols, twod[0], twod[5]); /*p*/
@@ -64,13 +64,13 @@ namespace bdm{
         // gr7->SetLineColorAlpha(10, 0.1);
         // gr7->SetLineWidth(1);
 
-        TGraph* gr8 = new TGraph(cols, twod[0], twod[9]); /*A_uscita*/
-        gr8->SetLineColorAlpha(2, 0.1);
-        gr8->SetLineWidth(1);  
+        // TGraph* gr8 = new TGraph(cols, twod[0], twod[9]); /*A_uscita*/
+        // gr8->SetLineColorAlpha(2, 0.1);
+        // gr8->SetLineWidth(1);  
 
-        TGraph* gr9 = new TGraph(cols, twod[0], twod[10]); /*A_ingresso*/
-        gr9->SetLineColorAlpha(3, 0.1);
-        gr9->SetLineWidth(1);  
+        // TGraph* gr9 = new TGraph(cols, twod[0], twod[10]); /*A_ingresso*/
+        // gr9->SetLineColorAlpha(3, 0.1);
+        // gr9->SetLineWidth(1);  
 
         // TGraph* gr10 = new TGraph(cols, twod[0], twod[11]); /*B_ingresso*/
         // gr10->SetLineColorAlpha(7, 0.1);
@@ -80,18 +80,18 @@ namespace bdm{
         // gr11->SetLineColorAlpha(9, 0.1);
         // gr11->SetLineWidth(1);  
 
-        // mg->Add(gr); //A
-        // mg->Add(gr1); //B
-        // mg->Add(gr2); //C
-        // mg->Add(gr3); //L
+        mg->Add(gr); //A
+        mg->Add(gr1); //B
+        mg->Add(gr2); //C
+        mg->Add(gr3); //L
 
         //mg->Add(gr4);   //p
         //mg->Add(gr5);   //AExt
         //mg->Add(gr6);   //BExt
         //mg -> Add(gr7); //compl  goes to 10^3
 
-        mg -> Add(gr8); //A_uscita
-        mg -> Add(gr9); //A_ingresso
+        // mg -> Add(gr8); //A_uscita
+        // mg -> Add(gr9); //A_ingresso
         // mg -> Add(gr10); //B_ingresso
         // mg -> Add(gr11); //B_uscita
 
@@ -101,22 +101,22 @@ namespace bdm{
 
 
         
-        // TLegendEntry *le = legend->AddEntry(gr,"A","l");
-        // le->SetTextColor(2);
-        // TLegendEntry *le1 = legend->AddEntry(gr1,"B","l");
-        // le1->SetTextColor(3);
-        // TLegendEntry *le2 = legend->AddEntry(gr2,"C","l");
-        // le2->SetTextColor(4);
-        // TLegendEntry *le3 = legend->AddEntry(gr3,"L","l");
-        // le3->SetTextColor(8);
+        TLegendEntry *le = legend->AddEntry(gr,"A","l");
+        le->SetTextColor(2);
+        TLegendEntry *le1 = legend->AddEntry(gr1,"B","l");
+        le1->SetTextColor(3);
+        TLegendEntry *le2 = legend->AddEntry(gr2,"C","l");
+        le2->SetTextColor(4);
+        TLegendEntry *le3 = legend->AddEntry(gr3,"L","l");
+        le3->SetTextColor(8);
         // TLegendEntry *le7 = legend->AddEntry(gr7,"Compl","l");
         // le7->SetTextColor(1);
 
         //graph A-ingresso  A-uscita B-ingresso B-uscita
-        TLegendEntry *le8 = legend->AddEntry(gr8,"Aout","l");
-        le8->SetTextColor(2);
-        TLegendEntry *le9 = legend->AddEntry(gr9,"Ain","l");
-        le9->SetTextColor(3);
+        // TLegendEntry *le8 = legend->AddEntry(gr8,"Aout","l");
+        // le8->SetTextColor(2);
+        // TLegendEntry *le9 = legend->AddEntry(gr9,"Ain","l");
+        // le9->SetTextColor(3);
         // TLegendEntry *le10 = legend->AddEntry(gr10,"Bin","l");
         // le10->SetTextColor(7);
         // TLegendEntry *le11 = legend->AddEntry(gr11,"Bout","l");
