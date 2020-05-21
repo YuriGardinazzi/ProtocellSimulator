@@ -12,6 +12,7 @@
 #include "rrUtils.h"
 
 
+
 namespace bdm{
 // Define SbmlModule to simulate intracellular chemical reaction network.
 struct SbmlModule : public BaseBiologyModule {
@@ -75,15 +76,13 @@ struct SbmlModule : public BaseBiologyModule {
     // rr_ -> setValue("C",static_cast<int>(+v*1e-19*A*B));
     // rr_ -> setValue("L",static_cast<int>(+v*1e-17*p*C));
   }
-  //Append volume value to text file
-  void SaveVolume(int t, float v){
-    #pragma omp critical
-    {
-      std::ofstream outfile;
 
+  //Append volume value to text file
+  void SaveToFile( const SoUid id, int iteration, float v){
+
+      std::ofstream outfile;
       outfile.open("volume.csv", std::ios_base::app); // append instead of overwrite
-      outfile << t<<";" << v << std::endl;
-    } 
+      outfile <<id<<";"  << iteration << ";" << v << std::endl;
   }
   //update volume
   void UpdateVolume(){
@@ -129,8 +128,9 @@ struct SbmlModule : public BaseBiologyModule {
       cell -> SetCompartment(rr_ -> getValue("compartment"));
       
 
-      //std::cout << "Aext: "<< rr_ -> getValue("Aext") << std::endl;
-      //SaveVolume(i,rr_ -> getValue("compartment"));
+   
+      
+      SaveToFile(so -> GetUid(),i,rr_ -> getValue("compartment"));
      // std::cout << i << " " << rr_ -> getValue("compartment") << std::endl;
       
 
