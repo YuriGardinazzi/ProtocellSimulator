@@ -14,6 +14,11 @@
 
 
 namespace bdm{
+
+enum Substances { Aspecie, Bspecie };
+
+
+
 // Define SbmlModule to simulate intracellular chemical reaction network.
 struct SbmlModule : public BaseBiologyModule {
   SbmlModule(const std::string& sbml_file, const rr::SimulateOptions& opt)
@@ -78,11 +83,24 @@ struct SbmlModule : public BaseBiologyModule {
   }
 
   //Append volume value to text file
-  void SaveToFile( const SoUid id, int iteration, float v){
+  void SaveToFile( const SoUid id, int iteration){
 
       std::ofstream outfile;
       outfile.open("volume.csv", std::ios_base::app); // append instead of overwrite
-      outfile <<id<<";"  << iteration << ";" << v << std::endl;
+      outfile <<id<<";"  << iteration << ";" << 
+              rr_ -> getValue("compartment") << ";" <<
+              rr_ -> getValue("A_0")  <<";" <<
+              rr_ -> getValue("B_0")  <<";" <<
+              rr_ -> getValue("C")    <<";" <<
+              rr_ -> getValue("L")    <<";" <<
+              rr_ -> getValue("p")    <<";" <<
+              rr_ -> getValue("Aext")  <<";" << 
+              rr_ -> getValue("Bext")  <<";" <<
+              rr_ -> getValue("Compl")  <<";" <<
+              rr_ -> getValue("A_uscita")  << ";" << 
+              rr_ -> getValue("A_ingresso")  <<";" <<
+              rr_ -> getValue("B_uscita")  << ";" <<
+              rr_ -> getValue("B_ingresso")  << std::endl;
   }
   //update volume
   void UpdateVolume(){
@@ -127,10 +145,11 @@ struct SbmlModule : public BaseBiologyModule {
     
       cell -> SetCompartment(rr_ -> getValue("compartment"));
       
-
+     static auto* aDiffGrid = Simulation::GetActive()-> GetResourceManager()->GetDiffusionGrid(Aspecie);
+      std::cout << aDiffGrid -> GetConcentration( so -> GetPosition()) << std::endl;
    
       
-      SaveToFile(so -> GetUid(),i,rr_ -> getValue("compartment"));
+      SaveToFile(so -> GetUid(),i);
      // std::cout << i << " " << rr_ -> getValue("compartment") << std::endl;
       
 

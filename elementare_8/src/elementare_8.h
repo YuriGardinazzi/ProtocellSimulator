@@ -36,7 +36,7 @@
 #include <stdlib.h> /*rand()*/
 namespace bdm {
 
-  enum Substances { Aspecie, Bspecie };
+  
 
   struct PersonalizedCube {
     int value_;
@@ -68,6 +68,22 @@ inline int Simulate(int argc, const char** argv) {
   opts.AddOption<uint64_t>("n, num-cells", "10", "The total number of cells");
   uint64_t num_cells = opts.Get<uint64_t>("num-cells");
 
+  std::ofstream outfile;
+  outfile.open("volume.csv"); // append instead of overwrite
+  outfile <<"id"<<";"  << "step" << ";" << "volume" << ";" <<
+              "A_0"<<";" <<
+              "B_0"  <<";" <<
+               "C"    <<";" <<
+               "L"    <<";" <<
+               "p"    <<";" <<
+              "Aext"  <<";" << 
+               "Bext"  <<";" <<
+             "Compl"  <<";" <<
+              "A_uscita"  << ";" << 
+              "A_ingresso"  <<";" <<
+               "B_uscita" << ";" <<
+               "B_ingresso" <<    std::endl;
+  outfile.close();
   // roadrunner options
   rr::SimulateOptions opt;
   opt.start = 0;
