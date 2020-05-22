@@ -64,9 +64,9 @@ namespace bdm {
   }; //end personalized Cube
 
 inline int Simulate(int argc, const char** argv) {
-  auto opts = CommandLineOptions(argc, argv);
-  opts.AddOption<uint64_t>("n, num-cells", "10", "The total number of cells");
-  uint64_t num_cells = opts.Get<uint64_t>("num-cells");
+   auto opts = CommandLineOptions(argc, argv);
+   opts.AddOption<uint64_t>("n, num-cells", "10", "The total number of cells");
+   uint64_t num_cells = opts.Get<uint64_t>("num-cells");
 
   std::ofstream outfile;
   outfile.open("volume.csv"); // append instead of overwrite
@@ -87,7 +87,7 @@ inline int Simulate(int argc, const char** argv) {
   // roadrunner options
   rr::SimulateOptions opt;
   opt.start = 0;
-  opt.duration = 50;
+  opt.duration = 100;
   opt.steps = 200;
 
   auto set_param = [&](Param* param) {
@@ -115,12 +115,20 @@ inline int Simulate(int argc, const char** argv) {
     cell->AddBiologyModule(new SbmlModule(sbml_file, opt));
     return cell;
   };
-  ModelInitializer::CreateCellsRandom(0, 200, num_cells, construct);
+
+  std::vector<Double3> positions;
+  positions.push_back({100, 100, 100});
+  // positions.push_back({120,120,120});
+  // positions.push_back({120,120,120});
+  // positions.push_back({120,120,120});
+
+
+  ModelInitializer::CreateCells(positions, construct);
   ModelInitializer::DefineSubstance(Aspecie, "Aspecie",0.5, 0, 15);
   ModelInitializer::DefineSubstance(Bspecie, "Bspecie",0.5, 0, 15);
 
-  ModelInitializer::InitializeSubstance(Aspecie, "Aspecie",PersonalizedCube(50,50,50,50));
-  ModelInitializer::InitializeSubstance(Bspecie, "Bspecie",PersonalizedCube(50,100,100,100));
+  ModelInitializer::InitializeSubstance(Aspecie, "Aspecie",PersonalizedCube(200,50,50,50));
+  ModelInitializer::InitializeSubstance(Bspecie, "Bspecie",PersonalizedCube(200,60,50,50));
   // Run simulation
   auto start = Timing::Timestamp();
   simulation.GetScheduler()->Simulate(opt.steps);

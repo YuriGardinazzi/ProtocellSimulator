@@ -63,6 +63,7 @@ struct SbmlModule : public BaseBiologyModule {
     rr_ -> setValue("C", static_cast<int>(rr_ -> getValue("C")*value));
   }
 
+
   //Correct the value of all species
   //
   void UpdateSpecies(){
@@ -82,6 +83,28 @@ struct SbmlModule : public BaseBiologyModule {
     // rr_ -> setValue("L",static_cast<int>(+v*1e-17*p*C));
   }
 
+  //Perfom the exchange of substances with the environment
+  // in this case just A and B
+
+  void ExchangeSubstances(const Double3 pos){
+    static auto* aDiffGrid = Simulation::GetActive()-> GetResourceManager()->GetDiffusionGrid(Aspecie);
+    static auto* bDiffGrid = Simulation::GetActive()-> GetResourceManager()->GetDiffusionGrid(Bspecie);
+
+    size_t iA = aDiffGrid -> GetBoxIndex(pos);
+    size_t iB = bDiffGrid -> GetBoxIndex(pos);
+    int B_Concentration = static_cast<int>(bDiffGrid -> GetConcentration(pos));
+    int A_Concentration = static_cast<int>(aDiffGrid -> GetConcentration(pos));
+
+    if(A_Concentration > 0){
+      rr_ -> setValue("Aext", A_Concentration);
+      aDiffGrid -> IncreaseConcentrationBy(iA, -A_Concentration*0.1);
+    }
+    if(B_Concentration > 0){
+      rr_ -> setValue("Bext", A_Concentration);
+      bDiffGrid -> IncreaseConcentrationBy(iB, -B_Concentration*0.1);
+    }
+    //std::cout << B_Concentration << std::endl;
+  }
   //Append volume value to text file
   void SaveToFile( const SoUid id, int iteration){
 
@@ -104,17 +127,17 @@ struct SbmlModule : public BaseBiologyModule {
   }
   //update volume
   void UpdateVolume(){
-    //float ro = 7.87870;
+    //float ro =7.87870;
     float ro =7.87870e+22;
-    //float r = 1e-6;
     float delta = 1e-8;
     float delta3 = pow(delta,3);
-   
-    float L = rr_ -> getValue("L");
-    double newVolume = (1.0/6.0)*M_PI*delta3*pow(sqrt((L/(ro*M_PI*delta3)) -1.0/3.0)-1 ,3 );
-    //std::cout <<newVolume<<std::endl;
+    int L = rr_ -> getValue("L");
+    double newVolume = (1.0/6.0)*M_PI*delta3*pow(sqrt((L/(ro*M_PI*delta3)) -1.0/3.0)-1 ,3 );   
+    
     rr_ -> setValue("compartment",newVolume*1000);
   }
+
+
   void Run(SimObject* so) override {
     if (auto* cell = static_cast<MyCell*>(so)) {
 
@@ -137,24 +160,32 @@ struct SbmlModule : public BaseBiologyModule {
         rr_ -> setValue("B_0", cell -> GetB() * randomSpeciesChange / 100);
         rr_ -> setValue("C", cell -> GetC() * randomSpeciesChange / 100);
         rr_ -> setValue("L", cell -> GetL() * randomSpeciesChange / 100);
-       // rr_ -> setValue("Compl", cell -> GetCompl() * randomSpeciesChange / 100);
-       // rr_ -> setValue("p", cell -> GetP());
+        //rr_ -> setValue("Compl", cell -> GetCompl() * randomSpeciesChange / 100);
+        //rr_ -> setValue("p", cell -> GetP());
+        // rr_ -> setValue("Aext", cell -> GetAExt());
+        // rr_ -> setValue("Bext", cell -> GetBExt());
       }
 
-      rr_->getIntegrator()->integrate(0 * dt_, dt_);
-    
-      cell -> SetCompartment(rr_ -> getValue("compartment"));
-      
-     static auto* aDiffGrid = Simulation::GetActive()-> GetResourceManager()->GetDiffusionGrid(Aspecie);
-      std::cout << aDiffGrid -> GetConcentration( so -> GetPosition()) << std::endl;
-   
-      
-      SaveToFile(so -> GetUid(),i);
-     // std::cout << i << " " << rr_ -> getValue("compartment") << std::endl;
-      
 
+      ExchangeSubstances(so -> GetPosition());
+
+
+     
       cell -> SetL(rr_ -> getValue("L"));
+
       UpdateVolume();
+      //Integration pass
+      rr_->getIntegrator()->integrate(0 * dt_, dt_);
+      if(i != 199){
+      rr_ -> setValue("A_uscita",0);
+      rr_ -> setValue("A_ingresso",0);
+      rr_ -> setValue("B_uscita",0);
+      rr_ -> setValue("B_ingresso",0);
+      }
+      
+      
+      SaveToFile(so -> GetUid(),i);   
+
       const auto& partial_result = rr_->getFloatingSpeciesAmountsNamedArray();
      
       result_(i, 0) = i * dt_;
@@ -162,9 +193,9 @@ struct SbmlModule : public BaseBiologyModule {
         result_(i, j + 1) = partial_result(0, j);
       }
 
-      UpdateSpecies();
+      //UpdateSpecies();
    
-      if (cell -> GetL() > 20000 && active_){
+      if (rr_ -> getValue("L") > 20000 && active_){
           //multiply lipids by 0.5
           rr_ -> setValue("L", rr_ -> getValue("L")/2);
           cell -> SetL(rr_ -> getValue("L"));
@@ -175,11 +206,14 @@ struct SbmlModule : public BaseBiologyModule {
           cell -> SetA(rr_ -> getValue("A_0"));
           cell -> SetB(rr_ -> getValue("B_0"));
           cell -> SetC(rr_ -> getValue("C"));
+          cell -> SetL(rr_ -> getValue("L"));
           cell -> SetP(rr_ -> getValue("p"));
+          cell -> SetAExt(rr_ -> getValue("Aext"));
+          cell -> SetAExt(rr_ -> getValue("Bext"));
           cell -> SetCompl(rr_ -> getValue("Compl"));
 
           //update volume of the cell and of the integrator
-          cell -> SetCompartment( cell -> GetCompartment()/2);
+          cell -> SetCompartment( rr_ -> getValue("compartment")/2);
           rr_ -> setValue("compartment", cell -> GetCompartment());
 
           cell -> SetIsBornAfterDivision(true);

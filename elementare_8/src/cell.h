@@ -9,7 +9,7 @@ namespace bdm{
 // data member compartment_, L_.
 class MyCell : public Cell {
   BDM_SIM_OBJECT_HEADER(MyCell, Cell, 1, compartment_, L_,A_0_ ,B_0_, p_ ,C_ ,Compl_, isBornAfterDivision_,
-                        A_IN_, B_IN, A_EXT_, B_EXT_);
+                         A_EXT_, B_EXT_);
 
  public:
   MyCell() {}
@@ -28,6 +28,9 @@ class MyCell : public Cell {
             SetB(mother -> GetB());
             SetC(mother -> GetC());
             SetP(mother -> GetP());
+            SetAExt(mother -> GetAExt());
+            SetBExt(mother -> GetBExt());
+            //SetCompartment(mother -> GetCompartment());
           }
         }
       }
@@ -55,6 +58,12 @@ class MyCell : public Cell {
   
   void SetIsBornAfterDivision(bool flag){ isBornAfterDivision_ = flag;}
   bool GetIsBornAfterDivision(){ return isBornAfterDivision_ ;}
+
+  void SetAExt(int aext) { A_EXT_ = aext; }
+  int GetAExt() const { return A_EXT_; }
+  
+  void SetBExt(int bext) { B_EXT_ = bext; }
+  int GetBExt() const { return B_EXT_; }
   
   void PrintValues(){
     std::cout <<"L:  "<<GetL() <<"\n" 
@@ -75,8 +84,7 @@ class MyCell : public Cell {
   int C_ = 0;
   int Compl_ = 0;
   double p_ = 0;
-  int A_IN_ = 0; 
-  int B_IN = 0; 
+
   int A_EXT_ = 0;
   int B_EXT_ = 0;
   bool isBornAfterDivision_ = false;
