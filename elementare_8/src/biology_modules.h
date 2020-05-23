@@ -32,7 +32,7 @@ struct SbmlModule : public BaseBiologyModule {
     integrator->setValue("variable_step_size", false);
     integrator->setValue("initial_time_step", dt_);
     integrator->setValue("maximum_time_step", dt_);
-    result_.resize(opt.steps, 13);
+
   }
 
   virtual ~SbmlModule() { delete rr_; }
@@ -186,13 +186,6 @@ struct SbmlModule : public BaseBiologyModule {
       
       SaveToFile(so -> GetUid(),i);   
 
-      const auto& partial_result = rr_->getFloatingSpeciesAmountsNamedArray();
-     
-      result_(i, 0) = i * dt_;
-      for (unsigned j = 0; j < partial_result.numCols(); j++) {
-        result_(i, j + 1) = partial_result(0, j);
-      }
-
       //UpdateSpecies();
    
       if (rr_ -> getValue("L") > 20000 && active_){
@@ -224,10 +217,10 @@ struct SbmlModule : public BaseBiologyModule {
     }
   }
 
-  const ls::DoubleMatrix& GetResult() const { return result_; }
+
 
  private:
-  ls::DoubleMatrix result_;
+
   bool active_ = true;
   rr::RoadRunner* rr_;
   double dt_;

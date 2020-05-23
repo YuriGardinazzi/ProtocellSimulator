@@ -17,7 +17,6 @@
 #include "biodynamo.h"
 #include "cell.h"
 #include "biology_modules.h"
-#include "output_modules.h"
 
 #include "core/util/io.h"
 #include "core/util/timing.h"
@@ -135,7 +134,6 @@ inline int Simulate(int argc, const char** argv) {
   auto stop = Timing::Timestamp();
   std::cout << "RUNTIME " << (stop - start) << std::endl;
 
-  PlotSbmlModules("sbml-modules.svg");
  /*Export to file */
 
   std::cout << "Simulation completed successfully!" << std::endl;
