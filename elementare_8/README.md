@@ -6,7 +6,7 @@ __NOTE__:
 * _random change_ of values after division
 * no changes applied to A_ingresso, A_uscita, B_ingresso, B_uscita after integration
 * Aext and Bext are increased if the cell is near a substance by 10% of the substance each step
-* the substances is decreased with the amount "eaten" by the cell
+* the substances are decreased by the amount "eaten" by the cell
 
 * __random change__ is between [-10%; +10%] appliet to A, B, C, L
 
