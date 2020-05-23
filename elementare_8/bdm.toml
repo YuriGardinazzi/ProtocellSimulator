@@ -10,6 +10,6 @@ export_interval = 2
 	name = "Aspecie"
 	gradient = false
 
-    [[visualize_diffusion]]
-    name = "Bspecie"
-    gradient = false
+	[[visualize_diffusion]]
+	name = "Bspecie"
+	gradient = false
