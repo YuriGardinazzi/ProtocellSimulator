@@ -4,8 +4,8 @@ __NOTE__:
 
 * _random change_ on initialization default values (step 1 instead of 0)
 * _random change_ of values after division
-* no changes applied to A_ingresso, A_uscita, B_ingresso, B_uscita
-* Aext and Bext are increased if the cell is near a substance but 10 of the substance each step
+* no changes applied to A_ingresso, A_uscita, B_ingresso, B_uscita after integration
+* Aext and Bext are increased if the cell is near a substance by 10% of the substance each step
 * the substances is decreased with the amount "eaten" by the cell
 
 * __random change__ is between [-10%; +10%] appliet to A, B, C, L
@@ -44,7 +44,6 @@ Susbtances A and B are not both cubes, for some unidentified reason B does not c
 
 __TODO__  
 * Implement inheritance of sbml module (daughter cells have no module at the moment)
-* set _A_ingresso, A_uscita, B_ingresso, B_uscita_ to 0 after division 
 * Does the cell expel some substance?
 * How to check the parameters A-ingresso Aext-A; B-ingresso Bext-B; B-uscita B_Bext; A-uscita A_Aext 
   and how they should be modified
