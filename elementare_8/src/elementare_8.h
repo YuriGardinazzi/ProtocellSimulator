@@ -16,6 +16,7 @@
 
 #include "biodynamo.h"
 #include "cell.h"
+#include "substances.h"
 #include "biology_modules.h"
 
 #include "core/util/io.h"
@@ -35,32 +36,6 @@
 #include <stdlib.h> /*rand()*/
 namespace bdm {
 
-  
-
-  struct PersonalizedCube {
-    int value_;
-    int dim_;
-    double x0_;
-    double y0_;
-    double z0_;
-    PersonalizedCube(int value, double x0, double y0, double z0) {
-        dim_ = 50;
-        value_ = value;
-        x0_ = x0;
-        y0_ = y0;
-        z0_ = z0;
-    }
-
-    double operator()(double x, double y, double z) {
-        //cube creation
-        if( x >= -dim_ + x0_ and x <= dim_ + x0_ and 
-            y >= -dim_ + y0_ and y <= dim_ + y0_ and
-            z >= -dim_ + z0_ and z <= dim_ + z0_){
-            return value_;
-            }
-        return 0;
-    }
-  }; //end personalized Cube
 
 inline int Simulate(int argc, const char** argv) {
    auto opts = CommandLineOptions(argc, argv);
@@ -86,8 +61,8 @@ inline int Simulate(int argc, const char** argv) {
   // roadrunner options
   rr::SimulateOptions opt;
   opt.start = 0;
-  opt.duration = 100;
-  opt.steps = 200;
+  opt.duration = 200;
+  opt.steps = 400;
 
   auto set_param = [&](Param* param) {
     param->simulation_time_step_ = opt.duration / opt.steps;
@@ -117,17 +92,19 @@ inline int Simulate(int argc, const char** argv) {
 
   std::vector<Double3> positions;
   positions.push_back({100, 100, 100});
-  // positions.push_back({120,120,120});
-  // positions.push_back({120,120,120});
-  // positions.push_back({120,120,120});
+  positions.push_back({200,200,200});
+  positions.push_back({110,110,110});
+  positions.push_back({0,0,0});
 
 
   ModelInitializer::CreateCells(positions, construct);
-  ModelInitializer::DefineSubstance(Aspecie, "Aspecie",0.5, 0, 15);
   ModelInitializer::DefineSubstance(Bspecie, "Bspecie",0.5, 0, 15);
+  ModelInitializer::DefineSubstance(Aspecie, "Aspecie",0.5, 0, 15);
+  
 
-  ModelInitializer::InitializeSubstance(Aspecie, "Aspecie",PersonalizedCube(200,50,50,50));
-  ModelInitializer::InitializeSubstance(Bspecie, "Bspecie",PersonalizedCube(200,60,50,50));
+  ModelInitializer::InitializeSubstance(Bspecie, "Bspecie",PersonalizedCube(180,50,50,50));
+  ModelInitializer::InitializeSubstance(Aspecie, "Aspecie",PersonalizedCube(200,60,50,50));
+  
   // Run simulation
   auto start = Timing::Timestamp();
   simulation.GetScheduler()->Simulate(opt.steps);

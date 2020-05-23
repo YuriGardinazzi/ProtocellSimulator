@@ -3,6 +3,7 @@
 
 
 #include "biodynamo.h"
+#include "substances.h"
 #include "cell.h"
 #include "rrException.h"
 #include "rrExecutableModel.h"
@@ -15,7 +16,7 @@
 
 namespace bdm{
 
-enum Substances { Aspecie, Bspecie };
+
 
 
 
@@ -96,11 +97,11 @@ struct SbmlModule : public BaseBiologyModule {
     int A_Concentration = static_cast<int>(aDiffGrid -> GetConcentration(pos));
 
     if(A_Concentration > 0){
-      rr_ -> setValue("Aext", A_Concentration);
+      rr_ -> setValue("Aext", rr_ -> getValue("Aext") +  A_Concentration);
       aDiffGrid -> IncreaseConcentrationBy(iA, -A_Concentration*0.1);
     }
     if(B_Concentration > 0){
-      rr_ -> setValue("Bext", A_Concentration);
+      rr_ -> setValue("Bext", rr_ -> getValue("Bext") + B_Concentration);
       bDiffGrid -> IncreaseConcentrationBy(iB, -B_Concentration*0.1);
     }
     //std::cout << B_Concentration << std::endl;
@@ -176,12 +177,12 @@ struct SbmlModule : public BaseBiologyModule {
       UpdateVolume();
       //Integration pass
       rr_->getIntegrator()->integrate(0 * dt_, dt_);
-      if(i != 199){
-      rr_ -> setValue("A_uscita",0);
-      rr_ -> setValue("A_ingresso",0);
-      rr_ -> setValue("B_uscita",0);
-      rr_ -> setValue("B_ingresso",0);
-      }
+      // if(i != 199){
+      //   rr_ -> setValue("A_uscita",0);
+      //   rr_ -> setValue("A_ingresso",0);
+      //   rr_ -> setValue("B_uscita",0);
+      //   rr_ -> setValue("B_ingresso",0);
+      // }
       
       
       SaveToFile(so -> GetUid(),i);   
