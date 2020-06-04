@@ -75,7 +75,6 @@ struct SbmlModule : public BaseBiologyModule {
   
     float v = rr_ -> getValue("compartment");
     int co = rr_ -> getValue("Compl");
-
     //FIXME: Errors are raised in the simulation
     //FIXME: Update formulas with the one of the pdf
     // rr_ -> setValue("A_0",static_cast<int>(-v*1e-19*A*B+v*1e+17));
@@ -96,8 +95,10 @@ struct SbmlModule : public BaseBiologyModule {
     int B_Concentration = static_cast<int>(bDiffGrid -> GetConcentration(pos));
     int A_Concentration = static_cast<int>(aDiffGrid -> GetConcentration(pos));
 
+    //concentrazione * volume (DiffusionGrid::GetBoxLength())
     if(A_Concentration > 0){
       rr_ -> setValue("Aext", rr_ -> getValue("Aext") +  A_Concentration);
+      //si mangia / aggiunge è la diff tra a_uscita e a_ingresso
       aDiffGrid -> IncreaseConcentrationBy(iA, -A_Concentration*0.1);
     }
     if(B_Concentration > 0){
@@ -134,7 +135,6 @@ struct SbmlModule : public BaseBiologyModule {
     float delta3 = pow(delta,3);
     int L = rr_ -> getValue("L");
     double newVolume = (1.0/6.0)*M_PI*delta3*pow(sqrt((L/(ro*M_PI*delta3)) -1.0/3.0)-1 ,3 );   
-    
     rr_ -> setValue("compartment",newVolume*1000);
   }
 
@@ -143,7 +143,7 @@ struct SbmlModule : public BaseBiologyModule {
     if (auto* cell = static_cast<MyCell*>(so)) {
 
       auto i = Simulation::GetActive()->GetScheduler()->GetSimulatedSteps();
-
+    
       if(i == 1){
         //rand 90-110
         int randomSpeciesChange = rand() % 21 + 90;
@@ -167,22 +167,25 @@ struct SbmlModule : public BaseBiologyModule {
         // rr_ -> setValue("Bext", cell -> GetBExt());
       }
 
-
       ExchangeSubstances(so -> GetPosition());
 
-
+      std::cout << "lato cubetto: " << Simulation::GetActive()-> GetResourceManager()->GetDiffusionGrid(Bspecie) -> GetBoxLength() << std::endl;
      
       cell -> SetL(rr_ -> getValue("L"));
 
       UpdateVolume();
       //Integration pass
       rr_->getIntegrator()->integrate(0 * dt_, dt_);
-      // if(i != 199){
-      //   rr_ -> setValue("A_uscita",0);
-      //   rr_ -> setValue("A_ingresso",0);
-      //   rr_ -> setValue("B_uscita",0);
-      //   rr_ -> setValue("B_ingresso",0);
-      // }
+      //a uscita quantità prodotta, a ingresso quantità consumata
+      //la differenza è quello che inserisce all'ambiente
+      //fare ciò ad ogni integrazione
+      //prima di ogni integrazione van rimesse a 0
+      if(i != 399){
+        rr_ -> setValue("A_uscita",0);
+        rr_ -> setValue("A_ingresso",0);
+        rr_ -> setValue("B_uscita",0);
+        rr_ -> setValue("B_ingresso",0);
+      }
       
       
       SaveToFile(so -> GetUid(),i);   

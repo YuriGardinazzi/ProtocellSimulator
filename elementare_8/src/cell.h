@@ -31,6 +31,7 @@ class MyCell : public Cell {
             SetAExt(mother -> GetAExt());
             SetBExt(mother -> GetBExt());
             //SetCompartment(mother -> GetCompartment());
+          
           }
         }
       }
