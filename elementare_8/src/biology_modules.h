@@ -169,7 +169,7 @@ struct SbmlModule : public BaseBiologyModule {
 
       ExchangeSubstances(so -> GetPosition());
 
-      std::cout << "lato cubetto: " << Simulation::GetActive()-> GetResourceManager()->GetDiffusionGrid(Bspecie) -> GetBoxLength() << std::endl;
+     
      
       cell -> SetL(rr_ -> getValue("L"));
 
