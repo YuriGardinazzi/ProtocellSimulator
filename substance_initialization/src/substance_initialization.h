@@ -28,8 +28,8 @@ inline int Simulate(int argc, const char** argv) {
   auto set_param = [](Param* param) {
     // Create an artificial bounds for the simulation space
     param->bound_space_ = true;
-    param->min_bound_ = -100;
-    param->max_bound_ = 100;
+    param->min_bound_ = -500;
+    param->max_bound_ = 500;
   };
 
 
@@ -53,11 +53,11 @@ inline int Simulate(int argc, const char** argv) {
   // Define the substances in our simulation
   // Order: substance id, substance_name, diffusion_coefficient, decay_constant,
   // resolution
-  ModelInitializer::DefineSubstance(kSubstance, "Substance",0.5, 0, 15);
+  ModelInitializer::DefineSubstance(kSubstance, "Substance",0.5, 0, 10);
 
 
-  ModelInitializer::InitializeSubstance(kSubstance, "Substance",PersonalizedCube(50));
-                                     
+  ModelInitializer::InitializeSubstance(kSubstance, "Substance",PersonalizedCube(50,0,0,0));
+  //ModelInitializer::InitializeSubstance(kSubstance, "Substance",PersonalizedCube(50,50,50,50));                                   
 
 
   // Run simulation for N timesteps

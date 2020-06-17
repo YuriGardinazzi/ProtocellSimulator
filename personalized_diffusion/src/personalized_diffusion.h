@@ -52,12 +52,11 @@ inline int Simulate(int argc, const char** argv) {
 
   // The cell responsible for secretion
   positions.push_back({50, 50, 50});
-
   ModelInitializer::CreateCells(positions, construct);
   // Define the substances that cells may secrete
   ModelInitializer::DefineSubstance(Aspecie, "A", 0.4, 0, 25);
 
-
+  
   // Run simulation 
   simulation.GetScheduler()->Simulate(1000);
 
