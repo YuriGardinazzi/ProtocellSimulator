@@ -53,15 +53,15 @@ inline int Simulate(int argc, const char** argv) {
   // Define the substances in our simulation
   // Order: substance id, substance_name, diffusion_coefficient, decay_constant,
   // resolution
-  ModelInitializer::DefineSubstance(kSubstance, "Substance",0.5, 0, 10);
+  ModelInitializer::DefineSubstance(kSubstance, "Substance",0.005, 0, 100);
+  ModelInitializer::DefineSubstance(secondSubstance, "SecondOne",0.005, 0, 100);
 
-
-  ModelInitializer::InitializeSubstance(kSubstance, "Substance",PersonalizedCube(50,0,0,0));
-  //ModelInitializer::InitializeSubstance(kSubstance, "Substance",PersonalizedCube(50,50,50,50));                                   
+  ModelInitializer::InitializeSubstance(kSubstance, "Substance",PersonalizedCube(200,10,10,10));
+  ModelInitializer::InitializeSubstance(secondSubstance, "SecondOne",PersonalizedCube(100,210,10,10));                                   
 
 
   // Run simulation for N timesteps
-  simulation.GetScheduler()->Simulate(500);
+  simulation.GetScheduler()->Simulate(10);
 
   std::cout << "Simulation completed successfully!\n";
   return 0;

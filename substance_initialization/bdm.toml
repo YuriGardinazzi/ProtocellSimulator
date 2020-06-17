@@ -9,3 +9,7 @@ export_interval = 2
 	[[visualize_diffusion]]
 	name = "Substance"
 	gradient = true
+
+	[[visualize_diffusion]]
+	name = "SecondOne"
+	gradient = true

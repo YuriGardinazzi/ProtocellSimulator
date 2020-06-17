@@ -5,7 +5,7 @@
 namespace bdm{
 
     // Create list of substances
-    enum Substances { kSubstance };
+    enum Substances { kSubstance, secondSubstance };
 
     struct PersonalizedCube {
         int value_;
