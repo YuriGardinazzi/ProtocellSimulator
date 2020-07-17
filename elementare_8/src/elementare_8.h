@@ -106,7 +106,7 @@ inline int Simulate(int argc, const char** argv) {
   
 
   ModelInitializer::InitializeSubstance(Bspecie, "Bspecie",PersonalizedCube(180,50,50,50));
-  ModelInitializer::InitializeSubstance(Aspecie, "Aspecie",PersonalizedCube(200,150,50,50));
+  ModelInitializer::InitializeSubstance(Aspecie, "Aspecie",PersonalizedCube(180,50,50,50));
   
   // Run simulation
   auto start = Timing::Timestamp();

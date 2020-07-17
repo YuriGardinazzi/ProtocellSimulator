@@ -95,15 +95,23 @@ struct SbmlModule : public BaseBiologyModule {
     int B_Concentration = static_cast<int>(bDiffGrid -> GetConcentration(pos));
     int A_Concentration = static_cast<int>(aDiffGrid -> GetConcentration(pos));
 
+    //std::cout << rr_ -> getValue("A_uscita");
     //concentrazione * volume (DiffusionGrid::GetBoxLength())
     if(A_Concentration > 0){
       rr_ -> setValue("Aext", rr_ -> getValue("Aext") +  A_Concentration);
       //si mangia / aggiunge è la diff tra a_uscita e a_ingresso
-      aDiffGrid -> IncreaseConcentrationBy(iA, -A_Concentration*0.1);
+      int A_netto = rr_ -> getValue("A_ingresso") - rr_ -> getValue("A_uscita");
+      //aDiffGrid -> IncreaseConcentrationBy(iA, A_netto);
+      std::cout << "A_netto: "<<A_netto <<std::endl;
+      //aDiffGrid -> IncreaseConcentrationBy(iA, -A_Concentration*0.1);
     }
     if(B_Concentration > 0){
       rr_ -> setValue("Bext", rr_ -> getValue("Bext") + B_Concentration);
-      bDiffGrid -> IncreaseConcentrationBy(iB, -B_Concentration*0.1);
+      int B_netto = rr_ -> getValue("B_ingresso") - rr_ -> getValue("B_uscita");
+      //bDiffGrid -> IncreaseConcentrationBy(iA, B_netto);
+      std::cout << "B_netto: "<<B_netto<<std::endl;
+      
+      //bDiffGrid -> IncreaseConcentrationBy(iB, -B_Concentration*0.1);
     }
     //std::cout << B_Concentration << std::endl;
   }
@@ -169,23 +177,24 @@ struct SbmlModule : public BaseBiologyModule {
 
       ExchangeSubstances(so -> GetPosition());
 
-     
+      
      
       cell -> SetL(rr_ -> getValue("L"));
 
       UpdateVolume();
       //Integration pass
       rr_->getIntegrator()->integrate(0 * dt_, dt_);
-      //a uscita quantità prodotta, a ingresso quantità consumata
+      
+      //A_uscita quantità prodotta, A_ingresso quantità consumata
       //la differenza è quello che inserisce all'ambiente
       //fare ciò ad ogni integrazione
       //prima di ogni integrazione van rimesse a 0
-      if(i != 399){
-        rr_ -> setValue("A_uscita",0);
-        rr_ -> setValue("A_ingresso",0);
-        rr_ -> setValue("B_uscita",0);
-        rr_ -> setValue("B_ingresso",0);
-      }
+      // if(i != 399){
+      //   rr_ -> setValue("A_uscita",0);
+      //   rr_ -> setValue("A_ingresso",0);
+      //   rr_ -> setValue("B_uscita",0);
+      //   rr_ -> setValue("B_ingresso",0);
+      // }
       
       
       SaveToFile(so -> GetUid(),i);   
