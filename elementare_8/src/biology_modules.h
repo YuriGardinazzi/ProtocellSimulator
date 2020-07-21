@@ -92,27 +92,48 @@ struct SbmlModule : public BaseBiologyModule {
 
     size_t iA = aDiffGrid -> GetBoxIndex(pos);
     size_t iB = bDiffGrid -> GetBoxIndex(pos);
-    int B_Concentration = static_cast<int>(bDiffGrid -> GetConcentration(pos));
-    int A_Concentration = static_cast<int>(aDiffGrid -> GetConcentration(pos));
+    
+  
+    int A_netto = rr_ -> getValue("A_ingresso") - rr_ -> getValue("A_uscita");
+    int B_netto = rr_ -> getValue("B_ingresso") - rr_ -> getValue("B_uscita");
+    //concentrazione* volume (DiffusionGrid::GetBoxLength())
+    //A netto < 0: the cell eats something from the environment
+    if (A_netto < 0){
+      int A_Concentration = static_cast<int>(aDiffGrid -> GetConcentration(pos));
+      //Check if there's A in the environment and eat it
+      if(A_Concentration > 0){
+        aDiffGrid -> IncreaseConcentrationBy(iA, A_netto);
+      }
 
-    //std::cout << rr_ -> getValue("A_uscita");
-    //concentrazione * volume (DiffusionGrid::GetBoxLength())
-    if(A_Concentration > 0){
-      rr_ -> setValue("Aext", rr_ -> getValue("Aext") +  A_Concentration);
-      //si mangia / aggiunge è la diff tra a_uscita e a_ingresso
-      int A_netto = rr_ -> getValue("A_ingresso") - rr_ -> getValue("A_uscita");
-      //aDiffGrid -> IncreaseConcentrationBy(iA, A_netto);
-      std::cout << "A_netto: "<<A_netto <<std::endl;
-      //aDiffGrid -> IncreaseConcentrationBy(iA, -A_Concentration*0.1);
+    }else{
+      //A_netto is positive so the cell eject A in the environment
+      aDiffGrid -> IncreaseConcentrationBy(iA, A_netto);
+
     }
-    if(B_Concentration > 0){
-      rr_ -> setValue("Bext", rr_ -> getValue("Bext") + B_Concentration);
-      int B_netto = rr_ -> getValue("B_ingresso") - rr_ -> getValue("B_uscita");
-      //bDiffGrid -> IncreaseConcentrationBy(iA, B_netto);
-      std::cout << "B_netto: "<<B_netto<<std::endl;
-      
-      //bDiffGrid -> IncreaseConcentrationBy(iB, -B_Concentration*0.1);
+
+    
+    //B_netto < 0: the cell eats something from the environment
+    if (B_netto < 0){
+      int B_Concentration = static_cast<int>(bDiffGrid -> GetConcentration(pos));
+      //check if there's B in the environment
+      if(B_Concentration > 0){      
+        bDiffGrid -> IncreaseConcentrationBy(iB, B_netto);
+      }
+
+    }else{
+      bDiffGrid -> IncreaseConcentrationBy(iB, B_netto);
     }
+
+    //set new concentrations of Aext and Bnext
+    int Avolume = aDiffGrid->GetBoxVolume();
+    int Bvolume = bDiffGrid->GetBoxVolume();
+    int newAext = (rr_ ->getValue("Aext")*Avolume - A_netto )/Avolume;
+    int newBext = (rr_ ->getValue("Bext")*Bvolume - B_netto )/Bvolume;
+    rr_->setValue("Aext",newAext );
+    rr_->setValue("Bext",newBext );
+    std::cout << "new Aext: "<< newAext 
+              <<"\nnew Bext:" << newBext
+              <<"\n A netto: "<< A_netto <<" B netto: " << B_netto <<std::endl;
     //std::cout << B_Concentration << std::endl;
   }
   //Append volume value to text file
@@ -175,7 +196,7 @@ struct SbmlModule : public BaseBiologyModule {
         // rr_ -> setValue("Bext", cell -> GetBExt());
       }
 
-      ExchangeSubstances(so -> GetPosition());
+
 
       
      
@@ -185,16 +206,19 @@ struct SbmlModule : public BaseBiologyModule {
       //Integration pass
       rr_->getIntegrator()->integrate(0 * dt_, dt_);
       
+
+      ExchangeSubstances(so -> GetPosition());
+
       //A_uscita quantità prodotta, A_ingresso quantità consumata
       //la differenza è quello che inserisce all'ambiente
       //fare ciò ad ogni integrazione
       //prima di ogni integrazione van rimesse a 0
-      // if(i != 399){
-      //   rr_ -> setValue("A_uscita",0);
-      //   rr_ -> setValue("A_ingresso",0);
-      //   rr_ -> setValue("B_uscita",0);
-      //   rr_ -> setValue("B_ingresso",0);
-      // }
+//      if(i != 399){
+        rr_ -> setValue("A_uscita",0);
+        rr_ -> setValue("A_ingresso",0);
+        rr_ -> setValue("B_uscita",0);
+        rr_ -> setValue("B_ingresso",0);
+  //    }
       
       
       SaveToFile(so -> GetUid(),i);   

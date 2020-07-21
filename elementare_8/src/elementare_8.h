@@ -61,9 +61,8 @@ inline int Simulate(int argc, const char** argv) {
   // roadrunner options
   rr::SimulateOptions opt;
   opt.start = 0;
-  opt.duration = 10;
-  opt.steps = 20;
-
+  opt.duration = 100;
+  opt.steps = 300;
   auto set_param = [&](Param* param) {
     param->simulation_time_step_ = opt.duration / opt.steps;
     param->bound_space_ = true;
@@ -96,11 +95,11 @@ inline int Simulate(int argc, const char** argv) {
   positions.push_back({110,110,110});
   positions.push_back({0,0,0});
 
-
   ModelInitializer::CreateCells(positions, construct);
   //Chiedere cosa intende per risoluzione (terzo parametro)
-//la risoluzione si basa sulla dimensione del Cubo della dimensione
-//Boxlength (lunghezza dei singoli cubi) = Lunghezza Cubo simulazione / resolution
+ //la risoluzione si basa sulla dimensione del Cubo della dimensione
+ //Boxlength (lunghezza dei singoli cubi) = Lunghezza Cubo simulazione / resolution
+
   ModelInitializer::DefineSubstance(Bspecie, "Bspecie",0.0005, 0, 250);
   ModelInitializer::DefineSubstance(Aspecie, "Aspecie",0.0005, 0, 250);
   
@@ -113,7 +112,7 @@ inline int Simulate(int argc, const char** argv) {
   simulation.GetScheduler()->Simulate(opt.steps);
   auto stop = Timing::Timestamp();
   std::cout << "RUNTIME " << (stop - start) << std::endl;
-
+  
  /*Export to file */
 
   std::cout << "Simulation completed successfully!" << std::endl;
