@@ -214,6 +214,7 @@ struct SbmlModule : public BaseBiologyModule {
       //fare ciò ad ogni integrazione
       //prima di ogni integrazione van rimesse a 0
 //      if(i != 399){
+        SaveToFile(so -> GetUid(),i);   
         rr_ -> setValue("A_uscita",0);
         rr_ -> setValue("A_ingresso",0);
         rr_ -> setValue("B_uscita",0);
@@ -221,7 +222,7 @@ struct SbmlModule : public BaseBiologyModule {
   //    }
       
       
-      SaveToFile(so -> GetUid(),i);   
+
 
       //UpdateSpecies();
    
