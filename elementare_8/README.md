@@ -4,28 +4,33 @@ __NOTE__:
 
 * _random change_ on initialization default values (step 1 instead of 0)
 * _random change_ of values after division
-* no changes applied to A_ingresso, A_uscita, B_ingresso, B_uscita after integration
-* Aext and Bext are increased if the cell is near a substance by 10% of the substance each step
-* the substances are decreased by the amount "eaten" by the cell
+* A_ingresso, A_uscita, B_ingresso, B_uscita set to 0 after integration
+* Aext and Bext are changed as follows __[Aext]' = ([Aext]*Volume-A_netto)/Volume__ and __[Bext]' = ([Bext]*Volume-A_netto)/Volume__
+* the substances in the environment are changed by the amount A_netto and B_netto
 
 * __random change__ is between [-10%; +10%] appliet to A, B, C, L
 
 ## Cell positions
-![cell_position](positions.png)
+![cell_position](datas/positions.png)
 
 ## Cell positions with A and B in the environment
-![environment](cell_and_substances.png)
+![environment](datas/cell_and_substances.jpeg)
 
 __Note__: A and B are cubes, they're just not completely well renderized
 
-## step 0
-![step0](step0.png)
 
-## After some step
-![some_step](some_step.png)
+## After few steps
+![some_step](datas/few_steps.jpeg)
+
+## After about 100 steps
+![more_step](datas/more_steps.jpeg)
 
 # Major problem to fix ASAP
 Susbtances A and B are not both cubes, for some unidentified reason B does not come out as cube
+
+# Memory usage
+the following statistics shows how the substances use a very large amount of memory 
+![statistics](datas/statistics.jpg)
 
 # Some graph of single cell metabolism
 
@@ -44,7 +49,3 @@ Susbtances A and B are not both cubes, for some unidentified reason B does not c
 
 __TODO__  
 * Implement inheritance of sbml module (daughter cells have no module at the moment)
-* Does the cell expel some substance?
-* How to check the parameters A-ingresso Aext-A; B-ingresso Bext-B; B-uscita B_Bext; A-uscita A_Aext 
-  and how they should be modified
-* The species to multiply by 0.3... after division are just A,B,C?
