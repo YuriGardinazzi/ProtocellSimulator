@@ -25,8 +25,6 @@ __Note__: A and B are cubes, they're just not completely well renderized
 ## After about 100 steps
 ![more_step](datas/more_steps.jpeg)
 
-# Major problem to fix ASAP
-Susbtances A and B are not both cubes, for some unidentified reason B does not come out as cube
 
 # Memory usage
 the following statistics shows how the substances use a very large amount of memory 
