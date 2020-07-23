@@ -1,11 +1,11 @@
 # Elementare 8
 
-__NOTE__: 
+__NOTES__: 
 
 * _random change_ on initialization default values (step 1 instead of 0)
 * _random change_ of values after division
 * A_ingresso, A_uscita, B_ingresso, B_uscita set to 0 after integration
-* Aext and Bext are changed as follows __[Aext]' = ([Aext]*Volume-A_netto)/Volume__ and __[Bext]' = ([Bext]*Volume-A_netto)/Volume__
+* Aext and Bext are changed as follows __[Aext]' = ([Aext]*Volume-A_netto)/Volume__ and __[Bext]' = ([Bext]*Volume-B_netto)/Volume__
 * the substances in the environment are changed by the amount A_netto and B_netto
 
 * __random change__ is between [-10%; +10%] appliet to A, B, C, L
@@ -16,7 +16,6 @@ __NOTE__:
 ## Cell positions with A and B in the environment
 ![environment](datas/cell_and_substances.jpeg)
 
-__Note__: A and B are cubes, they're just not completely well renderized
 
 
 ## After few steps
@@ -27,22 +26,21 @@ __Note__: A and B are cubes, they're just not completely well renderized
 
 
 # Memory usage
-the following statistics shows how the substances use a very large amount of memory 
+the following statistics shows how the substances use a very large amount of memory.
+The duration of entire simulation was about __15 minutes__ 
 ![statistics](datas/statistics.jpg)
 
-# Some graph of single cell metabolism
+# Some graph of a single cell metabolism
 
-### Cell 0
-![cell0](Cell0.png)
+Since A_netto and B_netto are positive in the simulation with 300 steps the behaviour of the cell eating some substances in the environment doesn't appear.
 
-### Cell 1
-![cell0](Cell1.png)
+So every cell has the same graph.
 
-### Cell 2
-![cell0](Cell2.png)
+### A_netto and B_netto production 
+![netto](datas/el_8_netto.jpg)
 
-### Cell 3
-![cell0](Cell3.png)
+### Metabolism of A-B-C
+![a_b_c](datas/el_8_abc.jpg)
 
 
 __TODO__  

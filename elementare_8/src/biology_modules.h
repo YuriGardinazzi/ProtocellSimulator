@@ -65,24 +65,6 @@ struct SbmlModule : public BaseBiologyModule {
   }
 
 
-  //Correct the value of all species
-  //
-  void UpdateSpecies(){
-    float A = rr_ -> getValue("A_0");
-    float B = rr_ -> getValue("B_0");
-    float C = rr_ -> getValue("C");
-    float p = rr_ -> getValue("p");
-  
-    float v = rr_ -> getValue("compartment");
-    int co = rr_ -> getValue("Compl");
-    //FIXME: Errors are raised in the simulation
-    //FIXME: Update formulas with the one of the pdf
-    // rr_ -> setValue("A_0",static_cast<int>(-v*1e-19*A*B+v*1e+17));
-    // rr_ -> setValue("B_0",static_cast<int>(-v*1e-19*A*B+v*1e+17));
-    // rr_ -> setValue("C",static_cast<int>(+v*1e-19*A*B));
-    // rr_ -> setValue("L",static_cast<int>(+v*1e-17*p*C));
-  }
-
   //Perfom the exchange of substances with the environment
   // in this case just A and B
 
@@ -221,16 +203,13 @@ struct SbmlModule : public BaseBiologyModule {
         rr_ -> setValue("B_ingresso",0);
   //    }
       
-      
-
-
-      //UpdateSpecies();
+    
    
       if (rr_ -> getValue("L") > 20000 && active_){
           //multiply lipids by 0.5
           rr_ -> setValue("L", rr_ -> getValue("L")/2);
           cell -> SetL(rr_ -> getValue("L"));
-          //UpdateSpecies();
+          
          // active_ = false;  <- cells keep replicating
           MultiplyAllSpecies(0.353553391);
           //update Cell Values
