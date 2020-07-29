@@ -28,6 +28,7 @@ __NOTES__:
 
 # Memory usage
 the following statistics shows how the substances use a very large amount of memory.
+
 Parameters of the substances: 
 * resolution: 250
 * diffusion coefficient: 0.0005
