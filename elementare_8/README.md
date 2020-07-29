@@ -43,10 +43,10 @@ Since A_netto and B_netto are positive in the simulation with 300 steps the beha
 So every cell has the same graph.
 
 ### A_netto and B_netto production 
-![netto](datas/el_8_netto.jpg)
+![netto](datas/Netto.jpg)
 
 ### Metabolism of A-B-C
-![a_b_c](datas/el_8_abc.jpg)
+![a_b_c](datas/abc.jpg)
 
 
 __TODO__  
