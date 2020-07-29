@@ -184,7 +184,7 @@ struct SbmlModule : public BaseBiologyModule {
      
       cell -> SetL(rr_ -> getValue("L"));
 
-      //UpdateVolume();
+      UpdateVolume();
       //Integration pass
       rr_->getIntegrator()->integrate(0 * dt_, dt_);
       
