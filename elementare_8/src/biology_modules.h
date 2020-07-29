@@ -109,13 +109,13 @@ struct SbmlModule : public BaseBiologyModule {
     //set new concentrations of Aext and Bnext
     int Avolume = aDiffGrid->GetBoxVolume();
     int Bvolume = bDiffGrid->GetBoxVolume();
-    int newAext = (rr_ ->getValue("Aext")*Avolume - A_netto )/Avolume;
-    int newBext = (rr_ ->getValue("Bext")*Bvolume - B_netto )/Bvolume;
-    rr_->setValue("Aext",newAext );
-    rr_->setValue("Bext",newBext );
-    std::cout << "new Aext: "<< newAext 
-              <<"\nnew Bext:" << newBext
-              <<"\n A netto: "<< A_netto <<" B netto: " << B_netto <<std::endl;
+
+    auto newAext = (rr_ ->getValue("Aext")*Avolume - A_netto )/Avolume;
+    auto newBext = (rr_ ->getValue("Bext")*Bvolume - B_netto )/Bvolume;
+    
+    rr_->setValue("Aext",static_cast<int>(newAext) );
+    rr_->setValue("Bext",static_cast<int>(newBext) );
+
     //std::cout << B_Concentration << std::endl;
   }
   //Append volume value to text file
@@ -184,7 +184,7 @@ struct SbmlModule : public BaseBiologyModule {
      
       cell -> SetL(rr_ -> getValue("L"));
 
-      UpdateVolume();
+      //UpdateVolume();
       //Integration pass
       rr_->getIntegrator()->integrate(0 * dt_, dt_);
       
