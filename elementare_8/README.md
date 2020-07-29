@@ -5,6 +5,7 @@ __NOTES__:
 * _random change_ on initialization default values (step 1 instead of 0)
 * _random change_ of values after division
 * A_ingresso, A_uscita, B_ingresso, B_uscita set to 0 after integration
+* A_netto = A_ingresso - A_uscita tells us what is the amount of A that the cell consumes or ejects in the environment. (same for B_netto)
 * Aext and Bext are changed as follows __[Aext]' = ([Aext]*Volume-A_netto)/Volume__ and __[Bext]' = ([Bext]*Volume-B_netto)/Volume__
 * the substances in the environment are changed by the amount A_netto and B_netto
 
@@ -27,6 +28,11 @@ __NOTES__:
 
 # Memory usage
 the following statistics shows how the substances use a very large amount of memory.
+Parameters of the substances: 
+* resolution: 250
+* diffusion coefficient: 0.0005
+* decay costant: 0
+
 The duration of entire simulation was about __15 minutes__ 
 ![statistics](datas/statistics.jpg)
 
