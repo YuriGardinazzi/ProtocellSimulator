@@ -61,8 +61,8 @@ inline int Simulate(int argc, const char** argv) {
   // roadrunner options
   rr::SimulateOptions opt;
   opt.start = 0;
-  opt.duration = 100;
-  opt.steps = 300;
+  opt.duration = 1000;
+  opt.steps = 3000;
   auto set_param = [&](Param* param) {
     param->simulation_time_step_ = opt.duration / opt.steps;
     param->bound_space_ = true;
@@ -100,10 +100,13 @@ inline int Simulate(int argc, const char** argv) {
  //la risoluzione si basa sulla dimensione del Cubo della dimensione
  //Boxlength (lunghezza dei singoli cubi) = Lunghezza Cubo simulazione / resolution
 
-  ModelInitializer::DefineSubstance(Bspecie, "Bspecie",0.0005, 0, 250);
-  ModelInitializer::DefineSubstance(Aspecie, "Aspecie",0.0005, 0, 250);
+  ModelInitializer::DefineSubstance(Bspecie, "Bspecie",0.0005, 0, 50);
+  ModelInitializer::DefineSubstance(Aspecie, "Aspecie",0.0005, 0, 50);
   
-
+  /**
+   * Valore iniziale di Aext/Bext fratto il volume del cubettino della griglia
+   * 
+   * **/
   ModelInitializer::InitializeSubstance(Bspecie, "Bspecie",PersonalizedCube(180,50,50,50));
   ModelInitializer::InitializeSubstance(Aspecie, "Aspecie",PersonalizedCube(180,50,50,50));
   

@@ -78,6 +78,15 @@ struct SbmlModule : public BaseBiologyModule {
   
     int A_netto = rr_ -> getValue("A_ingresso") - rr_ -> getValue("A_uscita");
     int B_netto = rr_ -> getValue("B_ingresso") - rr_ -> getValue("B_uscita");
+    
+    /** 
+     * Salvare il valore Aext dell'ambiente 
+     * Calcolare quello nuovo 
+     * Utilizzare la differenza in IncreaseConcentration.
+     * 
+     * A_netto se positivo mangia roba da fuori
+     * **/
+    
     //concentrazione* volume (DiffusionGrid::GetBoxLength())
     //A netto < 0: the cell eats something from the environment
     if (A_netto < 0){
@@ -112,7 +121,7 @@ struct SbmlModule : public BaseBiologyModule {
 
     auto newAext = (rr_ ->getValue("Aext")*Avolume - A_netto )/Avolume;
     auto newBext = (rr_ ->getValue("Bext")*Bvolume - B_netto )/Bvolume;
-    
+    //newAext - VecchioAext = valore da incrementare
     rr_->setValue("Aext",static_cast<int>(newAext) );
     rr_->setValue("Bext",static_cast<int>(newBext) );
 
