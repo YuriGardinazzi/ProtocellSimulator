@@ -75,6 +75,8 @@ struct SbmlModule : public BaseBiologyModule {
     size_t iA = aDiffGrid -> GetBoxIndex(pos);
     size_t iB = bDiffGrid -> GetBoxIndex(pos);
     
+    int Avolume = aDiffGrid->GetBoxVolume();
+    int Bvolume = bDiffGrid->GetBoxVolume();
   
     int A_netto = rr_ -> getValue("A_ingresso") - rr_ -> getValue("A_uscita");
     int B_netto = rr_ -> getValue("B_ingresso") - rr_ -> getValue("B_uscita");
@@ -86,38 +88,45 @@ struct SbmlModule : public BaseBiologyModule {
      * 
      * A_netto se positivo mangia roba da fuori
      * **/
-    
-    //concentrazione* volume (DiffusionGrid::GetBoxLength())
-    //A netto < 0: the cell eats something from the environment
-    if (A_netto < 0){
-      int A_Concentration = static_cast<int>(aDiffGrid -> GetConcentration(pos));
+       
+    int A_Concentration = static_cast<int>(aDiffGrid -> GetConcentration(pos));
+    auto newExternalAExt = (A_Concentration*Avolume - A_netto )/Avolume;
+    auto increaseAValue = newExternalAExt - A_Concentration/Avolume;
+    //std::cout << "A_conc: " << A_Concentration << " newAext: " << newExternalAExt << " value: "<<increaseAValue << std::endl;
+    //A netto > 0: the cell eats something from the environment
+    if (A_netto > 0){
+      
       //Check if there's A in the environment and eat it
       if(A_Concentration > 0){
-        aDiffGrid -> IncreaseConcentrationBy(iA, A_netto);
+        std::cout << "A eaten by : " << increaseAValue << std::endl;
+        aDiffGrid -> IncreaseConcentrationBy(iA, increaseAValue);
       }
 
     }else{
-      //A_netto is positive so the cell eject A in the environment
-      aDiffGrid -> IncreaseConcentrationBy(iA, A_netto);
+      std::cout << "A ejected by : " << increaseAValue << std::endl;
+      //A_netto is negative so the cell eject A in the environment
+      aDiffGrid -> IncreaseConcentrationBy(iA, increaseAValue);
 
     }
 
     
+    int B_Concentration = static_cast<int>(bDiffGrid -> GetConcentration(pos));
+    auto newExternalBExt = (B_Concentration*Avolume -B_netto )/Bvolume;
+    auto increaseBValue = newExternalBExt - B_Concentration/Bvolume;
+
     //B_netto < 0: the cell eats something from the environment
     if (B_netto < 0){
-      int B_Concentration = static_cast<int>(bDiffGrid -> GetConcentration(pos));
       //check if there's B in the environment
       if(B_Concentration > 0){      
-        bDiffGrid -> IncreaseConcentrationBy(iB, B_netto);
+        bDiffGrid -> IncreaseConcentrationBy(iB, increaseBValue);
       }
 
     }else{
-      bDiffGrid -> IncreaseConcentrationBy(iB, B_netto);
+      bDiffGrid -> IncreaseConcentrationBy(iB, increaseBValue);
     }
 
     //set new concentrations of Aext and Bnext
-    int Avolume = aDiffGrid->GetBoxVolume();
-    int Bvolume = bDiffGrid->GetBoxVolume();
+
 
     auto newAext = (rr_ ->getValue("Aext")*Avolume - A_netto )/Avolume;
     auto newBext = (rr_ ->getValue("Bext")*Bvolume - B_netto )/Bvolume;

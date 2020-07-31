@@ -62,11 +62,11 @@ inline int Simulate(int argc, const char** argv) {
   rr::SimulateOptions opt;
   opt.start = 0;
   opt.duration = 1000;
-  opt.steps = 3000;
+  opt.steps = 2000;
   auto set_param = [&](Param* param) {
     param->simulation_time_step_ = opt.duration / opt.steps;
     param->bound_space_ = true;
-    param->min_bound_ = -500;
+    param->min_bound_ = 0;
     param->max_bound_ = 500;
   };
 
@@ -90,10 +90,11 @@ inline int Simulate(int argc, const char** argv) {
   };
 
   std::vector<Double3> positions;
-  positions.push_back({100, 100, 100});
+  positions.push_back({250, 250, 250});
+  positions.push_back({250,245,250});
   positions.push_back({200,200,200});
-  positions.push_back({110,110,110});
-  positions.push_back({0,0,0});
+  positions.push_back({160,160,160});
+  positions.push_back({300,300,300});
 
   ModelInitializer::CreateCells(positions, construct);
   //Chiedere cosa intende per risoluzione (terzo parametro)
@@ -106,9 +107,15 @@ inline int Simulate(int argc, const char** argv) {
   /**
    * Valore iniziale di Aext/Bext fratto il volume del cubettino della griglia
    * 
+   * dal modello SBML A/Bext: 	2.38663484486874e+17	
+   * =>  10^3 => 1000
    * **/
-  ModelInitializer::InitializeSubstance(Bspecie, "Bspecie",PersonalizedCube(180,50,50,50));
-  ModelInitializer::InitializeSubstance(Aspecie, "Aspecie",PersonalizedCube(180,50,50,50));
+  double AExtValue = 2.38663484486874e+17/1000;
+  double BExtValue = 2.38663484486874e+17/1000;
+  // double AExtValue = 20000;
+  // double BExtValue = 20000;
+  ModelInitializer::InitializeSubstance(Bspecie, "Bspecie",PersonalizedCube(AExtValue,200,200,200));
+  ModelInitializer::InitializeSubstance(Aspecie, "Aspecie",PersonalizedCube(BExtValue,200,200,200));
   
   // Run simulation
   auto start = Timing::Timestamp();
