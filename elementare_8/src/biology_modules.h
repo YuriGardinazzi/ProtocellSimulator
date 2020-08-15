@@ -88,17 +88,21 @@ struct SbmlModule : public BaseBiologyModule {
      * 
      * A_netto se positivo mangia roba da fuori
      * **/
-       
+    //newAext - VecchioAext = valore da incrementare       
     int A_Concentration = static_cast<int>(aDiffGrid -> GetConcentration(pos));
     auto newExternalAExt = (A_Concentration*Avolume - A_netto )/Avolume;
-    auto increaseAValue = newExternalAExt - A_Concentration/Avolume;
+    auto increaseAValue = newExternalAExt/Avolume - A_Concentration/Avolume;
     //std::cout << "A_conc: " << A_Concentration << " newAext: " << newExternalAExt << " value: "<<increaseAValue << std::endl;
+    
     //A netto > 0: the cell eats something from the environment
     if (A_netto > 0){
       
       //Check if there's A in the environment and eat it
-      if(A_Concentration > 0){
+      if(A_Concentration > 0){      
         std::cout << "A eaten by : " << increaseAValue << std::endl;
+        if (increaseAValue > A_Concentration){
+          aDiffGrid -> IncreaseConcentrationBy(iA, -A_Concentration);  
+        }
         aDiffGrid -> IncreaseConcentrationBy(iA, increaseAValue);
       }
 
@@ -112,12 +116,15 @@ struct SbmlModule : public BaseBiologyModule {
     
     int B_Concentration = static_cast<int>(bDiffGrid -> GetConcentration(pos));
     auto newExternalBExt = (B_Concentration*Avolume -B_netto )/Bvolume;
-    auto increaseBValue = newExternalBExt - B_Concentration/Bvolume;
+    auto increaseBValue = newExternalBExt/Bvolume - B_Concentration/Bvolume;
 
     //B_netto < 0: the cell eats something from the environment
     if (B_netto < 0){
       //check if there's B in the environment
-      if(B_Concentration > 0){      
+      if(B_Concentration > 0){    
+        if(increaseBValue > B_Concentration){
+          bDiffGrid -> IncreaseConcentrationBy(iB, -B_Concentration);  
+        }  
         bDiffGrid -> IncreaseConcentrationBy(iB, increaseBValue);
       }
 
@@ -130,7 +137,7 @@ struct SbmlModule : public BaseBiologyModule {
 
     auto newAext = (rr_ ->getValue("Aext")*Avolume - A_netto )/Avolume;
     auto newBext = (rr_ ->getValue("Bext")*Bvolume - B_netto )/Bvolume;
-    //newAext - VecchioAext = valore da incrementare
+
     rr_->setValue("Aext",static_cast<int>(newAext) );
     rr_->setValue("Bext",static_cast<int>(newBext) );
 
