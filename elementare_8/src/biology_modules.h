@@ -23,6 +23,7 @@ namespace bdm{
 // Define SbmlModule to simulate intracellular chemical reaction network.
 struct SbmlModule : public BaseBiologyModule {
   SbmlModule(const std::string& sbml_file, const rr::SimulateOptions& opt)
+    //: BaseBiologyModule(gAllEventIds) {
       : BaseBiologyModule(gNullEventId, gNullEventId) {
     rr_ = new rr::RoadRunner(sbml_file);
     rr_->getSimulateOptions() = opt;
@@ -91,23 +92,31 @@ struct SbmlModule : public BaseBiologyModule {
     //newAext - VecchioAext = valore da incrementare       
     int A_Concentration = static_cast<int>(aDiffGrid -> GetConcentration(pos));
     auto newExternalAExt = (A_Concentration*Avolume - A_netto )/Avolume;
-    auto increaseAValue = newExternalAExt/Avolume - A_Concentration/Avolume;
-    //std::cout << "A_conc: " << A_Concentration << " newAext: " << newExternalAExt << " value: "<<increaseAValue << std::endl;
+    auto increaseAValue = newExternalAExt - A_Concentration/Avolume;
+    std::cout << "A_conc: " << A_Concentration <<" A_netto: "<< A_netto  <<" newAext: " << newExternalAExt << " value: "<<increaseAValue << std::endl;
     
     //A netto > 0: the cell eats something from the environment
     if (A_netto > 0){
       
       //Check if there's A in the environment and eat it
       if(A_Concentration > 0){      
-        std::cout << "A eaten by : " << increaseAValue << std::endl;
+        //std::cout << "A eaten by : " << increaseAValue << std::endl;
+        
+        /**
+         * Se il valore che devo togliere dall'ambiente è maggiore di quello attualmente presente
+         * tolgo solo quello presente
+         * TODO: gestire in modo coerente anche i valori della cellula
+         * */
         if (increaseAValue > A_Concentration){
           aDiffGrid -> IncreaseConcentrationBy(iA, -A_Concentration);  
+        } else{
+          aDiffGrid -> IncreaseConcentrationBy(iA, increaseAValue);
         }
-        aDiffGrid -> IncreaseConcentrationBy(iA, increaseAValue);
+        
       }
 
-    }else{
-      std::cout << "A ejected by : " << increaseAValue << std::endl;
+    }else if (A_netto <0){
+      //std::cout << "A ejected by : " << increaseAValue << std::endl;
       //A_netto is negative so the cell eject A in the environment
       aDiffGrid -> IncreaseConcentrationBy(iA, increaseAValue);
 
@@ -116,19 +125,28 @@ struct SbmlModule : public BaseBiologyModule {
     
     int B_Concentration = static_cast<int>(bDiffGrid -> GetConcentration(pos));
     auto newExternalBExt = (B_Concentration*Avolume -B_netto )/Bvolume;
-    auto increaseBValue = newExternalBExt/Bvolume - B_Concentration/Bvolume;
+    auto increaseBValue = newExternalBExt - B_Concentration/Bvolume;
 
     //B_netto < 0: the cell eats something from the environment
     if (B_netto < 0){
       //check if there's B in the environment
       if(B_Concentration > 0){    
+                
+        /**
+         * Se il valore che devo togliere dall'ambiente è maggiore di quello attualmente presente
+         * tolgo solo quello presente
+         * TODO: gestire in modo coerente anche i valori della cellula
+         * */
+        
         if(increaseBValue > B_Concentration){
           bDiffGrid -> IncreaseConcentrationBy(iB, -B_Concentration);  
-        }  
-        bDiffGrid -> IncreaseConcentrationBy(iB, increaseBValue);
+        }else{
+          bDiffGrid -> IncreaseConcentrationBy(iB, increaseBValue);
+        }
+        
       }
 
-    }else{
+    }else if (B_netto <0){
       bDiffGrid -> IncreaseConcentrationBy(iB, increaseBValue);
     }
 
@@ -161,7 +179,9 @@ struct SbmlModule : public BaseBiologyModule {
               rr_ -> getValue("A_uscita")  << ";" << 
               rr_ -> getValue("A_ingresso")  <<";" <<
               rr_ -> getValue("B_uscita")  << ";" <<
-              rr_ -> getValue("B_ingresso")  << std::endl;
+              rr_ -> getValue("B_ingresso") <<";"<<
+              rr_ -> getValue("A_ingresso") -rr_ -> getValue("A_uscita") <<";" <<
+              rr_ -> getValue("B_ingresso") -rr_ -> getValue("B_uscita") << std::endl;
   }
   //update volume
   void UpdateVolume(){
@@ -231,6 +251,7 @@ struct SbmlModule : public BaseBiologyModule {
     
    
       if (rr_ -> getValue("L") > 20000 && active_){
+          std::cout<<"Cell: "<< so -> GetUid()<<" DIVISIONE " << std::endl;
           //multiply lipids by 0.5
           rr_ -> setValue("L", rr_ -> getValue("L")/2);
           cell -> SetL(rr_ -> getValue("L"));

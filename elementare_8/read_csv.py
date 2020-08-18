@@ -10,7 +10,7 @@ with open('volume.csv') as file:
         if not row['id'] in id:
             id.add(row['id'])
             table[row['id']] = {'step':[],'volume':[], 'A_0':[],'B_0':[], 'C':[], 'L':[], 'p':[], 'Compl':[],\
-                 'Aext':[],  'Bext':[],'A_uscita':[], 'A_ingresso':[],'B_uscita':[], 'B_ingresso':[]}
+                 'Aext':[],  'Bext':[],'A_uscita':[], 'A_ingresso':[],'B_uscita':[], 'B_ingresso':[],'A_netto':[], "B_netto":[]}
         table[row['id']]['step'].append(row['step'])
         table[row['id']]['volume'].append(row['volume'])
         table[row['id']]['A_0'].append(row['A_0'])
@@ -25,9 +25,11 @@ with open('volume.csv') as file:
         table[row['id']]['A_ingresso'].append(row['A_ingresso'])
         table[row['id']]['B_uscita'].append(row['B_uscita'])
         table[row['id']]['B_ingresso'].append(row['B_ingresso'])
+        table[row['id']]['A_netto'].append(row['A_netto'])
+        table[row['id']]['B_netto'].append(row['B_netto'])
 for key in table:
     with open(key+".csv",'w') as file:
-        file.write("step;volume;A_0;B_0;C;L;p;Compl;Aext;Bext;A_ingresso;A_uscita;B_ingresso;B_uscita\n")
+        file.write("step;volume;A_0;B_0;C;L;p;Compl;Aext;Bext;A_ingresso;A_uscita;B_ingresso;B_uscita;A_netto;B_netto\n")
         for i in range(len(table[key]['step'])):
                 file.write(table[key]['step'][i]+ ";"+table[key]['volume'][i] 
                            +";"+table[key]['A_0'][i] \
@@ -41,4 +43,5 @@ for key in table:
                            +";"+table[key]['A_ingresso'][i] \
                            +";"+table[key]['A_uscita'][i] \
                            +";"+table[key]['B_ingresso'][i] \
-                           +";"+table[key]['B_uscita'][i] +"\n")
+                           +";"+table[key]['A_netto'][i] \
+                           +";"+table[key]['B_netto'][i] +"\n")

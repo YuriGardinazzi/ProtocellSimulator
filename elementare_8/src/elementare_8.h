@@ -56,13 +56,15 @@ inline int Simulate(int argc, const char** argv) {
               "A_uscita"  << ";" << 
               "A_ingresso"  <<";" <<
                "B_uscita" << ";" <<
-               "B_ingresso" <<    std::endl;
+               "B_ingresso" <<";"<<
+               "A_netto"<<";"<<
+               "B_netto"<<";"<<    std::endl;
   outfile.close();
   // roadrunner options
   rr::SimulateOptions opt;
   opt.start = 0;
-  opt.duration = 50;
-  opt.steps = 100;
+  opt.duration = 1000;
+  opt.steps = 2000;
   auto set_param = [&](Param* param) {
     param->simulation_time_step_ = opt.duration / opt.steps;
     param->bound_space_ = true;
@@ -93,8 +95,8 @@ inline int Simulate(int argc, const char** argv) {
   positions.push_back({250, 250, 250});
   //positions.push_back({250,245,250});
   positions.push_back({200,200,200});
-  //positions.push_back({160,160,160});
-  //positions.push_back({300,300,300});
+  positions.push_back({250,250,260});
+  positions.push_back({300,300,300});
 
   ModelInitializer::CreateCells(positions, construct);
   //Chiedere cosa intende per risoluzione (terzo parametro)
