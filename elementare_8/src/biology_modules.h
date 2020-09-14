@@ -93,7 +93,7 @@ struct SbmlModule : public BaseBiologyModule {
     int A_Concentration = static_cast<int>(aDiffGrid -> GetConcentration(pos));
     auto newExternalAExt = (A_Concentration*Avolume - A_netto )/Avolume;
     auto increaseAValue = newExternalAExt - A_Concentration/Avolume;
-    std::cout << "A_conc: " << A_Concentration <<" A_netto: "<< A_netto  <<" newAext: " << newExternalAExt << " value: "<<increaseAValue << std::endl;
+    //std::cout << "A_conc: " << A_Concentration <<" A_netto: "<< A_netto  <<" newAext: " << newExternalAExt << " value: "<<increaseAValue << std::endl;
     
     //A netto > 0: the cell eats something from the environment
     if (A_netto > 0){
