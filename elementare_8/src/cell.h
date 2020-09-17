@@ -18,7 +18,8 @@ class MyCell : public Cell {
   /// Default event constructor
   MyCell(const Event& event, SimObject* other, uint64_t new_oid = 0)
       : Base(event, other, new_oid) {
-
+        
+        //AddBiologyModule
         //TODO: inherit substances from mother and update RR
         if (auto* mother = dynamic_cast<MyCell*>(other)) {
           if(mother -> GetIsBornAfterDivision()){

@@ -63,8 +63,8 @@ inline int Simulate(int argc, const char** argv) {
   // roadrunner options
   rr::SimulateOptions opt;
   opt.start = 0;
-  opt.duration = 2000;
-  opt.steps = 4000;
+  opt.duration = 500;
+  opt.steps = 1000;
   auto set_param = [&](Param* param) {
     param->simulation_time_step_ = opt.duration / opt.steps;
     param->bound_space_ = true;
@@ -99,12 +99,13 @@ inline int Simulate(int argc, const char** argv) {
   positions.push_back({300,300,300});
 
   ModelInitializer::CreateCells(positions, construct);
-  //Chiedere cosa intende per risoluzione (terzo parametro)
+  //risoluzione = numero di cubettini che vogliamo
  //la risoluzione si basa sulla dimensione del Cubo della dimensione
  //Boxlength (lunghezza dei singoli cubi) = Lunghezza Cubo simulazione / resolution
 
-  ModelInitializer::DefineSubstance(Bspecie, "Bspecie",0.0005, 0, 50);
-  ModelInitializer::DefineSubstance(Aspecie, "Aspecie",0.0005, 0, 50);
+  //                                 diff coeff. decay costant , resolution
+  ModelInitializer::DefineSubstance(Bspecie, "Bspecie",2, 0, 10);
+  ModelInitializer::DefineSubstance(Aspecie, "Aspecie",2, 0, 10);
   
   /**
    * Valore iniziale di Aext/Bext fratto il volume del cubettino della griglia
@@ -114,8 +115,8 @@ inline int Simulate(int argc, const char** argv) {
    * **/
   //double AExtValue = 2.38663484486874e+17/1000;
   //double BExtValue = 2.38663484486874e+17/1000;
-   double AExtValue = 20000;
-   double BExtValue = 20000;
+  double AExtValue = 1000;
+  double BExtValue = 1000;
   ModelInitializer::InitializeSubstance(Bspecie, "Bspecie",PersonalizedCube(AExtValue,200,200,200));
   ModelInitializer::InitializeSubstance(Aspecie, "Aspecie",PersonalizedCube(BExtValue,200,200,200));
   
