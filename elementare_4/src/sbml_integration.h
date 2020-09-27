@@ -24,7 +24,8 @@
 #include <TGraph.h>
 #include <TMultiGraph.h>
 #include <TPad.h>
-
+#include <TLegend.h>
+#include <TLegendEntry.h>
 #include "rrException.h"
 #include "rrExecutableModel.h"
 #include "rrLogger.h"
@@ -226,7 +227,7 @@ struct SbmlModule : public BaseBiologyModule {
         result_(i, j + 1) = partial_result(0, j);
       }
 
-      UpdateSpecies();
+      //UpdateSpecies();
 
       if (cell -> GetL() > 20000 && active_){
           //multiply lipids by 0.5
@@ -303,6 +304,22 @@ inline void AddToPlot(TMultiGraph* mg, const ls::Matrix<double>* result) {
   mg->Add(gr3);
   //mg->Add(gr4);
   mg->Draw("AL C C");
+
+  auto* legend = new TLegend(0.8,0.7,0.90,0.9);
+
+
+   
+  TLegendEntry *le = legend->AddEntry(gr,"A","l");
+  le->SetTextColor(2);
+  TLegendEntry *le1 = legend->AddEntry(gr1,"B","l");
+  le1->SetTextColor(3);
+  TLegendEntry *le2 = legend->AddEntry(gr2,"C","l");
+  le2->SetTextColor(4);
+  TLegendEntry *le3 = legend->AddEntry(gr3,"L","l");
+  le3->SetTextColor(5);
+
+  legend -> Draw();
+
 }
 
 inline void PlotSbmlModules(const char* filename) {
@@ -343,7 +360,7 @@ inline int Simulate(int argc, const char** argv) {
   rr::SimulateOptions opt;
   opt.start = 0;
   opt.duration = 100;
-  opt.steps = 1000;
+  opt.steps = 500;
 
   auto set_param = [&](Param* param) {
     param->simulation_time_step_ = opt.duration / opt.steps;
