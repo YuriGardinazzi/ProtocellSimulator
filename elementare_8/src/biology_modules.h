@@ -4,7 +4,7 @@
 
 #include "biodynamo.h"
 #include "substances.h"
-#include "cell.h"
+//#include "cell.h"
 #include "rrException.h"
 #include "rrExecutableModel.h"
 #include "rrLogger.h"
@@ -22,11 +22,68 @@ namespace bdm{
 
 // Define SbmlModule to simulate intracellular chemical reaction network.
 struct SbmlModule : public BaseBiologyModule {
-  SbmlModule(const std::string& sbml_file, const rr::SimulateOptions& opt)
-    //: BaseBiologyModule(gAllEventIds) {
-      : BaseBiologyModule(gNullEventId, gNullEventId) {
-    rr_ = new rr::RoadRunner(sbml_file);
-    rr_->getSimulateOptions() = opt;
+  BDM_BM_HEADER(SbmlModule, BaseBiologyModule, 1)
+  //BDM_STATELESS_BM_HEADER(SbmlModule,BaseBiologyModule,1);
+  
+  // SbmlModule(const std::string& sbml_file, const rr::SimulateOptions& opt)
+  //   : BaseBiologyModule(gAllEventIds) {
+  SbmlModule()
+    : BaseBiologyModule(gAllEventIds) {  
+    //  : BaseBiologyModule(gNullEventId, gNullEventId) {
+   //   Initialize(sbml_file, opt);
+   Initialize();
+
+  }
+  SbmlModule(int A, int B, int C, int L)
+    : BaseBiologyModule(gAllEventIds) {  
+    //  : BaseBiologyModule(gNullEventId, gNullEventId) {
+   //   Initialize(sbml_file, opt);
+   std::cout << "costruttore figlia "<<A << " " << B << " "<<C <<" "<<L << std::endl;
+   Initialize();
+    this -> inherited_ = true;
+    this -> A_ = abs(A);
+    this -> B_ = abs(B);
+    this -> C_ = abs(C);
+    this -> L_ = abs(L);
+  }
+
+  SbmlModule(const SbmlModule& other) {
+    auto mother_sbml_module = bdm_static_cast<const SbmlModule*>(&other);
+    //auto mother_sbml_module = dynamic_cast<SbmlModule*>(&other);
+    Initialize();
+    // std::cout << "son dentro il modulo bello" << std::endl;
+    // if (mother_sbml_module -> divided_){
+    //  // mother_sbml_module -> divided_ = false;
+    //   std::cout << "son dentro l'if "<< std::endl;
+    //   this -> A_ = mother_sbml_module -> A_;
+    //   this -> B_ = mother_sbml_module -> B_;
+    //   this -> C_ = mother_sbml_module -> C_;
+    //   this -> L_ = mother_sbml_module -> L_;
+    //   this -> inherited_ = true;
+    // }
+    //Initialize(other_sbml_bm->sbml_file_, other_sbml_bm->initial_options_);
+  }
+
+  virtual ~SbmlModule() { delete rr_; }
+
+  SbmlModule(const Event& event, BaseBiologyModule* other, uint64_t new_oid = 0)
+      : BaseBiologyModule(event, other, new_oid) {
+      }
+  
+  // void Initialize(const std::string& sbml_file,
+  //                 const rr::SimulateOptions& opt) {
+  void Initialize() {
+    
+    rr::SimulateOptions opt;
+    opt.start = 0;
+    opt.duration = 400;
+    opt.steps = 870;
+    std::string sbml_file = "src/sbml_model.xml";
+    sbml_file_ = sbml_file; 
+    initial_options_ = opt;
+
+    rr_ = new rr::RoadRunner(sbml_file_);
+    rr_->getSimulateOptions() = initial_options_;
     // setup integrator
     rr_->setIntegrator("gillespie");
     dt_ = opt.duration / opt.steps;
@@ -34,29 +91,22 @@ struct SbmlModule : public BaseBiologyModule {
     integrator->setValue("variable_step_size", false);
     integrator->setValue("initial_time_step", dt_);
     integrator->setValue("maximum_time_step", dt_);
-
   }
+  // /// Create a new instance of this object using the default constructor.
+  // BaseBiologyModule* GetInstance(const Event& event, BaseBiologyModule* other,
+  //                                uint64_t new_oid = 0) const override {
+  //   return new SbmlModule(event, other, new_oid);
+  // }
 
-  virtual ~SbmlModule() { delete rr_; }
+  // /// Create a copy of this biology module.
+  // BaseBiologyModule* GetCopy() const override { return new SbmlModule(*this); }
 
-  SbmlModule(const Event& event, BaseBiologyModule* other, uint64_t new_oid = 0)
-      : BaseBiologyModule(event, other, new_oid) {}
-
-  /// Create a new instance of this object using the default constructor.
-  BaseBiologyModule* GetInstance(const Event& event, BaseBiologyModule* other,
-                                 uint64_t new_oid = 0) const override {
-    return new SbmlModule(event, other, new_oid);
-  }
-
-  /// Create a copy of this biology module.
-  BaseBiologyModule* GetCopy() const override { return new SbmlModule(*this); }
-
-  /// Default event handler (exising biology module won't be modified on
-  /// any event)
-  void EventHandler(const Event& event, BaseBiologyModule* other1,
-                    BaseBiologyModule* other2 = nullptr) override {
-    BaseBiologyModule::EventHandler(event, other1, other2);
-  }
+  // /// Default event handler (exising biology module won't be modified on
+  // /// any event)
+  // void EventHandler(const Event& event, BaseBiologyModule* other1,
+  //                   BaseBiologyModule* other2 = nullptr) override {
+  //   BaseBiologyModule::EventHandler(event, other1, other2);
+  // }
   //Multiply all species by a value, excepts lipids "L"
   void MultiplyAllSpecies(float value){
     rr_ -> setValue("A_0", static_cast<int>(rr_ -> getValue("A_0")*value));
@@ -111,10 +161,10 @@ struct SbmlModule : public BaseBiologyModule {
          * */
         if (increaseAValue > A_Concentration){
           aDiffGrid -> IncreaseConcentrationBy(iA, -A_Concentration);  
-          std::cout << "A eaten: "<< A_Concentration << std::endl;
+          //std::cout << "A eaten: "<< A_Concentration << std::endl;
         } else{
-          std::cout << "A eaten: "<< increaseAValue << std::endl;
-          aDiffGrid -> IncreaseConcentrationBy(iA, increaseAValue);
+         // std::cout << "A eaten: "<< increaseAValue << std::endl;
+         // aDiffGrid -> IncreaseConcentrationBy(iA, increaseAValue);
         }
         
       }
@@ -122,7 +172,7 @@ struct SbmlModule : public BaseBiologyModule {
     }else if (A_netto <0){
       //std::cout << "A ejected by : " << increaseAValue << std::endl;
       //A_netto is negative so the cell eject A in the environment
-      std::cout << "A ejected: "<< increaseAValue << std::endl;
+      //std::cout << "A ejected: "<< increaseAValue << std::endl;
       aDiffGrid -> IncreaseConcentrationBy(iA, increaseAValue);
 
     }
@@ -146,9 +196,9 @@ struct SbmlModule : public BaseBiologyModule {
         
         if(increaseBValue > B_Concentration){
           bDiffGrid -> IncreaseConcentrationBy(iB, -B_Concentration); 
-          std::cout << "B eaten: "<< -B_Concentration << std::endl; 
+        //  std::cout << "B eaten: "<< -B_Concentration << std::endl; 
         }else{
-          std::cout << "B eaten: "<< increaseBValue << std::endl;
+        //  std::cout << "B eaten: "<< increaseBValue << std::endl;
           bDiffGrid -> IncreaseConcentrationBy(iB, increaseBValue);
         }
         
@@ -205,13 +255,14 @@ struct SbmlModule : public BaseBiologyModule {
 
 
   void Run(SimObject* so) override {
-    if (auto* cell = static_cast<MyCell*>(so)) {
+    if (auto* cell = static_cast<Cell*>(so)) {
 
       static auto* aDiffGrid = Simulation::GetActive()-> GetResourceManager()->GetDiffusionGrid(Aspecie);
       static auto* bDiffGrid = Simulation::GetActive()-> GetResourceManager()->GetDiffusionGrid(Bspecie);
 
       auto i = Simulation::GetActive()->GetScheduler()->GetSimulatedSteps();
     
+      std::cout << i << std::endl;
       if(i == 0){
         //rand 90-110
         //int randomSpeciesChange = rand() % 21 + 90;
@@ -225,33 +276,52 @@ struct SbmlModule : public BaseBiologyModule {
         rr_-> setValue("Bext", static_cast<int>(bDiffGrid -> GetConcentration(so -> GetPosition()) ) );
        // rr_ -> setValue("Compl", cell -> GetCompl() * randomSpeciesChange / 100);
       }
-      if(cell -> GetIsBornAfterDivision()){
-        //rand 90-110
-        int randomSpeciesChange = rand() % 21 + 90;
-        cell -> SetIsBornAfterDivision(false);
-        rr_ -> setValue("A_0", cell -> GetA() * randomSpeciesChange / 100);
-        rr_ -> setValue("B_0", cell -> GetB() * randomSpeciesChange / 100);
-        rr_ -> setValue("C", cell -> GetC() * randomSpeciesChange / 100);
-        rr_ -> setValue("L", cell -> GetL() * randomSpeciesChange / 100);
 
-        rr_-> setValue("Aext", static_cast<int>(aDiffGrid -> GetConcentration(so -> GetPosition()) ) );
-        rr_-> setValue("Bext", static_cast<int>(bDiffGrid -> GetConcentration(so -> GetPosition()) ) );
-        //rr_ -> setValue("Compl", cell -> GetCompl() * randomSpeciesChange / 100);
-        //rr_ -> setValue("p", cell -> GetP());
-        // rr_ -> setValue("Aext", cell -> GetAExt());
-        // rr_ -> setValue("Bext", cell -> GetBExt());
-      }
+      // if(cell -> GetIsBornAfterDivision()){
+      //   //rand 90-110
+      //   int randomSpeciesChange = rand() % 21 + 90;
+      //   // cell -> SetIsBornAfterDivision(false);
+      //   // rr_ -> setValue("A_0", cell -> GetA() * randomSpeciesChange / 100);
+      //   // rr_ -> setValue("B_0", cell -> GetB() * randomSpeciesChange / 100);
+      //   // rr_ -> setValue("C", cell -> GetC() * randomSpeciesChange / 100);
+      //   // rr_ -> setValue("L", cell -> GetL() * randomSpeciesChange / 100);
+
+      //   rr_-> setValue("Aext", static_cast<int>(aDiffGrid -> GetConcentration(so -> GetPosition()) ) );
+      //   rr_-> setValue("Bext", static_cast<int>(bDiffGrid -> GetConcentration(so -> GetPosition()) ) );
+      //   //rr_ -> setValue("Compl", cell -> GetCompl() * randomSpeciesChange / 100);
+      //   //rr_ -> setValue("p", cell -> GetP());
+      //   // rr_ -> setValue("Aext", cell -> GetAExt());
+      //   // rr_ -> setValue("Bext", cell -> GetBExt());
+      // }
 
 
 
       
      
-      cell -> SetL(rr_ -> getValue("L"));
+      //cell -> SetL(rr_ -> getValue("L"));
 
       UpdateVolume();
       //Integration pass
-      rr_->getIntegrator()->integrate(0 * dt_, dt_);
-      
+
+      rr_->getIntegrator()->integrate(personal_counter_* dt_, dt_);
+      personal_counter_ ++;
+
+      if(divided_){
+        divided_  = false;
+      }
+      if(this -> inherited_){
+        std::cout << "C: "<< rr_ -> getValue("C") << std::endl;
+        inherited_ = false;
+        rr_ -> setValue("A_0", A_);
+        rr_ -> setValue("B_0", B_);
+        rr_ -> setValue("C", C_);
+        rr_ -> setValue("L", L_);
+        A_ = 0;
+        B_= 0;
+        C_ = 0;
+        L_ = 0;
+        std::cout << "C: "<< rr_ -> getValue("C") << std::endl;
+      }
 
       ExchangeSubstances(so -> GetPosition());
 
@@ -280,30 +350,33 @@ struct SbmlModule : public BaseBiologyModule {
   //    }
       
     
-   
+      //std::cout << "ID: "<< so->GetUid() << std::endl;
       if (rr_ -> getValue("L") > 20000 && active_){
-          std::cout<<"Cell: "<< so -> GetUid()<<" DIVISIONE " << std::endl;
           //multiply lipids by 0.5
           rr_ -> setValue("L", rr_ -> getValue("L")/2);
-          cell -> SetL(rr_ -> getValue("L"));
+          // cell -> SetL(rr_ -> getValue("L"));
           
          // active_ = false;  <- cells keep replicating
           MultiplyAllSpecies(0.353553391);
           //update Cell Values
-          cell -> SetA(rr_ -> getValue("A_0"));
-          cell -> SetB(rr_ -> getValue("B_0"));
-          cell -> SetC(rr_ -> getValue("C"));
-          cell -> SetL(rr_ -> getValue("L"));
-          cell -> SetP(rr_ -> getValue("p"));
-          cell -> SetAExt(rr_ -> getValue("Aext"));
-          cell -> SetAExt(rr_ -> getValue("Bext"));
-          cell -> SetCompl(rr_ -> getValue("Compl"));
-
+          // cell -> SetA(rr_ -> getValue("A_0"));
+          // cell -> SetB(rr_ -> getValue("B_0"));
+          // cell -> SetC(rr_ -> getValue("C"));
+          // cell -> SetL(rr_ -> getValue("L"));
+          // cell -> SetP(rr_ -> getValue("p"));
+          // cell -> SetAExt(rr_ -> getValue("Aext"));
+          // cell -> SetAExt(rr_ -> getValue("Bext"));
+          // cell -> SetCompl(rr_ -> getValue("Compl"));
+          this -> A_ = rr_ -> getValue("A_0");
+          this -> B_ = rr_ -> getValue("B_0");
+          this -> C_ = rr_ -> getValue("C");
+          this -> L_ = rr_ -> getValue("L");
+          this -> divided_ = true;
           //update volume of the cell and of the integrator
-          cell -> SetCompartment( rr_ -> getValue("compartment")/2);
-          rr_ -> setValue("compartment", cell -> GetCompartment());
+          //cell -> SetCompartment( rr_ -> getValue("compartment")/2);
+          //rr_ -> setValue("compartment", cell -> GetCompartment());
 
-          cell -> SetIsBornAfterDivision(true);
+          //cell -> SetIsBornAfterDivision(true);
 
           cell -> Divide();
       }
@@ -312,15 +385,55 @@ struct SbmlModule : public BaseBiologyModule {
   }
 
 
-
+  public:
+    int A_ = 0;
+    int B_ = 0;
+    int C_ = 0;
+    int L_ = 0; 
  private:
-
+  std::string sbml_file_;
+  rr::SimulateOptions initial_options_;
   bool active_ = true;
   rr::RoadRunner* rr_;
   double dt_;
-  BDM_CLASS_DEF_OVERRIDE(SbmlModule, 1);
+  int personal_counter_ = 0;
+
+  bool inherited_ = false;
+  bool divided_ = false; 
+  //BDM_CLASS_DEF_OVERRIDE(SbmlModule, 1);
 };
 
+class MyCell : public Cell {
+  BDM_SIM_OBJECT_HEADER(MyCell, Cell, 1);
+
+ public:
+  MyCell() {}
+  explicit MyCell(const Double3& position) : Base(position) {}
+
+  /// Default event constructor
+  MyCell(const Event& event, SimObject* other, uint64_t new_oid = 0)
+      : Base(event, other, new_oid) {
+        
+        //AddBiologyModule
+        //TODO: inherit substances from mother and update RR
+        if (auto* mother = dynamic_cast<MyCell*>(other)) {
+          // rr::SimulateOptions opt;
+          // opt.start = 0;
+          // opt.duration = 200;
+          // opt.steps = 200;
+          const auto module = mother -> GetAllBiologyModules();
+          const auto mother_module = bdm_static_cast<const SbmlModule*>(module[0]);
+          int A = mother_module -> A_;
+          int B = mother_module -> B_;
+          int C = mother_module -> C_;
+          int L = mother_module -> L_;
+           // std::string sbml_file = "src/sbml_model.xml";
+          this -> AddBiologyModule(new SbmlModule(A,B,C,L));
+        }
+      }
+
+  
+};
 
 
 

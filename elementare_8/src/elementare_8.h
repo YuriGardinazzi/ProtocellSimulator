@@ -14,15 +14,21 @@
 #ifndef ELEMENTARE_8_H_
 #define ELEMENTARE_8_H_
 
+
+
+
+
 #include "biodynamo.h"
-#include "cell.h"
-#include "substances.h"
 #include "biology_modules.h"
+//#include "cell.h"
+
+
+#include "substances.h"
+
 
 #include "core/util/io.h"
 #include "core/util/timing.h"
 #include "core/exporter.h"
-
 
 #include "rrException.h"
 #include "rrExecutableModel.h"
@@ -63,8 +69,8 @@ inline int Simulate(int argc, const char** argv) {
   // roadrunner options
   rr::SimulateOptions opt;
   opt.start = 0;
-  opt.duration = 500;
-  opt.steps = 1000;
+  opt.duration = 400;
+  opt.steps = 870;
   auto set_param = [&](Param* param) {
     param->simulation_time_step_ = opt.duration / opt.steps;
     param->bound_space_ = true;
@@ -87,7 +93,8 @@ inline int Simulate(int argc, const char** argv) {
     auto* cell = new MyCell();
     cell->SetPosition(position);
     cell->SetDiameter(10);
-    cell->AddBiologyModule(new SbmlModule(sbml_file, opt));
+    cell->AddBiologyModule(new SbmlModule());
+    //cell->AddBiologyModule(new SbmlModule(sbml_file, opt));
     return cell;
   };
 
