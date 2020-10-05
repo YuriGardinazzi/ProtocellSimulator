@@ -28,7 +28,7 @@ inline int Simulate(int argc, const char** argv) {
   auto set_param = [](Param* param) {
     // Create an artificial bounds for the simulation space
     param->bound_space_ = true;
-    param->min_bound_ = -500;
+    param->min_bound_ = 0;
     param->max_bound_ = 500;
   };
 
@@ -47,21 +47,21 @@ inline int Simulate(int argc, const char** argv) {
   };
 
   std::vector<Double3> positions;
-  positions.push_back({50, 50, 50});
-  positions.push_back({50,0,0});
+  positions.push_back({230, 230, 230});
+ // positions.push_back({50,0,0});
   ModelInitializer::CreateCells(positions, construct);
   // Define the substances in our simulation
   // Order: substance id, substance_name, diffusion_coefficient, decay_constant,
   // resolution
-  ModelInitializer::DefineSubstance(kSubstance, "Substance",0.005, 0, 100);
-  ModelInitializer::DefineSubstance(secondSubstance, "SecondOne",0.005, 0, 100);
+  ModelInitializer::DefineSubstance(kSubstance, "Substance",20, 0, 10);
+  ModelInitializer::DefineSubstance(secondSubstance, "SecondOne",20, 0, 10);
 
-  ModelInitializer::InitializeSubstance(kSubstance, "Substance",PersonalizedCube(200,10,10,10));
-  ModelInitializer::InitializeSubstance(secondSubstance, "SecondOne",PersonalizedCube(100,210,10,10));                                   
+  ModelInitializer::InitializeSubstance(kSubstance, "Substance",PersonalizedCube(1000,200,200,200));
+  ModelInitializer::InitializeSubstance(secondSubstance, "SecondOne",PersonalizedCube(1000,200,200,200));                                   
 
 
   // Run simulation for N timesteps
-  simulation.GetScheduler()->Simulate(10);
+  simulation.GetScheduler()->Simulate(1000);
 
   std::cout << "Simulation completed successfully!\n";
   return 0;

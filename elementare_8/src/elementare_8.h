@@ -64,13 +64,16 @@ inline int Simulate(int argc, const char** argv) {
                "B_uscita" << ";" <<
                "B_ingresso" <<";"<<
                "A_netto"<<";"<<
-               "B_netto"<<";"<<    std::endl;
+               "B_netto"<<";"<< 
+               "Avicino" <<";"<< "Amedio" <<";"<<"Alontano" <<";"<<    std::endl;
   outfile.close();
   // roadrunner options
   rr::SimulateOptions opt;
   opt.start = 0;
   opt.duration = 400;
   opt.steps = 870;
+  // opt.duration = 25;
+  // opt.steps = 50;
   auto set_param = [&](Param* param) {
     param->simulation_time_step_ = opt.duration / opt.steps;
     param->bound_space_ = true;
@@ -99,11 +102,11 @@ inline int Simulate(int argc, const char** argv) {
   };
 
   std::vector<Double3> positions;
-  positions.push_back({250, 250, 250});
+//  positions.push_back({250, 250, 250});
   //positions.push_back({250,245,250});
-  positions.push_back({200,200,200});
-  positions.push_back({250,250,260});
-  positions.push_back({300,300,300});
+ positions.push_back({200,200,200});
+//  positions.push_back({250,250,260});
+//  positions.push_back({300,300,300});
 
   ModelInitializer::CreateCells(positions, construct);
   //risoluzione = numero di cubettini che vogliamo
@@ -111,8 +114,8 @@ inline int Simulate(int argc, const char** argv) {
  //Boxlength (lunghezza dei singoli cubi) = Lunghezza Cubo simulazione / resolution
 
   //                                 diff coeff. decay costant , resolution
-  ModelInitializer::DefineSubstance(Bspecie, "Bspecie",2, 0, 10);
-  ModelInitializer::DefineSubstance(Aspecie, "Aspecie",2, 0, 10);
+  ModelInitializer::DefineSubstance(Bspecie, "Bspecie",20, 0, 10);
+  ModelInitializer::DefineSubstance(Aspecie, "Aspecie",20, 0, 10);
   
   /**
    * Valore iniziale di Aext/Bext fratto il volume del cubettino della griglia

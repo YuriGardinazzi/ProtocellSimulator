@@ -42,18 +42,15 @@ namespace bdm{
         auto* sim = Simulation::GetActive();
         auto* rm = sim->GetResourceManager();
         static auto* kDg = rm->GetDiffusionGrid(kSubstance);
+        static auto* sDg = rm->GetDiffusionGrid(secondSubstance);
 
         if (auto* cell = dynamic_cast<Cell*>(so)) {
           const auto& position = so->GetPosition();
-          Double3 gradient;
-          kDg->GetGradient(position, &gradient);
-        //   std::cout << "gradient: "<< gradient << std::endl;
-          gradient *= 0.5;
-          cell->UpdatePosition(gradient);
           size_t i = kDg -> GetBoxIndex(position);
-
+          size_t is = sDg -> GetBoxIndex(position);
           //negative value, means that the cells ate something
-          kDg -> IncreaseConcentrationBy(i,-5); 
+          kDg -> IncreaseConcentrationBy(i,5); 
+          sDg -> IncreaseConcentrationBy(is,5); 
         }
     }
     };

@@ -78,6 +78,8 @@ struct SbmlModule : public BaseBiologyModule {
     opt.start = 0;
     opt.duration = 400;
     opt.steps = 870;
+  //     opt.duration = 25;
+  // opt.steps = 50;
     std::string sbml_file = "src/sbml_model.xml";
     sbml_file_ = sbml_file; 
     initial_options_ = opt;
@@ -131,7 +133,7 @@ struct SbmlModule : public BaseBiologyModule {
   
     int A_netto = rr_ -> getValue("A_ingresso") - rr_ -> getValue("A_uscita");
     int B_netto = rr_ -> getValue("B_ingresso") - rr_ -> getValue("B_uscita");
-    
+   // std::cout << "Il volume e' " << Avolume << " Lato: "<< aDiffGrid -> GetBoxLength()<< std::endl;
     /** 
      * Salvare il valore Aext dell'ambiente 
      * Calcolare quello nuovo 
@@ -141,8 +143,8 @@ struct SbmlModule : public BaseBiologyModule {
      * **/
     //newAext - VecchioAext = valore da incrementare       
     int A_Concentration = static_cast<int>(aDiffGrid -> GetConcentration(pos));
-    auto newExternalAExt = (A_Concentration*Avolume - A_netto )/Avolume;
-    
+    //auto newExternalAExt = (A_Concentration*Avolume - A_netto )/Avolume;
+    auto newExternalAExt = A_Concentration - A_netto;
     auto increaseAValue = newExternalAExt - A_Concentration;
     //auto increaseAValue = newExternalAExt - A_Concentration/Avolume;
     //std::cout << "A_conc: " << A_Concentration <<" A_netto: "<< A_netto  <<" newAext: " << newExternalAExt << " value: "<<increaseAValue << std::endl;
@@ -159,12 +161,12 @@ struct SbmlModule : public BaseBiologyModule {
          * tolgo solo quello presente
          * TODO: gestire in modo coerente anche i valori della cellula
          * */
-        if (increaseAValue > A_Concentration){
+        if (-increaseAValue > A_Concentration){
           aDiffGrid -> IncreaseConcentrationBy(iA, -A_Concentration);  
           //std::cout << "A eaten: "<< A_Concentration << std::endl;
         } else{
          // std::cout << "A eaten: "<< increaseAValue << std::endl;
-         // aDiffGrid -> IncreaseConcentrationBy(iA, increaseAValue);
+          aDiffGrid -> IncreaseConcentrationBy(iA, increaseAValue);
         }
         
       }
@@ -179,8 +181,10 @@ struct SbmlModule : public BaseBiologyModule {
 
     
     int B_Concentration = static_cast<int>(bDiffGrid -> GetConcentration(pos));
-    auto newExternalBExt = (B_Concentration*Avolume -B_netto )/Bvolume;
+    //auto newExternalBExt = (B_Concentration*Avolume -B_netto )/Bvolume;
+    auto newExternalBExt = (B_Concentration -B_netto );
     auto increaseBValue = newExternalBExt - B_Concentration;
+
     //auto increaseBValue = newExternalBExt - B_Concentration/Bvolume;
 
     //B_netto < 0: the cell eats something from the environment
@@ -194,7 +198,7 @@ struct SbmlModule : public BaseBiologyModule {
          * TODO: gestire in modo coerente anche i valori della cellula
          * */
         
-        if(increaseBValue > B_Concentration){
+        if(-increaseBValue > B_Concentration){
           bDiffGrid -> IncreaseConcentrationBy(iB, -B_Concentration); 
         //  std::cout << "B eaten: "<< -B_Concentration << std::endl; 
         }else{
@@ -212,8 +216,11 @@ struct SbmlModule : public BaseBiologyModule {
     //set new concentrations of Aext and Bnext
 
 
-    auto newAext = (rr_ ->getValue("Aext")*Avolume - A_netto )/Avolume;
-    auto newBext = (rr_ ->getValue("Bext")*Bvolume - B_netto )/Bvolume;
+    // auto newAext = (rr_ ->getValue("Aext")*Avolume - A_netto )/Avolume;
+    // auto newBext = (rr_ ->getValue("Bext")*Bvolume - B_netto )/Bvolume;
+    auto newAext = static_cast<int>(aDiffGrid -> GetConcentration(pos));
+    auto newBext = static_cast<int>(bDiffGrid -> GetConcentration(pos));
+  
 
     rr_->setValue("Aext",static_cast<int>(newAext) );
     rr_->setValue("Bext",static_cast<int>(newBext) );
@@ -223,7 +230,22 @@ struct SbmlModule : public BaseBiologyModule {
   //Append volume value to text file
   void SaveToFile( const SoUid id, int iteration){
 
+      static auto* aDiffGrid = Simulation::GetActive()-> GetResourceManager()->GetDiffusionGrid(Aspecie);
+      bdm::Double3 cuboVicino = {200,200,200};
+      bdm::Double3 cuboMedio = {300,300,300};
+      bdm::Double3 cuboLontano = {400,400,400};
+
+      int Avicino, Amedio, Alontano;
+
+      Avicino = static_cast<int>(aDiffGrid -> GetConcentration(cuboVicino));
+      Amedio = static_cast<int>(aDiffGrid -> GetConcentration(cuboMedio));
+      Alontano = static_cast<int>(aDiffGrid -> GetConcentration(cuboLontano));
       std::ofstream outfile;
+
+
+
+
+
       outfile.open("volume.csv", std::ios_base::app); // append instead of overwrite
       outfile <<id<<";"  << iteration << ";" << 
               rr_ -> getValue("compartment") << ";" <<
@@ -240,7 +262,8 @@ struct SbmlModule : public BaseBiologyModule {
               rr_ -> getValue("B_uscita")  << ";" <<
               rr_ -> getValue("B_ingresso") <<";"<<
               rr_ -> getValue("A_ingresso") -rr_ -> getValue("A_uscita") <<";" <<
-              rr_ -> getValue("B_ingresso") -rr_ -> getValue("B_uscita") << std::endl;
+              rr_ -> getValue("B_ingresso") -rr_ -> getValue("B_uscita") << 
+              ";" << Avicino <<";"<<Amedio << ";"<< Alontano << ";" <<std::endl;
   }
   //update volume
   void UpdateVolume(){
@@ -262,7 +285,7 @@ struct SbmlModule : public BaseBiologyModule {
 
       auto i = Simulation::GetActive()->GetScheduler()->GetSimulatedSteps();
     
-      std::cout << i << std::endl;
+      //std::cout << i << std::endl;
       if(i == 0){
         //rand 90-110
         //int randomSpeciesChange = rand() % 21 + 90;
@@ -329,13 +352,15 @@ struct SbmlModule : public BaseBiologyModule {
       
       if (so -> GetPosition() == posCubo){
           //std::cout << "son la cellula 200 200 200" <<std::endl;
-          double AExtValue = 10;
-          double BExtValue = 10;
+          double AExtValue = 100;
+          double BExtValue = 100;
           
+          bdm::Double3 nuova_pos = {230,230,230};
+          size_t iA = aDiffGrid -> GetBoxIndex(nuova_pos);
+          size_t iB = bDiffGrid -> GetBoxIndex(nuova_pos);
 
-         
-          aDiffGrid -> IncreaseConcentrationBy(posCubo, AExtValue);
-          bDiffGrid -> IncreaseConcentrationBy(posCubo, BExtValue);
+          aDiffGrid -> IncreaseConcentrationBy(iA, AExtValue);
+          bDiffGrid -> IncreaseConcentrationBy(iB, BExtValue);
       }
       //A_uscita quantità prodotta, A_ingresso quantità consumata
       //la differenza è quello che inserisce all'ambiente
