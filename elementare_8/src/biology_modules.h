@@ -68,6 +68,19 @@ struct SbmlModule : public BaseBiologyModule {
 
   SbmlModule(const Event& event, BaseBiologyModule* other, uint64_t new_oid = 0)
       : BaseBiologyModule(event, other, new_oid) {
+        std::cout << "son dentro il costruttore brutto" << std::endl;
+        if (SbmlModule* gdbm = dynamic_cast<SbmlModule*>(other)) {
+          std::cout << "son dentro l'if " <<std::endl;
+          Initialize();
+          this -> inherited_ = true;
+          this->A_ = gdbm->A_;
+          this->B_ = gdbm->B_;
+          this->C_ = gdbm->C_;
+          this->L_ = gdbm->L_;
+        } else {
+          Log::Fatal("SbmlModule::EventConstructor",
+                  "other was not of type SbmlModule");
+        }
       }
   
   // void Initialize(const std::string& sbml_file,
@@ -76,10 +89,10 @@ struct SbmlModule : public BaseBiologyModule {
     
     rr::SimulateOptions opt;
     opt.start = 0;
-    opt.duration = 400;
-    opt.steps = 870;
-  //     opt.duration = 25;
-  // opt.steps = 50;
+    // opt.duration = 400;
+    // opt.steps = 870;
+    opt.duration = 1000;
+    opt.steps = 2000;
     std::string sbml_file = "src/sbml_model.xml";
     sbml_file_ = sbml_file; 
     initial_options_ = opt;
@@ -144,7 +157,7 @@ struct SbmlModule : public BaseBiologyModule {
     //newAext - VecchioAext = valore da incrementare       
     int A_Concentration = static_cast<int>(aDiffGrid -> GetConcentration(pos));
     //auto newExternalAExt = (A_Concentration*Avolume - A_netto )/Avolume;
-    auto newExternalAExt = A_Concentration - A_netto;
+    auto newExternalAExt = A_Concentration - A_netto*0.05;
     auto increaseAValue = newExternalAExt - A_Concentration;
     //auto increaseAValue = newExternalAExt - A_Concentration/Avolume;
     //std::cout << "A_conc: " << A_Concentration <<" A_netto: "<< A_netto  <<" newAext: " << newExternalAExt << " value: "<<increaseAValue << std::endl;

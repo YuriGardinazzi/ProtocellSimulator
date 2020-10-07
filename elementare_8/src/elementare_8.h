@@ -70,10 +70,10 @@ inline int Simulate(int argc, const char** argv) {
   // roadrunner options
   rr::SimulateOptions opt;
   opt.start = 0;
-  opt.duration = 400;
-  opt.steps = 870;
-  // opt.duration = 25;
-  // opt.steps = 50;
+  // opt.duration = 400;
+  // opt.steps = 870;
+  opt.duration = 1000;
+  opt.steps = 2000;
   auto set_param = [&](Param* param) {
     param->simulation_time_step_ = opt.duration / opt.steps;
     param->bound_space_ = true;
@@ -102,11 +102,11 @@ inline int Simulate(int argc, const char** argv) {
   };
 
   std::vector<Double3> positions;
-//  positions.push_back({250, 250, 250});
+ positions.push_back({250, 250, 250});
   //positions.push_back({250,245,250});
  positions.push_back({200,200,200});
-//  positions.push_back({250,250,260});
-//  positions.push_back({300,300,300});
+ positions.push_back({250,250,260});
+ positions.push_back({300,300,300});
 
   ModelInitializer::CreateCells(positions, construct);
   //risoluzione = numero di cubettini che vogliamo
