@@ -5,13 +5,13 @@ namespace bdm{
     enum Substances { Aspecie, Bspecie };
 
 
-    struct PersonalizedCube {
+    class PersonalizedCube {
         int value_;
         int dim_;
         double x0_;
         double y0_;
         double z0_;
-        PersonalizedCube(int value, double x0, double y0, double z0) {
+        public: PersonalizedCube(int value, double x0, double y0, double z0) {
             dim_ = 50;
             value_ = value;
             x0_ = x0;
